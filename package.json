@@ -1,0 +1,27 @@
+{
+  "name": "custom-componet-creator",
+  "version": "0.1.0",
+  "description": "",
+  "type": "module",
+  "main": "index.js",
+  "bin": {
+    "mccc": "./src/index.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon src/index.js",
+    "build": "babel src -d dist",
+    "start": "node src"
+  },
+  "author": "victorsigma",
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^5.3.0",
+    "commander": "^12.1.0",
+    "inquirer": "^11.0.2",
+    "ora": "^8.1.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.5"
+  }
+}
