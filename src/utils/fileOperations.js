@@ -67,3 +67,13 @@ export const makeFile = async (name, content) => {
         throw error;
     }
 }
+
+export const makeSubFile = async (name, currentPath, content) => {
+    const fileName = `${currentPath}${name}`;
+    try {
+        await validateDirectory(`${currentPath}`);
+        await fs.promises.writeFile(fileName, content, 'utf-8');
+    } catch (error) {
+        throw error;
+    }
+}
