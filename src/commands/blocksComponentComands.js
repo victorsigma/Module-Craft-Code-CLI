@@ -1,4 +1,4 @@
-import { toCamelCase, uppercaseFirstLetter } from '../utils/stringManager.js';
+import { toCamelCase, toSnackCase, uppercaseFirstLetter } from '../utils/stringManager.js';
 import { clearEvents, makeComponentFile, makeEventFile } from '../utils/fileOperations.js';
 import { ONLY_BEHAVIOR, PATH_BLOCK_COMPONENTS, PATH_BLOCK_EVENTS } from '../utils/constants.js';
 import { propertiesAsync } from '../utils/readProperties.js';
@@ -31,6 +31,8 @@ blocksComponent.action(async (options) => {
     }
 
     // Asegurar que el nombre tenga un namespace
+    options.name = toSnackCase(options.name);
+    console.log(toSnackCase(options.name));
     while (!options.name.includes(':')) {
         if (!config['addon.namespace']) {
             console.error(
