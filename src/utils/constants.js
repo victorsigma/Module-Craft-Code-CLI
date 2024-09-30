@@ -1,5 +1,9 @@
+import { myRequire } from "./exports.js";
 import { propertiesAsync } from "./readProperties.js";
 import { toCamelCase } from "./stringManager.js";
+const { version } = myRequire('../../package.json');
+
+export const VERSION = version;
 
 export const PATH_ITEM_COMPONENTS = 'scripts/components/items';
 export const PATH_BLOCK_COMPONENTS = 'scripts/components/blocks';
@@ -12,6 +16,15 @@ export const ONLY_BEHAVIOR = async () => {
     return config['addon.type'] == 'behavior';
 }
 
+export const ONLY_RESOURCE = async () => {
+    const config = await propertiesAsync();
+    return config['addon.type'] == 'resource';
+}
+
+export const ONLY_SKIN = async () => {
+    const config = await propertiesAsync();
+    return config['addon.type'] == 'skin';
+}
 
 export const EVENT_TEMPLATES = {
     'onBeforeDurabilityDamage': (name) => onBeforeDurabilityDamage(name),
@@ -32,6 +45,16 @@ export const EVENT_TEMPLATES = {
     'onTick': (name) => onTick(name),
 }
 
+export const MODULE_VERSION = {
+    '@minecraft/common': '1.2.0',
+    '@minecraft/debug-utilities': '1.0.0-beta',
+    '@minecraft/server-admin': '1.0.0-beta',
+    '@minecraft/server-gametest': '1.0.0-beta',
+    '@minecraft/server-net': '1.0.0-beta',
+    '@minecraft/server-ui': '1.3.0',
+    '@minecraft/server': '1.14.0',
+    '@minecraft/server-editor': '0.1.0-beta',
+}
 
 export const LANGS = [
     "da_DK",

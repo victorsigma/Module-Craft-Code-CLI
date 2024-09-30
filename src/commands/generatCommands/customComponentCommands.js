@@ -1,6 +1,6 @@
 import { Command } from "commander";
-import itemsComponent from "./itemsComponentComands.js";
-import blocksComponent from './blocksComponentComands.js';
+import itemsComponent from "./components/itemsComponentCommands.js";
+import blocksComponent from './components/blocksComponentCommands.js';
 
 const component = new Command('component').alias('c').description('Generar un componentes personalizado [block|item]')
 

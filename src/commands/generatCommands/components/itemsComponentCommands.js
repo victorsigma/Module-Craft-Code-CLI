@@ -1,34 +1,31 @@
-import { toCamelCase, toSnackCase, uppercaseFirstLetter } from '../utils/stringManager.js';
-import { clearEvents, makeComponentFile, makeEventFile } from '../utils/fileOperations.js';
-import { ONLY_BEHAVIOR, PATH_ITEM_COMPONENTS, PATH_ITEM_EVENTS } from '../utils/constants.js';
-import { propertiesAsync } from '../utils/readProperties.js';
+import { toCamelCase, toSnackCase, uppercaseFirstLetter } from '../../../utils/stringManager.js';
+import { clearEvents, makeComponentFile, makeEventFile, updateIndexFile } from '../../../utils/fileOperations.js';
+import { ONLY_BEHAVIOR, PATH_ITEM_COMPONENTS, PATH_ITEM_EVENTS } from '../../../utils/constants.js';
+import { propertiesAsync } from '../../../utils/readProperties.js';
 import { Command } from 'commander';
 import inquirer from 'inquirer';
 import chalk from 'chalk';
 import ora from 'ora';
 
 const itemsComponent = new Command('item')
-	.description('Crea un componente personalizado de item nuevo');
+    .description('Crea un componente personalizado de item nuevo');
 itemsComponent.option('-n, --name <string>', 'especifica el nombre del componente', 'namespace:item_component', (value) => {
-	if (value.includes(':')) return value;
-	throw new Error('El nombre del componente debe incluir ":" para separar namespace');
+    if (value.includes(':')) return value;
+    throw new Error('El nombre del componente debe incluir ":" para separar namespace');
 })
 itemsComponent.option('-d, --description <string>', 'especifica la descripción del componente', 'description')
 
 itemsComponent.action(async (options) => {
     const config = await propertiesAsync();
-    if (!config) {
-        return console.log(
-            chalk.yellowBright('No puedes generar un componente en un proyecto sin el archivo'), 
-            chalk.bold(chalk.green('addon.properties'))
-        );
-    }
+    if (!config) return console.log(
+        chalk.yellowBright('No puedes generar un componente en un proyecto sin el archivo'),
+        chalk.bold(chalk.green('addon.properties'))
+    );
+
     const behavior = await ONLY_BEHAVIOR()
-    if(!behavior) {
-        return console.log(
-            chalk.yellowBright('No puedes generar un componente en un proyecto que no sea behavior')
-        );
-    }
+    if (!behavior) return console.log(
+        chalk.yellowBright('No puedes generar un componente en un proyecto que no sea behavior')
+    );
 
     // Asegurar que el nombre tenga un namespace
     options.name = toSnackCase(options.name);
@@ -36,7 +33,7 @@ itemsComponent.action(async (options) => {
         if (!config['addon.namespace']) {
             console.error(
                 chalk.red('El nombre del componente debe incluir ":" para separar namespace'),
-                chalk.green('\nNombre actual:'), 
+                chalk.green('\nNombre actual:'),
                 chalk.white(options.name)
             );
 
@@ -52,8 +49,8 @@ itemsComponent.action(async (options) => {
     }
 
     if (options.name === 'namespace:item_component') {
-        options.name = config['addon.namespace'] 
-            ? `${config['addon.namespace']}:item_component` 
+        options.name = config['addon.namespace']
+            ? `${config['addon.namespace']}:item_component`
             : 'namespace:item_component';
     }
 
@@ -61,7 +58,7 @@ itemsComponent.action(async (options) => {
         {
             type: 'checkbox',
             name: 'selections',
-            message: 'Selecciona tus eventos:',
+            message: 'Selecciona los eventos:',
             choices: [
                 { name: 'onBeforeDurabilityDamage', value: 'onBeforeDurabilityDamage' },
                 { name: 'onCompleteUse', value: 'onCompleteUse' },
@@ -77,9 +74,7 @@ itemsComponent.action(async (options) => {
     const response = await inquirer.prompt(questions);
 
     // Validar si el usuario no selecciona ningún evento
-    if (response.selections.length === 0) {
-        return console.log(chalk.red('Debes seleccionar al menos un evento.'));
-    }
+    if (!response.selections.length) return console.log(chalk.red('Debes seleccionar al menos un evento.'));
 
     response.selections.forEach(evento => {
         console.log(chalk.yellow(`- ${evento}`));
@@ -113,6 +108,7 @@ export const ${toCamelCase(options.name.split(':')[1])}Component = {
             await makeEventFile(options.name, response.selections[i], PATH_ITEM_EVENTS);
         }
 
+        updateIndexFile('item', options.name, `./components/items/${toCamelCase(options.name.split(':')[1])}`);
         spinner.succeed(chalk.bold(chalk.whiteBright(`El componente ${options.name} ha sido creado exitosamente!`)));
     } catch (error) {
         spinner.fail(chalk.red('Error al crear el componente.'));

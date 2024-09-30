@@ -1,7 +1,9 @@
+import { EVENT_TEMPLATES } from "./constants.js";
 import { toCamelCase } from "./stringManager.js";
+import { fileURLToPath } from 'url';
+import chalk from "chalk";
 import path from "path";
 import fs from 'fs';
-import { EVENT_TEMPLATES } from "./constants.js";
 
 
 export const validateDirectory = async (dir) => {
@@ -22,6 +24,12 @@ export const validateDirectory = async (dir) => {
         prevPath = currentPath;
     }
 }
+
+
+export const validateFile = (dir) => {
+    return fs.existsSync(dir);
+}
+
 
 export const clearEvents = async (dir) => {
     try {
@@ -77,3 +85,67 @@ export const makeSubFile = async (name, currentPath, content) => {
         throw error;
     }
 }
+
+export const validateFileAndCreate = async (dir, content) => {
+    if (!fs.existsSync(dir)) {
+        await makeFile(dir, content)
+    }
+    return true;
+}
+
+export const cloneFile = async (sourceFileName, destinationPath) => {
+    const __filename = fileURLToPath(import.meta.url);
+    const __dirname = path.dirname(__filename);
+    // Ruta al archivo de origen dentro del directorio de la CLI
+    const sourcePath = path.join(__dirname, `../../src/assets/${sourceFileName}`);
+
+    try {
+        // Copiar archivo al destino
+        await fs.promises.copyFile(sourcePath, destinationPath);
+    } catch (error) {
+        console.error('Error al clonar el archivo:', error);
+    }
+};
+
+export const updateIndexFile = async (componentType, componentName, componentPath) => {
+    const filePath = path.join(process.cwd(), 'scripts/index.js');
+
+    //const filePathMain = path.join(__dirname, 'scripts/index.js');}
+
+    const validation = validateFile('scripts/index.js');
+    if (!validation) {
+        await cloneFile('js/index.js', 'scripts/index.js')
+
+        console.log(chalk.green('✔'), chalk.bold(chalk.whiteBright(`El archivo`), chalk.yellow('index.js'), chalk.whiteBright('fue creado de forma automática al no existir previamente.')))
+    }
+    try {
+        const fileContent = await fs.promises.readFile(filePath, 'utf-8');
+
+        // El componente que deseas insertar
+        const componentImport = `import { ${toCamelCase(componentName.split(':')[1])}Component } from '${componentPath}Component';\n`;
+        const componentRegister = `initEvent.${componentType}ComponentRegistry.registerCustomComponent('${componentName.toLowerCase()}', ${toCamelCase(componentName.split(':')[1])}Component);\n`;
+
+        // Verificar si el componente ya está registrado para evitar duplicados
+        if (fileContent.includes(componentRegister)) return console.log(chalk.green('✔'), chalk.bold(chalk.whiteBright(`El componente ${componentName} ya está registrado.`)));
+
+
+        // Insertar el import del componente
+        let updatedContent = fileContent.replace(
+            new RegExp(`// aquí se agregan los imports de componentes ${componentType}`),
+            `${componentImport}// aquí se agregan los imports de componentes ${componentType}`
+        );
+
+        // Insertar la declaración en el registro de componentes
+        updatedContent = updatedContent.replace(
+            new RegExp(`// aquí se agregan los registros de componentes ${componentType}`),
+            `${componentRegister}    // aquí se agregan los registros de componentes ${componentType}`
+        );
+
+        // Escribir el archivo actualizado
+        await fs.promises.writeFile(filePath, updatedContent, 'utf-8');
+
+        console.log(chalk.green('✔'), chalk.bold(chalk.whiteBright(`El componente ${componentName} ha sido agregado correctamente a index.js`)));
+    } catch (error) {
+        console.error('Error al actualizar el archivo index.js:', error);
+    }
+};

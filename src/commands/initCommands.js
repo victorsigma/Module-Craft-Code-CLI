@@ -11,7 +11,7 @@ const init = new Command('init').alias('i')
 init.option('-n, --name <string>', 'especifica el nombre del addon', 'New Addon')
 init.option('-s, --namespace <string>', 'especifica el namespace del addon', 'namespace')
 init.option('-d, --description <string>', 'especifica la descripción', 'Addon Description')
-init.addOption(new Option('-t, --type <string>', 'especifica el tipo de proyecto').default('behavior').choices(['behavior', 'resource']))
+init.addOption(new Option('-t, --type <string>', 'especifica el tipo de proyecto').default('behavior').choices(['behavior', 'resource', 'skin']))
 
 init.action(async (options) => {
     const config = await propertiesAsync();
@@ -60,8 +60,8 @@ addon.type=${addon.type}`.replace(/\r\n|\n/g, "\n");
 
     console.log(chalk.yellow(`- Addon: ${addon.name}`));
     console.log(chalk.yellow(`- Description: ${addon.description}`));
-    if (addon.namespace)  console.log(chalk.yellow(`- Spacename: ${addon.namespace}`));
-    if (addon.type)  console.log(chalk.yellow(`- Type: ${addon.type}`));
+    if (addon.namespace) console.log(chalk.yellow(`- Spacename: ${addon.namespace}`));
+    if (addon.type) console.log(chalk.yellow(`- Type: ${addon.type}`));
     const spinner = ora('Creando addon.properties...').start();
 
     try {

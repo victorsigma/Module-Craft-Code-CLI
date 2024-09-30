@@ -1,6 +1,6 @@
-import { propertiesAsync } from "../utils/readProperties.js";
-import { makeSubFile } from "../utils/fileOperations.js";
-import { LANGS } from "../utils/constants.js";
+import { propertiesAsync } from "../../../utils/readProperties.js";
+import { makeSubFile, validateFile } from "../../../utils/fileOperations.js";
+import { LANGS } from "../../../utils/constants.js";
 import { Command, Option } from "commander";
 import inquirer from "inquirer";
 import chalk from "chalk";
@@ -20,7 +20,7 @@ lang.action(async (options) => {
         );
     }
 
-    if(!LANGS.includes(options.region)) {
+    if (!LANGS.includes(options.region)) {
         console.log(
             chalk.yellowBright('La localización no fue seleciona o no es valida')
         );
@@ -28,7 +28,7 @@ lang.action(async (options) => {
             {
                 type: 'list',
                 name: 'selection',
-                message: 'Selecciona tu localización:',
+                message: 'Selecciona la localización:',
                 choices: [
                     { value: "da_DK", name: "Danish, Denmark" },
                     { value: "de_DE", name: "German, Germany" },
@@ -67,19 +67,21 @@ lang.action(async (options) => {
         options.region = response.selection;
     }
 
-    
 
-    
+
+
 
     console.log(chalk.yellow(`- ${options.region}`));
 
-    const content = 
-`pack.name=${config['addon.name']}
+    const content =
+        `pack.name=${config['addon.name']}
 pack.description=${config['addon.description']}`
 
     const spinner = ora('Creando localización...').start();
 
     try {
+
+        if (validateFile(`texts/${options.region}.lang`)) return spinner.fail(chalk.bold(chalk.yellowBright('La localización ya existe')));
         await makeSubFile(`${options.region}.lang`, 'texts/', content);
 
         spinner.succeed(chalk.bold(chalk.whiteBright(`La localización ${options.region} ha sido creado exitosamente!`)));
