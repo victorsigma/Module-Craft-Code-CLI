@@ -56,6 +56,12 @@ export const MODULE_VERSION = {
     '@minecraft/server-editor': '0.1.0-beta',
 }
 
+export const LIBS = [
+    "bedrockSystem",
+    "blockManager",
+    "itemManager",
+]
+
 export const LANGS = [
     "da_DK",
     "de_DE",

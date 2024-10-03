@@ -98,19 +98,23 @@ export const cloneFile = async (sourceFileName, destinationPath) => {
     const __dirname = path.dirname(__filename);
     // Ruta al archivo de origen dentro del directorio de la CLI
     const sourcePath = path.join(__dirname, `../../src/assets/${sourceFileName}`);
-
+    
     try {
+        // Verifica si la ruta de destino existe
+        const dirpath = destinationPath.substring(0, destinationPath.lastIndexOf('/'));
+        await validateDirectory(dirpath);
         // Copiar archivo al destino
         await fs.promises.copyFile(sourcePath, destinationPath);
+
+        return true;
     } catch (error) {
         console.error('Error al clonar el archivo:', error);
+        return false
     }
 };
 
 export const updateIndexFile = async (componentType, componentName, componentPath) => {
     const filePath = path.join(process.cwd(), 'scripts/index.js');
-
-    //const filePathMain = path.join(__dirname, 'scripts/index.js');}
 
     const validation = validateFile('scripts/index.js');
     if (!validation) {

@@ -9,7 +9,7 @@ import ora from "ora";
 const lang = new Command('lang')
     .description('Genera un archivo de idioma')
 
-lang.addOption(new Option('-r, --region <string>', 'especifica el regio para la localizacion de idioma'));
+lang.addOption(new Option('-r, --region <string>', 'especifica la region para la localizacion de idioma'));
 
 lang.action(async (options) => {
     const config = await propertiesAsync();
