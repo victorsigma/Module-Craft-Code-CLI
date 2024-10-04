@@ -188,7 +188,7 @@ const resourcePack = async (options) => {
     }
     const content =
         `{
-	"format_version": 2,
+	"format_version": 1,
 	"header": {
 		"name": "pack.name",
 		"description": "pack.description",
