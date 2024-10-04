@@ -20,7 +20,7 @@ library.action(async (options) => {
 
     const behavior = await ONLY_BEHAVIOR()
     if (!behavior) return console.log(
-        chalk.yellowBright('No puedes generar un componente en un proyecto que no sea behavior')
+        chalk.yellowBright('No puedes agregar una libreria en un proyecto que no sea behavior')
     );
     if (!LIBS.includes(options.module)) {
         console.log(

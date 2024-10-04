@@ -1,7 +1,7 @@
 import { propertiesAsync } from "../../../utils/readProperties.js";
 import { makeSubFile, validateFile } from "../../../utils/fileOperations.js";
 import { LANGS } from "../../../utils/constants.js";
-import { Command, Option } from "commander";
+import { Command } from "commander";
 import inquirer from "inquirer";
 import chalk from "chalk";
 import ora from "ora";
@@ -9,7 +9,7 @@ import ora from "ora";
 const lang = new Command('lang')
     .description('Genera un archivo de idioma')
 
-lang.addOption(new Option('-r, --region <string>', 'especifica la region para la localizacion de idioma'));
+lang.option('-r, --region <string>', 'especifica la region para la localizacion de idioma');
 
 lang.action(async (options) => {
     const config = await propertiesAsync();

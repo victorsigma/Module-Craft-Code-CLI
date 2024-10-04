@@ -44,7 +44,7 @@ manifest.action(async (options) => {
 
 
 const behaviorPack = async (options) => {
-    if (validateFile(`manifest.json`)) return console.log(chalk.bold(chalk.yellowBright('El archivo manifest ya existe')));
+    if (validateFile(`manifest.json`)) return console.log(chalk.bold(chalk.yellowBright('El archivo manifest.json ya existe')));
     let scripts = '';
     let modules = '';
     options.modules = [];
@@ -160,7 +160,7 @@ const behaviorPack = async (options) => {
 }
 
 const resourcePack = async (options) => {
-    if (validateFile(`manifest.json`)) return console.log(chalk.bold(chalk.yellowBright('El archivo manifest ya existe')));
+    if (validateFile(`manifest.json`)) return console.log(chalk.bold(chalk.yellowBright('El archivo manifest.json ya existe')));
     let capabilities = [];
     if (options.capabilities) {
         let response
@@ -222,7 +222,7 @@ const resourcePack = async (options) => {
 
 const skinPack = async (options) => {
     
-    if (validateFile(`manifest.json`)) return console.log(chalk.bold(chalk.yellowBright('El archivo manifest ya existe')));
+    if (validateFile(`manifest.json`)) return console.log(chalk.bold(chalk.yellowBright('El archivo manifest.json ya existe')));
     const content =
 `{
     "format_version": 1,
