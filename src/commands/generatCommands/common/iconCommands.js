@@ -2,6 +2,7 @@ import { cloneFile, validateFile } from "../../../utils/fileOperations.js";
 import { propertiesAsync } from "../../../utils/readProperties.js";
 import { ONLY_BEHAVIOR, ONLY_RESOURCE } from "../../../utils/constants.js";
 import { Command } from "commander";
+import inquirer from "inquirer";
 import chalk from "chalk";
 
 const icon = new Command('icon')
