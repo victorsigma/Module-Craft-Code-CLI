@@ -172,7 +172,8 @@ const resourcePack = async (options) => {
                     message: 'Selecciona las capacidades:',
                     choices: [
                         { name: 'Physically Based Rendering', value: 'pbr' },
-                        { name: 'Ray Tracing', value: 'raytraced' }
+                        { name: 'Ray Tracing', value: 'raytraced' },
+                        { name: 'Experimental Custom UI', value: 'experimental_custom_ui'},
                     ],
                 },
             ];
@@ -187,7 +188,7 @@ const resourcePack = async (options) => {
     }
     const content =
         `{
-	"format_version": 1,
+	"format_version": 2,
 	"header": {
 		"name": "pack.name",
 		"description": "pack.description",
