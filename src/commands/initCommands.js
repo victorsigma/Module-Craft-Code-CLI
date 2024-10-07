@@ -8,10 +8,10 @@ import ora from "ora";
 
 const init = new Command('init').alias('i')
     .description('Inicializa el proyecto con un archivo addon.properties');
-init.option('-n, --name <string>', 'especifica el nombre del addon', 'New Addon')
-init.option('-s, --namespace <string>', 'especifica el namespace del addon', 'namespace')
-init.option('-d, --description <string>', 'especifica la descripción', 'Addon Description')
-init.addOption(new Option('-t, --type <string>', 'especifica el tipo de proyecto').default('behavior').choices(['behavior', 'resource', 'skin']))
+init.option('-n, --name <string>', 'Especifica el nombre del addon', 'New Addon');
+init.option('-s, --namespace <string>', 'Especifica el namespace del addon', 'namespace');
+init.option('-d, --description <string>', 'Especifica la descripción del addon', 'Addon Description');
+init.addOption(new Option('-t, --type <string>', 'Especifica el tipo de proyecto').default('behavior').choices(['behavior', 'resource', 'skin']));
 
 init.action(async (options) => {
     const config = await propertiesAsync();
@@ -50,9 +50,9 @@ init.action(async (options) => {
     } else {
         addon.namespace = options.namespace;
     }
-    
+
     const content =
-`##Project Config
+        `##Project Config
 addon.name=${addon.name}
 addon.description=${addon.description}
 ${addon.namespace ? `addon.namespace=${addon.namespace}` : '#addon.namespace='}

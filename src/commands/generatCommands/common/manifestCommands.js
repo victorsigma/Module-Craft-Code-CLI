@@ -10,11 +10,10 @@ import chalk from "chalk";
 const manifest = new Command('manifest')
     .description('Genera un archivo manifest para behavior | resource | skin')
 
-manifest.option('-l, --link <string>', 'vincula un resource_pack con un behavior_pack')
+manifest.option('-l, --link <string>', 'Vincula un resource_pack con un behavior_pack');
+manifest.option('-s, --scripts <boolean>', 'Habilita los scripts en un behavior_pack');
+manifest.option('-c, --capabilities <boolean>', 'Habilita las capacidades en un resource_pack');
 
-manifest.option('-s, --scripts <boolean>', 'habilita los scripts en un behavior_pack')
-
-manifest.option('-c, --capabilities <boolean>', 'habilita las capacidades en un resource_pack')
 
 manifest.action(async (options) => {
     const config = await propertiesAsync();
@@ -82,19 +81,19 @@ const behaviorPack = async (options) => {
         for (let i = 0; i < options.modules.length; i++) {
             if (i === options.modules.length - 1) {
                 modules =
-        `${modules}${options.modules.length > 1 ? '\n        ' : ''}{
+                    `${modules}${options.modules.length > 1 ? '\n        ' : ''}{
             "module_name": "${options.modules[i]}",
             "version": "${MODULE_VERSION[options.modules[i]]}"
         }`
             } else if (i === 0) {
                 modules =
-        `{
+                    `{
             "module_name": "${options.modules[i]}",
             "version": "${MODULE_VERSION[options.modules[i]]}"
         },`
             } else {
                 modules =
-        `${modules}
+                    `${modules}
         {
             "module_name": "${options.modules[i]}",
             "version": "${MODULE_VERSION[options.modules[i]]}"
@@ -103,7 +102,7 @@ const behaviorPack = async (options) => {
         }
 
         scripts =
-        `,
+            `,
         {
             "type": "script",
             "language": "javascript",
@@ -121,7 +120,7 @@ const behaviorPack = async (options) => {
 
 
     const content =
-`{
+        `{
 	"format_version": 2,
 	"header": {
 		"uuid": "${uuidv4()}",
@@ -173,7 +172,7 @@ const resourcePack = async (options) => {
                     choices: [
                         { name: 'Physically Based Rendering', value: 'pbr' },
                         { name: 'Ray Tracing', value: 'raytraced' },
-                        { name: 'Experimental Custom UI', value: 'experimental_custom_ui'},
+                        { name: 'Experimental Custom UI', value: 'experimental_custom_ui' },
                     ],
                 },
             ];
@@ -222,10 +221,10 @@ const resourcePack = async (options) => {
 }
 
 const skinPack = async (options) => {
-    
+
     if (validateFile(`manifest.json`)) return console.log(chalk.bold(chalk.yellowBright('El archivo manifest.json ya existe')));
     const content =
-`{
+        `{
     "format_version": 1,
     "header": {
         "uuid": "${uuidv4()}",

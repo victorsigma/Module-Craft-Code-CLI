@@ -5,11 +5,12 @@ import { Command } from "commander";
 import inquirer from "inquirer";
 import chalk from "chalk";
 import ora from "ora";
+import fs from 'fs';
 
 const lang = new Command('lang')
     .description('Genera un archivo de idioma')
 
-lang.option('-r, --region <string>', 'especifica la region para la localizacion de idioma');
+lang.option('-r, --region <string>', 'Especifica la región para la localización de idioma');
 
 lang.action(async (options) => {
     const config = await propertiesAsync();
@@ -67,10 +68,6 @@ lang.action(async (options) => {
         options.region = response.selection;
     }
 
-
-
-
-
     console.log(chalk.yellow(`- ${options.region}`));
 
     const content =
@@ -83,6 +80,20 @@ pack.description=${config['addon.description']}`
 
         if (validateFile(`texts/${options.region}.lang`)) return spinner.fail(chalk.bold(chalk.yellowBright('La localización ya existe')));
         await makeSubFile(`${options.region}.lang`, 'texts/', content);
+
+        if (!validateFile(`texts/languages.json`)) {
+            const languages = [options.region];
+
+            makeSubFile('languages.json', 'texts/', JSON.stringify(languages, null, 2))
+        } else {
+            const languagesText = await fs.promises.readFile('texts/languages.json', 'utf8');
+
+            const languages = JSON.parse(languagesText);
+
+            languages.push(options.region);
+
+            makeSubFile('languages.json', 'texts/', JSON.stringify(languages, null, 2))
+        }
 
         spinner.succeed(chalk.bold(chalk.whiteBright(`La localización ${options.region} ha sido creado exitosamente!`)));
     } catch (error) {

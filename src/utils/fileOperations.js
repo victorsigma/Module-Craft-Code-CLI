@@ -101,15 +101,21 @@ export const cloneFile = async (sourceFileName, destinationPath) => {
     
     try {
         // Verifica si la ruta de destino existe
-        const dirpath = destinationPath.substring(0, destinationPath.lastIndexOf('/'));
+        const dirpath = path.dirname(destinationPath);
         await validateDirectory(dirpath);
         // Copiar archivo al destino
         await fs.promises.copyFile(sourcePath, destinationPath);
 
         return true;
     } catch (error) {
-        console.error('Error al clonar el archivo:', error);
-        return false
+        if (error.code === 'ENOENT') {
+            console.error(chalk.red('✖ Error: El archivo de origen no existe'), sourceFileName);
+        } else if (error.code === 'EACCES') {
+            console.error(chalk.red('✖ Error: Permisos insuficientes para escribir en el destino'), destinationPath);
+        } else {
+            console.error(chalk.red('✖ Error al clonar el archivo:'), error);
+        }
+        return false;
     }
 };
 

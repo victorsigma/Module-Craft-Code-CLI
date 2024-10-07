@@ -9,11 +9,9 @@ import ora from 'ora';
 
 const blocksComponent = new Command('block')
     .description('Crea un componente personalizado de block nuevo');
-blocksComponent.option('-n, --name <string>', 'especifica el nombre del componente', 'namespace:block_component', (value) => {
-    if (value.includes(':')) return value;
-    throw new Error('El nombre del componente debe incluir ":" para separar namespace');
-})
-blocksComponent.option('-d, --description <string>', 'especifica la descripción del componente', 'description')
+blocksComponent.option('-n, --name <string>', 'Especifica el nombre del componente del bloque', 'namespace:block_component');
+blocksComponent.option('-d, --description <string>', 'Especifica la descripción del componente del bloque', 'description');
+
 
 blocksComponent.action(async (options) => {
     const config = await propertiesAsync();

@@ -8,6 +8,7 @@ import lang from './commands/generatCommands/common/langCommands.js';
 import init from './commands/initCommands.js';
 import manifest from './commands/generatCommands/common/manifestCommands.js';
 import icon from './commands/generatCommands/common/iconCommands.js';
+import entity from './commands/generatCommands/elements/entitesCommands.js';
 
 const program = new Command();
 
@@ -21,5 +22,6 @@ program.addCommand(blocksComponent);
 program.addCommand(lang);
 program.addCommand(manifest);
 program.addCommand(icon);
+program.addCommand(entity);
 
 program.parse(process.argv);

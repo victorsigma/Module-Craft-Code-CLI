@@ -16,10 +16,55 @@ export const ONLY_BEHAVIOR = async () => {
     return config['addon.type'] == 'behavior';
 }
 
+export const BEHAVIOR_ENTITY = {
+    "format_version": "",
+    "minecraft:entity": {
+        "description": {
+			"identifier": "namespace:entity",
+			"is_spawnable": false,
+			"is_summonable": false,
+			"is_experimental": false
+		},
+		"component_groups": {},
+        "components": {},
+        "events": {}
+    }
+}
+
 export const ONLY_RESOURCE = async () => {
     const config = await propertiesAsync();
     return config['addon.type'] == 'resource';
 }
+
+export const RESOURCE_ENTITY = {
+    "format_version": "",
+    "minecraft:client_entity": {
+        "description": {
+			"identifier": "namespace:entity",
+			"materials": {
+				"default": "cow"
+			},
+            "textures": {
+                "default": "textures/entity/cow/cow"
+            },
+            "geometry": {
+				"default": "geometry.cow"
+			},
+            "animations": {},
+            "scripts": {
+                "animate": [],
+                "pre_animation": []
+            },
+			"render_controllers": ["controller.render.cow"],
+            "spawn_egg": {
+                "texture": "spawn_egg",
+                "texture_index": 1
+            }
+		}
+    }
+}
+
+
 
 export const ONLY_SKIN = async () => {
     const config = await propertiesAsync();

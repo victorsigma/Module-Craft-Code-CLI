@@ -9,11 +9,9 @@ import ora from 'ora';
 
 const itemsComponent = new Command('item')
     .description('Crea un componente personalizado de item nuevo');
-itemsComponent.option('-n, --name <string>', 'especifica el nombre del componente', 'namespace:item_component', (value) => {
-    if (value.includes(':')) return value;
-    throw new Error('El nombre del componente debe incluir ":" para separar namespace');
-})
-itemsComponent.option('-d, --description <string>', 'especifica la descripción del componente', 'description')
+itemsComponent.option('-n, --name <string>', 'Especifica el nombre del componente del ítem', 'namespace:item_component');
+itemsComponent.option('-d, --description <string>', 'Especifica la descripción del componente del ítem', 'description');
+
 
 itemsComponent.action(async (options) => {
     const config = await propertiesAsync();

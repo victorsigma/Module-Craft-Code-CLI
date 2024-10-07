@@ -8,8 +8,7 @@ import { cloneFile, validateFile } from "../../../utils/fileOperations.js";
 const library = new Command('library').alias('lib')
     .description('Genera un archivo de idioma');
 
-library.option('-m, --module <string>', 'especifica la libreria a agregar')
-
+library.option('-m, --module <string>', 'Especifica la librería que se va a agregar');
 
 library.action(async (options) => {
     const config = await propertiesAsync();
@@ -80,7 +79,7 @@ library.action(async (options) => {
             let fc3 = false;
             if (!validationBlockManager) {
                 fc3 = await cloneFile('js/libs/blockManager.js', 'scripts/libs/blockManager.js')
-                if(fc3) {
+                if (fc3) {
                     console.log(chalk.green('✔'), chalk.bold(chalk.whiteBright(`El archivo`), chalk.yellow('blockManager.js'), chalk.whiteBright('fue agregado exitosamente.')))
                 } else {
                     console.log(chalk.red('✖'), chalk.bold(chalk.whiteBright(`El archivo`), chalk.yellow('blockManager.js'), chalk.whiteBright('no pudo ser agregado')))
@@ -95,7 +94,7 @@ library.action(async (options) => {
             let fc4 = false;
             if (!validationItemManager) {
                 fc4 = await cloneFile('js/libs/itemManager.js', 'scripts/libs/itemManager.js')
-                if(fc4) {
+                if (fc4) {
                     console.log(chalk.green('✔'), chalk.bold(chalk.whiteBright(`El archivo`), chalk.yellow('itemManager.js'), chalk.whiteBright('fue agregado exitosamente.')))
                 } else {
                     console.log(chalk.red('✖'), chalk.bold(chalk.whiteBright(`El archivo`), chalk.yellow('itemManager.js'), chalk.whiteBright('no pudo ser agregado')))
@@ -103,7 +102,7 @@ library.action(async (options) => {
             } else {
                 console.log(chalk.green('✔'), chalk.bold(chalk.whiteBright(`El archivo`), chalk.yellow('itemManager.js'), chalk.whiteBright('ya existe.')))
             }
-            
+
             create = fc4;
             break;
         default:
