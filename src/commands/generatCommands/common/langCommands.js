@@ -71,8 +71,8 @@ lang.action(async (options) => {
     console.log(chalk.yellow(`- ${options.region}`));
 
     const content =
-        `pack.name=${config['addon.name']}
-pack.description=${config['addon.description']}`
+        `pack.name=${Array.isArray(config['addon.name']) ? config['addon.name'][0] : config['addon.name']}
+pack.description=${Array.isArray(config['addon.description']) ? config['addon.description'][0] : config['addon.description']}`
 
     const spinner = ora('Creando localización...').start();
 

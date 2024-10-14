@@ -144,7 +144,7 @@ const onBeforeDurabilityDamage = async (name) => {
     return `import { Entity, ItemStack } from "@minecraft/server";
 
 /**
- * Evento onBeforeDurabilityDamage del componente ${toCamelCase(componentName)}Component${config['addon.name'] ? `\n * Addon: ${config['addon.name']}` : ''}
+ * Evento onBeforeDurabilityDamage del componente ${toCamelCase(componentName)}Component${config['addon.name'] ? `\n * Addon: ${Array.isArray(config['addon.name']) ? config['addon.name'][0] : config['addon.name']}` : ''}
  * @param {{attackingEntity: Entity, durabilityDamage: number, hitEntity: Entity, itemStack: ItemStack}} event 
  */
 export const ${toCamelCase(componentName)}OnBeforeDurabilityDamageEvent = ({attackingEntity, durabilityDamage, hitEntity, itemStack}) => {
@@ -157,7 +157,7 @@ const onCompleteUse = async (name) => {
     return `import { Player, ItemStack } from "@minecraft/server";
 
 /**
- * Evento onCompleteUse del componente ${toCamelCase(componentName)}Component${config['addon.name'] ? `\n * Addon: ${config['addon.name']}` : ''}
+ * Evento onCompleteUse del componente ${toCamelCase(componentName)}Component${config['addon.name'] ? `\n * Addon: ${Array.isArray(config['addon.name']) ? config['addon.name'][0] : config['addon.name']}` : ''}
  * @param {{itemStack: ItemStack, source: Player}} event 
  */
 export const ${toCamelCase(componentName)}OnCompleteUseEvent = ({itemStack, source}) => {
@@ -170,7 +170,7 @@ const onConsume = async (name) => {
     return `import { Player, ItemStack } from "@minecraft/server";
 
 /**
- * Evento onConsume del componente ${toCamelCase(componentName)}Component${config['addon.name'] ? `\n * Addon: ${config['addon.name']}` : ''}
+ * Evento onConsume del componente ${toCamelCase(componentName)}Component${config['addon.name'] ? `\n * Addon: ${Array.isArray(config['addon.name']) ? config['addon.name'][0] : config['addon.name']}` : ''}
  * @param {{itemStack: ItemStack, source: Player}} event 
  */
 export const ${toCamelCase(componentName)}OnConsumeEvent = ({itemStack, source}) => {
@@ -183,7 +183,7 @@ const onHitEntity = async (name) => {
     return `import { Entity, ItemStack } from "@minecraft/server";
 
 /**
- * Evento onHitEntity del componente ${toCamelCase(componentName)}Component${config['addon.name'] ? `\n * Addon: ${config['addon.name']}` : ''}
+ * Evento onHitEntity del componente ${toCamelCase(componentName)}Component${config['addon.name'] ? `\n * Addon: ${Array.isArray(config['addon.name']) ? config['addon.name'][0] : config['addon.name']}` : ''}
  * @param {{attackingEntity: Entity, hadEffect: boolean, hitEntity: Entity, itemStack: ItemStack}} event 
  */
 export const ${toCamelCase(componentName)}OnHitEntityEvent = ({attackingEntity, hadEffect, hitEntity, itemStack}) => {
@@ -196,7 +196,7 @@ const onMineBlock = async (name) => {
     return `import { Block, BlockPermutation, ItemStack, Player } from "@minecraft/server";
 
 /**
- * Evento onMineBlock del componente ${toCamelCase(componentName)}Component${config['addon.name'] ? `\n * Addon: ${config['addon.name']}` : ''}
+ * Evento onMineBlock del componente ${toCamelCase(componentName)}Component${config['addon.name'] ? `\n * Addon: ${Array.isArray(config['addon.name']) ? config['addon.name'][0] : config['addon.name']}` : ''}
  * @param {{itemStack: ItemStack, source: Player, block: Block, minedBlockPermutation: BlockPermutation}} event 
  */
 export const ${toCamelCase(componentName)}OnMineBlockEvent = ({itemStack, source, block, minedBlockPermutation}) => {
@@ -209,7 +209,7 @@ const onUse = async (name) => {
     return `import { ItemStack, Player } from "@minecraft/server";
 
 /**
- * Evento onUse del componente ${toCamelCase(componentName)}Component${config['addon.name'] ? `\n * Addon: ${config['addon.name']}` : ''}
+ * Evento onUse del componente ${toCamelCase(componentName)}Component${config['addon.name'] ? `\n * Addon: ${Array.isArray(config['addon.name']) ? config['addon.name'][0] : config['addon.name']}` : ''}
  * @param {{itemStack: ItemStack, source: Player}} event 
  */
 export const ${toCamelCase(componentName)}OnUseEvent = ({itemStack, source}) => {
@@ -222,7 +222,7 @@ const onUseOn = async (name) => {
     return `import { Block, BlockPermutation, ItemStack, Player } from "@minecraft/server";
 
 /**
- * Evento onUseOn del componente ${toCamelCase(componentName)}Component${config['addon.name'] ? `\n * Addon: ${config['addon.name']}` : ''}
+ * Evento onUseOn del componente ${toCamelCase(componentName)}Component${config['addon.name'] ? `\n * Addon: ${Array.isArray(config['addon.name']) ? config['addon.name'][0] : config['addon.name']}` : ''}
  * @param {{blockFace: string, source: Player, usedOnBlockPermutation: BlockPermutation, itemStack: ItemStack, 
  * faceLocation: {x: number, y: number, z: number}, block: Block}} event 
  */
@@ -237,7 +237,7 @@ const beforeOnPlayerPlace = async (name) => {
     return `import { Block, BlockPermutation, Dimension, Player } from "@minecraft/server";
 
 /**
- * Evento beforeOnPlayerPlace del componente ${toCamelCase(componentName)}Component${config['addon.name'] ? `\n * Addon: ${config['addon.name']}` : ''}
+ * Evento beforeOnPlayerPlace del componente ${toCamelCase(componentName)}Component${config['addon.name'] ? `\n * Addon: ${Array.isArray(config['addon.name']) ? config['addon.name'][0] : config['addon.name']}` : ''}
  * @param {{player: Player, face: string, permutationToPlace: BlockPermutation, cancel: boolean, block: Block, dimension: Dimension}} event
  */
 export const ${toCamelCase(componentName)}BeforeOnPlayerPlaceEvent = ({player, face, permutationToPlace, cancel, block, dimension}) => {
@@ -250,7 +250,7 @@ const onEntityFallOn = async (name) => {
     return `import { Block, Dimension, Entity } from "@minecraft/server";
 
 /**
- * Evento onEntityFallOn del componente ${toCamelCase(componentName)}Component${config['addon.name'] ? `\n * Addon: ${config['addon.name']}` : ''}
+ * Evento onEntityFallOn del componente ${toCamelCase(componentName)}Component${config['addon.name'] ? `\n * Addon: ${Array.isArray(config['addon.name']) ? config['addon.name'][0] : config['addon.name']}` : ''}
  * @param {{entity: Entity, face: string, fallDistance: number, block: Block, dimension: Dimension}} event
  */
 export const ${toCamelCase(componentName)}OnEntityFallOnEvent = ({entity, face, fallDistance, block, dimension}) => {
@@ -263,7 +263,7 @@ const onPlace = async (name) => {
     return `import { Block, Dimension, BlockPermutation } from "@minecraft/server";
 
 /**
- * Evento onPlace del componente ${toCamelCase(componentName)}Component${config['addon.name'] ? `\n * Addon: ${config['addon.name']}` : ''}
+ * Evento onPlace del componente ${toCamelCase(componentName)}Component${config['addon.name'] ? `\n * Addon: ${Array.isArray(config['addon.name']) ? config['addon.name'][0] : config['addon.name']}` : ''}
  * @param {{previousBlock: BlockPermutation, block: Block, dimension: Dimension}} event
  */
 export const ${toCamelCase(componentName)}OnPlaceEvent = ({previousBlock, block, dimension}) => {
@@ -276,7 +276,7 @@ const onPlayerDestroy = async (name) => {
     return `import { Block, Dimension, BlockPermutation, Player } from "@minecraft/server";
 
 /**
- * Evento onPlayerDestroy del componente ${toCamelCase(componentName)}Component${config['addon.name'] ? `\n * Addon: ${config['addon.name']}` : ''}
+ * Evento onPlayerDestroy del componente ${toCamelCase(componentName)}Component${config['addon.name'] ? `\n * Addon: ${Array.isArray(config['addon.name']) ? config['addon.name'][0] : config['addon.name']}` : ''}
  * @param {{destroyedBlockPermutation: BlockPermutation, player: Player, block: Block, dimension: Dimension}} event
  */
 export const ${toCamelCase(componentName)}OnPlayerDestroyEvent = ({destroyedBlockPermutation, player, block, dimension}) => {
@@ -289,7 +289,7 @@ const onPlayerInteract = async (name) => {
     return `import { Block, Dimension, Direction, Vector3, Player } from "@minecraft/server";
 
 /**
- * Evento onPlayerInteract del componente ${toCamelCase(componentName)}Component${config['addon.name'] ? `\n * Addon: ${config['addon.name']}` : ''}
+ * Evento onPlayerInteract del componente ${toCamelCase(componentName)}Component${config['addon.name'] ? `\n * Addon: ${Array.isArray(config['addon.name']) ? config['addon.name'][0] : config['addon.name']}` : ''}
  * @param {{face: Direction, faceLocation: Vector3, player: Player, block: Block, dimension: Dimension}} event
  */
 export const ${toCamelCase(componentName)}OnPlayerInteractEvent = ({face, faceLocation, player, block, dimension}) => {
@@ -302,7 +302,7 @@ const onRandomTick = async (name) => {
     return `import { Block, Dimension } from "@minecraft/server";
 
 /**
- * Evento onRandomTick del componente ${toCamelCase(componentName)}Component${config['addon.name'] ? `\n * Addon: ${config['addon.name']}` : ''}
+ * Evento onRandomTick del componente ${toCamelCase(componentName)}Component${config['addon.name'] ? `\n * Addon: ${Array.isArray(config['addon.name']) ? config['addon.name'][0] : config['addon.name']}` : ''}
  * @param {{block: Block, dimension: Dimension}} event
  */
 export const ${toCamelCase(componentName)}OnRandomTickEvent = ( block, dimension}) => {
@@ -315,7 +315,7 @@ const onStepOff = async (name) => {
     return `import { Block, Dimension, Entity } from "@minecraft/server";
 
 /**
- * Evento onStepOff del componente ${toCamelCase(componentName)}Component${config['addon.name'] ? `\n * Addon: ${config['addon.name']}` : ''}
+ * Evento onStepOff del componente ${toCamelCase(componentName)}Component${config['addon.name'] ? `\n * Addon: ${Array.isArray(config['addon.name']) ? config['addon.name'][0] : config['addon.name']}` : ''}
  * @param {{entity: Entity, block: Block, dimension: Dimension}} event
  */
 export const ${toCamelCase(componentName)}OnStepOffEvent = ({entity, block, dimension}) => {
@@ -328,7 +328,7 @@ const onStepOn = async (name) => {
     return `import { Block, Dimension, Entity } from "@minecraft/server";
 
 /**
- * Evento onStepOn del componente ${toCamelCase(componentName)}Component${config['addon.name'] ? `\n * Addon: ${config['addon.name']}` : ''}
+ * Evento onStepOn del componente ${toCamelCase(componentName)}Component${config['addon.name'] ? `\n * Addon: ${Array.isArray(config['addon.name']) ? config['addon.name'][0] : config['addon.name']}` : ''}
  * @param {{entity: Entity, block: Block, dimension: Dimension}} event
  */
 export const ${toCamelCase(componentName)}OnStepOnEvent = ({entity, block, dimension}) => {
@@ -341,7 +341,7 @@ const onTick = async (name) => {
     return `import { Block, Dimension, Entity } from "@minecraft/server";
 
 /**
- * Evento onTick del componente ${toCamelCase(componentName)}Component${config['addon.name'] ? `\n * Addon: ${config['addon.name']}` : ''}
+ * Evento onTick del componente ${toCamelCase(componentName)}Component${config['addon.name'] ? `\n * Addon: ${Array.isArray(config['addon.name']) ? config['addon.name'][0] : config['addon.name']}` : ''}
  * @param {{entity: Entity, block: Block, dimension: Dimension}} event
  */
 export const ${toCamelCase(componentName)}OnTickEvent = ({entity, block, dimension}) => {

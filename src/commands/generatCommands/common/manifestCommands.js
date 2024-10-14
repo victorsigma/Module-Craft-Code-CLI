@@ -228,7 +228,7 @@ const skinPack = async (options) => {
     "format_version": 1,
     "header": {
         "uuid": "${uuidv4()}",
-        "name": "${options.config['addon.name']}",
+        "name": "${Array.isArray(config['addon.name']) ? config['addon.name'][0] : config['addon.name']}",
         "version": [ 1, 0, 0 ]
     },
     "modules": [

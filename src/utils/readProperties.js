@@ -20,7 +20,18 @@ export const propertiesAsync = async () => {
         lines.forEach(line => {
             if (line.trim() !== '' && !line.startsWith('#')) {
                 const [key, value] = line.split('=');
-                config[key.trim()] = value.trim();
+                const trimmedKey = key.trim();
+                const trimmedValue = value.trim();
+
+                // Divide el valor por comas si las contiene
+                const values = trimmedValue.includes(',') ? trimmedValue.split(',').map(item => item.trim()) : [trimmedValue];
+
+                // Si la clave ya existe, combina los valores
+                if (config[trimmedKey]) {
+                    config[trimmedKey] = Array.isArray(config[trimmedKey]) ? [...config[trimmedKey], ...values] : [config[trimmedKey], ...values];
+                } else {
+                    config[trimmedKey] = values.length === 1 ? values[0] : values;
+                }
             }
         });
 
@@ -49,7 +60,18 @@ export const propertiesSync = () => {
         lines.forEach(line => {
             if (line.trim() !== '' && !line.startsWith('#')) {
                 const [key, value] = line.split('=');
-                config[key.trim()] = value.trim();
+                const trimmedKey = key.trim();
+                const trimmedValue = value.trim();
+
+                // Divide el valor por comas si las contiene
+                const values = trimmedValue.includes(',') ? trimmedValue.split(',').map(item => item.trim()) : [trimmedValue];
+
+                // Si la clave ya existe, combina los valores
+                if (config[trimmedKey]) {
+                    config[trimmedKey] = Array.isArray(config[trimmedKey]) ? [...config[trimmedKey], ...values] : [config[trimmedKey], ...values];
+                } else {
+                    config[trimmedKey] = values.length === 1 ? values[0] : values;
+                }
             }
         });
 

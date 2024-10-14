@@ -2,6 +2,7 @@ import { toCamelCase, toSnackCase, uppercaseFirstLetter } from '../../../utils/s
 import { clearEvents, makeComponentFile, makeEventFile, updateIndexFile } from '../../../utils/fileOperations.js';
 import { ONLY_BEHAVIOR, PATH_BLOCK_COMPONENTS, PATH_BLOCK_EVENTS } from '../../../utils/constants.js';
 import { propertiesAsync } from '../../../utils/readProperties.js';
+import { selectFromArray } from '../../../utils/forms.js';
 import { Command } from 'commander';
 import inquirer from 'inquirer';
 import chalk from 'chalk';
@@ -28,7 +29,6 @@ blocksComponent.action(async (options) => {
 
     // Asegurar que el nombre tenga un namespace
     options.name = toSnackCase(options.name);
-    console.log(toSnackCase(options.name));
     while (!options.name.includes(':')) {
         if (!config['addon.namespace']) {
             console.error(
@@ -44,14 +44,28 @@ blocksComponent.action(async (options) => {
             const response = await inquirer.prompt(input);
             options.name = response.name;
         } else {
-            options.name = `${config['addon.namespace']}:${options.name}`;
+            if(Array.isArray(config['addon.namespace'])){
+                console.log(chalk.yellow(`Se encontraron multiples namespace`));
+                const namespace = await selectFromArray(config['addon.namespace']);
+                options.name = `${namespace}:${options.name}`;
+            } else {
+                options.name = `${config['addon.namespace']}:${options.name}`;
+            }
         }
     }
 
     if (options.name === 'namespace:block_component') {
-        options.name = config['addon.namespace']
+        if(Array.isArray(config['addon.namespace'])){
+            console.log(chalk.yellow(`Se encontraron multiples namespace`));
+            const namespace = await selectFromArray(config['addon.namespace']);
+            options.name = namespace
+            ? `${namespace}:block_component`
+            : 'namespace:block_component';
+        } else {
+            options.name = config['addon.namespace']
             ? `${config['addon.namespace']}:block_component`
             : 'namespace:block_component';
+        }
     }
 
     const questions = [
@@ -95,7 +109,7 @@ blocksComponent.action(async (options) => {
 
 /**
  * Componente: ${options.name}
- * Descripción: ${options.description}${config['addon.name'] ? `\n * Addon: ${config['addon.name']}` : ''}
+ * Descripción: ${options.description}${config['addon.name'] ? `\n * Addon: ${Array.isArray(config['addon.name']) ? config['addon.name'][0] : config['addon.name']}` : ''}
  */
 
 export const ${toCamelCase(options.name.split(':')[1])}Component = {

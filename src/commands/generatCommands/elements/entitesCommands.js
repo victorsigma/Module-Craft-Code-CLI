@@ -2,6 +2,7 @@ import { BEHAVIOR_ENTITY, ONLY_BEHAVIOR, ONLY_RESOURCE, RESOURCE_ENTITY } from "
 import { makeSubFile, validateFile } from "../../../utils/fileOperations.js";
 import { propertiesAsync } from "../../../utils/readProperties.js";
 import { toSnackCase } from "../../../utils/stringManager.js";
+import { selectFromArray } from "../../../utils/forms.js";
 import { Command } from "commander";
 import inquirer from "inquirer";
 import chalk from "chalk";
@@ -12,9 +13,9 @@ const entity = new Command('entity')
 
 entity.option('-n, --name <string>', 'Especifica el nombre de la entidad', 'namespace:entity');
 entity.option('-r, --runtime <string>', 'Establece el identificador de Vanilla Minecraft que esta entidad utilizará para construirse a sí misma');
-entity.option('-e, --experimental <boolean>', 'Indica si la entidad estará bajo características experimentales de Minecraft');
-entity.option('-sp, --spawnable <boolean>', 'Especifica si el generador de la entidad aparecerá en el inventario de creativo');
-entity.option('-su, --summonable <boolean>', 'Indica si la entidad puede ser invocada mediante comandos en el juego');
+entity.option('-e, --experimental <boolean>', 'Indica si la entidad estará bajo características experimentales de Minecraft', false);
+entity.option('-sp, --spawnable <boolean>', 'Especifica si el generador de la entidad aparecerá en el inventario de creativo', false);
+entity.option('-su, --summonable <boolean>', 'Indica si la entidad puede ser invocada mediante comandos en el juego', false);
 
 entity.action(async (options) => {
     const config = await propertiesAsync();
@@ -56,14 +57,29 @@ const behaviorPack = async (options) => {
             const response = await inquirer.prompt(input);
             options.name = response.name;
         } else {
-            options.name = `${options.config['addon.namespace']}:${options.name}`;
+            if(Array.isArray(options.config['addon.namespace'])){
+                console.log(chalk.yellow(`Se encontraron multiples namespace`));
+                const namespace = await selectFromArray(options.config['addon.namespace']);
+                options.name = `${namespace}:${options.name}`;
+            } else {
+                options.name = `${options.config['addon.namespace']}:${options.name}`;
+            }
         }
     }
 
     if (options.name === 'namespace:entity') {
-        options.name = options.config['addon.namespace']
+        if(Array.isArray(options.config['addon.namespace'])){
+            console.log(chalk.yellow(`Se encontraron multiples namespace`));
+            const namespace = await selectFromArray(options.config['addon.namespace']);
+            options.name = namespace
+            ? `${namespace}:entity`
+            : 'namespace:entity';
+        } else {
+            options.name = options.config['addon.namespace']
             ? `${options.config['addon.namespace']}:entity`
             : 'namespace:entity';
+        }
+        
     }
 
     const fileName = `${options.name.split(':')[1]}.json`;
@@ -114,16 +130,30 @@ const resourcePack = async (options) => {
             const response = await inquirer.prompt(input);
             options.name = response.name;
         } else {
-            options.name = `${options.config['addon.namespace']}:${options.name}`;
+            if(Array.isArray(options.config['addon.namespace'])){
+                console.log(chalk.yellow(`Se encontraron multiples namespace`));
+                const namespace = await selectFromArray(options.config['addon.namespace']);
+                options.name = `${namespace}:${options.name}`;
+            } else {
+                options.name = `${options.config['addon.namespace']}:${options.name}`;
+            }
         }
     }
 
     if (options.name === 'namespace:entity') {
-        options.name = options.config['addon.namespace']
+        if(Array.isArray(options.config['addon.namespace'])){
+            console.log(chalk.yellow(`Se encontraron multiples namespace`));
+            const namespace = await selectFromArray(options.config['addon.namespace']);
+            options.name = namespace
+            ? `${namespace}:entity`
+            : 'namespace:entity';
+        } else {
+            options.name = options.config['addon.namespace']
             ? `${options.config['addon.namespace']}:entity`
             : 'namespace:entity';
+        }
+        
     }
-    
 
     const fileName = `${options.name.split(':')[1]}.entity.json`
     const namespace = options.name.split(':')[0]
