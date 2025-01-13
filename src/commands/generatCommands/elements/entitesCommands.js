@@ -168,8 +168,7 @@ const resourcePack = async (options) => {
 
         spinner.succeed(chalk.bold(chalk.whiteBright(`La entidad ${options.name} ha sido creado exitosamente!`)));
     } catch (error) {
-        spinner.fail(chalk.red('Error al crear la entidad ${options.name}.'));
-        console.error(error);
+        spinner.fail(chalk.red(`Error al crear la entidad ${options.name}.`));
     }
 }
 

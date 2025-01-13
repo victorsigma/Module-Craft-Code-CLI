@@ -1,0 +1,20 @@
+{
+    "format_version": "1.21.10",
+    "minecraft:item": {
+        "description": {
+            "identifier": "namespace:item",
+            "menu_category": {
+                "category": "none"
+            }
+        },
+        "components": {
+            "minecraft:stacked_by_data": true,
+            "minecraft:custom_components": [],
+            "minecraft:icon": {
+                "textures": {
+                    "default": "item"
+                }
+            }
+        }
+    }
+}

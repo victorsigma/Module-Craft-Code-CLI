@@ -6,3 +6,10 @@
 /pack_icon.png
 /entities
 /entity
+/blocks
+/items
+/textures
+/block_components.json
+/item_components.json
+/terrain_texture.json
+/item_texture.json

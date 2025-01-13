@@ -1,0 +1,38 @@
+{
+    "format_version": "1.21.60",
+    "minecraft:block": {
+        "description": {
+            "identifier": "namespace:block",
+            "menu_category": {
+                "category": "construction",
+                "group": "itemGroup.name.copper"
+            },
+            "states": {}
+        },
+        "components": {
+            "minecraft:destructible_by_mining": {
+                "seconds_to_destroy": 4
+            },
+            "minecraft:material_instances": {
+                "*": {
+                    "texture": "block",
+                    "render_method": "opaque"
+                }
+            },
+            "minecraft:loot": "loot_tables/blocks/block.json",
+            "minecraft:geometry": {
+                "identifier": "minecraft:geometry.full_block"
+            },
+            "minecraft:custom_components": [],
+            "minecraft:liquid_detection":{
+                "detection_rules": [
+                    {
+                        "can_contain_liquid": false,
+                        "liquid_type": "water"
+                    }
+                ]
+            }
+        },
+        "permutations": []
+    }
+}

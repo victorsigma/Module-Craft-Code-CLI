@@ -1,5 +1,21 @@
+export const ITEM = {
+    "format_version": "1.21.10",
+    "minecraft:item": {
+        "description": {
+            "identifier": "namespace:item",
+            "menu_category": {
+                "category": "items"
+            }
+        },
+        "components": {
+            "minecraft:stacked_by_data": true,
+            "minecraft:icon":  "ruby"
+        }
+    }
+}
+
 export const PICKAXE = {
-    "format_version": "1.20.80",
+    "format_version": "1.21.10",
     "minecraft:item": {
         "description": {
             "identifier": "namespace:crimson_pickaxe",
@@ -53,7 +69,7 @@ export const PICKAXE = {
 
 
 export const AXE = {
-    "format_version": "1.20.80",
+    "format_version": "1.21.10",
     "minecraft:item": {
         "description": {
             "identifier": "namespace:crimson_axe",
@@ -106,7 +122,7 @@ export const AXE = {
 }
 
 export const SWORD = {
-    "format_version": "1.20.80",
+    "format_version": "1.21.10",
     "minecraft:item": {
         "description": {
             "identifier": "namespace:crimson_sword",
@@ -127,6 +143,9 @@ export const SWORD = {
                 "value": 15,
                 "slot": "sword"
             },
+            "minecraft:damage": {
+                "value": 8
+            },
             "minecraft:durability": {
                 "damage_chance": {
                     "min": 10,
@@ -146,7 +165,7 @@ export const SWORD = {
 
 
 export const SHOVEL = {
-    "format_version": "1.20.80",
+    "format_version": "1.21.10",
     "minecraft:item": {
         "description": {
             "identifier": "namespace:crimson_shovel",

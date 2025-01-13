@@ -1,5 +1,7 @@
+import block_components from "../../../assets/jsons/block_components.json" with { type: 'json' };
+
 import { toCamelCase, toSnackCase, uppercaseFirstLetter } from '../../../utils/stringManager.js';
-import { clearEvents, makeComponentFile, makeEventFile, updateIndexFile } from '../../../utils/fileOperations.js';
+import { clearEvents, getJsonFile, makeComponentFile, makeEventFile, makeFile, updateIndexFile, validateFile } from '../../../utils/fileOperations.js';
 import { ONLY_BEHAVIOR, PATH_BLOCK_COMPONENTS, PATH_BLOCK_EVENTS } from '../../../utils/constants.js';
 import { propertiesAsync } from '../../../utils/readProperties.js';
 import { selectFromArray } from '../../../utils/forms.js';
@@ -126,6 +128,18 @@ export const ${toCamelCase(options.name.split(':')[1])}Component = {
         }
 
         updateIndexFile('block', options.name, `./components/blocks/${toCamelCase(options.name.split(':')[1])}`);
+
+        const fileName = `block_components.json`
+        let fileData = {...block_components};
+        if (validateFile(fileName)) {
+            fileData = await getJsonFile(fileName);
+            fileData.components.push(options.name)
+            await makeFile('block_components.json', JSON.stringify(fileData, null, 2))
+        } else {
+            fileData.components.push(options.name)
+            await makeFile('block_components.json', JSON.stringify(fileData, null, 2))
+        }
+
         spinner.succeed(chalk.bold(chalk.whiteBright(`El componente ${options.name} ha sido creado exitosamente!`)));
     } catch (error) {
         spinner.fail(chalk.red('Error al crear el componente.'));

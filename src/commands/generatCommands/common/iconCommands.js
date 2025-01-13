@@ -29,6 +29,8 @@ icon.action(async (options) => {
         'pack_icon_2',
         'pack_icon_3',
         'pack_icon_4',
+        'pack_icon_5',
+        'pack_icon_6',
     ];
 
     const iconsNames = {
@@ -36,6 +38,8 @@ icon.action(async (options) => {
         'pack_icon_2': 'Pickaxe ⛏️',
         'pack_icon_3': 'Axe 🪓',
         'pack_icon_4': 'Shovel 🥄',
+        'pack_icon_5': 'Hoe 🏒',
+        'pack_icon_6': 'Pearl 🟠',
     };
 
     if(validateFile('pack_icon.png')) return console.log(chalk.bold(chalk.yellowBright('El archivo icon_pack.png ya existe')));
@@ -58,6 +62,8 @@ icon.action(async (options) => {
                     { value: "pack_icon_2", name: "Pickaxe ⛏️" },
                     { value: "pack_icon_3", name: "Axe 🪓" },
                     { value: "pack_icon_4", name: "Shovel 🥄" },
+                    { value: "pack_icon_5", name: "Hoe 🏒" },
+                    { value: "pack_icon_6", name: "Pearl 🟠" },
                 ],
             },
         ];

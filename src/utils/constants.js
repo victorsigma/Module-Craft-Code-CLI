@@ -6,7 +6,10 @@ const { version } = myRequire('../../package.json');
 export const VERSION = version;
 
 export const PATH_ITEM_COMPONENTS = 'scripts/components/items';
+export const PATH_ITEM_TEXTURES = 'textures/items';
+
 export const PATH_BLOCK_COMPONENTS = 'scripts/components/blocks';
+export const PATH_BLOCK_TEXTURES = 'textures/blocks';
 
 export const PATH_ITEM_EVENTS = 'scripts/events/items';
 export const PATH_BLOCK_EVENTS = 'scripts/events/blocks';
@@ -20,12 +23,12 @@ export const BEHAVIOR_ENTITY = {
     "format_version": "",
     "minecraft:entity": {
         "description": {
-			"identifier": "namespace:entity",
-			"is_spawnable": false,
-			"is_summonable": false,
-			"is_experimental": false
-		},
-		"component_groups": {},
+            "identifier": "namespace:entity",
+            "is_spawnable": false,
+            "is_summonable": false,
+            "is_experimental": false
+        },
+        "component_groups": {},
         "components": {},
         "events": {}
     }
@@ -40,27 +43,27 @@ export const RESOURCE_ENTITY = {
     "format_version": "",
     "minecraft:client_entity": {
         "description": {
-			"identifier": "namespace:entity",
-			"materials": {
-				"default": "cow"
-			},
+            "identifier": "namespace:entity",
+            "materials": {
+                "default": "cow"
+            },
             "textures": {
                 "default": "textures/entity/cow/cow"
             },
             "geometry": {
-				"default": "geometry.cow"
-			},
+                "default": "geometry.cow"
+            },
             "animations": {},
             "scripts": {
                 "animate": [],
                 "pre_animation": []
             },
-			"render_controllers": ["controller.render.cow"],
+            "render_controllers": ["controller.render.cow"],
             "spawn_egg": {
                 "texture": "spawn_egg",
                 "texture_index": 1
             }
-		}
+        }
     }
 }
 
@@ -138,9 +141,146 @@ export const LANGS = [
     "ko_KR",
 ]
 
+export const CATEGORYS = ["construction", "nature", "equipment", "items"]
+
+export const ITEM_GROUP_NAMES = {
+    "construction": [
+        "itemGroup.name.brick",
+        "itemGroup.name.climbing",
+        "itemGroup.name.cobblestone",
+        "itemGroup.name.constructionMisc",
+        "itemGroup.name.copper",
+        "itemGroup.name.concrete",
+        "itemGroup.name.concretePowder",
+        "itemGroup.name.door",
+        "itemGroup.name.glassPane",
+        "itemGroup.name.glass",
+        "itemGroup.name.glazedTerracotta",
+        "itemGroup.name.ironFence",
+        "itemGroup.name.purpur",
+        "itemGroup.name.sandstone",
+        "itemGroup.name.stairs",
+        "itemGroup.name.stainedClay",
+        "itemGroup.name.stoneBrick",
+        "itemGroup.name.slab",
+        "itemGroup.name.trapdoor",
+        "itemGroup.name.walls",
+        "itemGroup.name.wool",
+        "itemGroup.name.woolCarpet"
+    ],
+    "nature": [
+        "itemGroup.name.clay",
+        "itemGroup.name.cactus",
+        "itemGroup.name.coral",
+        "itemGroup.name.coral_decorations",
+        "itemGroup.name.crop",
+        "itemGroup.name.dirt",
+        "itemGroup.name.dye",
+        "itemGroup.name.eggBlocks",
+        "itemGroup.name.grass",
+        "itemGroup.name.gravel",
+        "itemGroup.name.greenery",
+        "itemGroup.name.ice",
+        "itemGroup.name.leaves",
+        "itemGroup.name.log",
+        "itemGroup.name.miscFood",
+        "itemGroup.name.mobEgg",
+        "itemGroup.name.monsterStoneEgg",
+        "itemGroup.name.mushroom",
+        "itemGroup.name.natureBuildingBlocks",
+        "itemGroup.name.natureMisc",
+        "itemGroup.name.oreBlocks",
+        "itemGroup.name.pumpkins",
+        "itemGroup.name.rawFood",
+        "itemGroup.name.sand",
+        "itemGroup.name.sapling",
+        "itemGroup.name.sculk",
+        "itemGroup.name.seed",
+        "itemGroup.name.skull",
+        "itemGroup.name.stone",
+        "itemGroup.name.wood"
+    ],
+    "equipment": [
+        "itemGroup.name.arrow",
+        "itemGroup.name.axe",
+        "itemGroup.name.boots",
+        "itemGroup.name.cookedFood",
+        "itemGroup.name.helmet",
+        "itemGroup.name.hoe",
+        "itemGroup.name.horseArmor",
+        "itemGroup.name.leggings",
+        "itemGroup.name.pickaxe",
+        "itemGroup.name.potion",
+        "itemGroup.name.shovel",
+        "itemGroup.name.sword",
+        "itemGroup.name.splashPotion",
+    ],
+    "items": [
+        "itemGroup.name.anvil",
+        "itemGroup.name.banner",
+        "itemGroup.name.banner_pattern",
+        "itemGroup.name.beacon",
+        "itemGroup.name.bed",
+        "itemGroup.name.bell",
+        "itemGroup.name.boat",
+        "itemGroup.name.buttons",
+        "itemGroup.name.camera",
+        "itemGroup.name.candles",
+        "itemGroup.name.chemistrytable",
+        "itemGroup.name.chest",
+        "itemGroup.name.chestboat",
+        "itemGroup.name.chestplate",
+        "itemGroup.name.chiseledBookshelf",
+        "itemGroup.name.composter",
+        "itemGroup.name.compounds",
+        "itemGroup.name.craftingTables",
+        "itemGroup.name.element",
+        "itemGroup.name.enchantedBook",
+        "itemGroup.name.enchantingTable",
+        "itemGroup.name.endPortalFrame",
+        "itemGroup.name.endRod",
+        "itemGroup.name.fence",
+        "itemGroup.name.fenceGate",
+        "itemGroup.name.fireworkStars",
+        "itemGroup.name.firework",
+        "itemGroup.name.flower",
+        "itemGroup.name.furnaces",
+        "itemGroup.name.grindStone",
+        "itemGroup.name.goatHorn",
+        "itemGroup.name.glowstone",
+        "itemGroup.name.hanging_sign",
+        "itemGroup.name.lectern",
+        "itemGroup.name.lights",
+        "itemGroup.name.lingeringPotion",
+        "itemGroup.name.minecart",
+        "itemGroup.name.musicBlocks",
+        "itemGroup.name.ore",
+        "itemGroup.name.permission",
+        "itemGroup.name.pistons",
+        "itemGroup.name.potterySherds",
+        "itemGroup.name.pressurePlate",
+        "itemGroup.name.products",
+        "itemGroup.name.rail",
+        "itemGroup.name.record",
+        "itemGroup.name.redstone",
+        "itemGroup.name.redstoneContainers",
+        "itemGroup.name.redstoneProducers",
+        "itemGroup.name.shulkerBox",
+        "itemGroup.name.sign",
+        "itemGroup.name.smithing_templates",
+        "itemGroup.name.tnt",
+        "itemGroup.name.torch",
+    ]
+};
+
+
+export const BLOCK_MATERIALS = [
+    "opaque", "double_sided", "blend", "alpha_test"
+]
+
 const onBeforeDurabilityDamage = async (name) => {
-	const config = await propertiesAsync();
-    const [,componentName] = name.split(':');
+    const config = await propertiesAsync();
+    const [, componentName] = name.split(':');
     return `import { Entity, ItemStack } from "@minecraft/server";
 
 /**
@@ -152,8 +292,8 @@ export const ${toCamelCase(componentName)}OnBeforeDurabilityDamageEvent = ({atta
 }`};
 
 const onCompleteUse = async (name) => {
-	const config = await propertiesAsync();
-    const [,componentName] = name.split(':');
+    const config = await propertiesAsync();
+    const [, componentName] = name.split(':');
     return `import { Player, ItemStack } from "@minecraft/server";
 
 /**
@@ -165,8 +305,8 @@ export const ${toCamelCase(componentName)}OnCompleteUseEvent = ({itemStack, sour
 }`};
 
 const onConsume = async (name) => {
-	const config = await propertiesAsync();
-    const [,componentName] = name.split(':');
+    const config = await propertiesAsync();
+    const [, componentName] = name.split(':');
     return `import { Player, ItemStack } from "@minecraft/server";
 
 /**
@@ -178,8 +318,8 @@ export const ${toCamelCase(componentName)}OnConsumeEvent = ({itemStack, source})
 }`};
 
 const onHitEntity = async (name) => {
-	const config = await propertiesAsync();
-    const [,componentName] = name.split(':');
+    const config = await propertiesAsync();
+    const [, componentName] = name.split(':');
     return `import { Entity, ItemStack } from "@minecraft/server";
 
 /**
@@ -191,8 +331,8 @@ export const ${toCamelCase(componentName)}OnHitEntityEvent = ({attackingEntity, 
 }`};
 
 const onMineBlock = async (name) => {
-	const config = await propertiesAsync();
-    const [,componentName] = name.split(':');
+    const config = await propertiesAsync();
+    const [, componentName] = name.split(':');
     return `import { Block, BlockPermutation, ItemStack, Player } from "@minecraft/server";
 
 /**
@@ -204,8 +344,8 @@ export const ${toCamelCase(componentName)}OnMineBlockEvent = ({itemStack, source
 }`};
 
 const onUse = async (name) => {
-	const config = await propertiesAsync();
-    const [,componentName] = name.split(':');
+    const config = await propertiesAsync();
+    const [, componentName] = name.split(':');
     return `import { ItemStack, Player } from "@minecraft/server";
 
 /**
@@ -217,8 +357,8 @@ export const ${toCamelCase(componentName)}OnUseEvent = ({itemStack, source}) => 
 }`};
 
 const onUseOn = async (name) => {
-	const config = await propertiesAsync();
-    const [,componentName] = name.split(':');
+    const config = await propertiesAsync();
+    const [, componentName] = name.split(':');
     return `import { Block, BlockPermutation, ItemStack, Player } from "@minecraft/server";
 
 /**
@@ -232,8 +372,8 @@ export const ${toCamelCase(componentName)}OnUseOnEvent = ({blockFace, source, us
 
 
 const beforeOnPlayerPlace = async (name) => {
-	const config = await propertiesAsync();
-    const [,componentName] = name.split(':');
+    const config = await propertiesAsync();
+    const [, componentName] = name.split(':');
     return `import { Block, BlockPermutation, Dimension, Player } from "@minecraft/server";
 
 /**
@@ -245,8 +385,8 @@ export const ${toCamelCase(componentName)}BeforeOnPlayerPlaceEvent = ({player, f
 }`};
 
 const onEntityFallOn = async (name) => {
-	const config = await propertiesAsync();
-    const [,componentName] = name.split(':');
+    const config = await propertiesAsync();
+    const [, componentName] = name.split(':');
     return `import { Block, Dimension, Entity } from "@minecraft/server";
 
 /**
@@ -258,8 +398,8 @@ export const ${toCamelCase(componentName)}OnEntityFallOnEvent = ({entity, face, 
 }`};
 
 const onPlace = async (name) => {
-	const config = await propertiesAsync();
-    const [,componentName] = name.split(':');
+    const config = await propertiesAsync();
+    const [, componentName] = name.split(':');
     return `import { Block, Dimension, BlockPermutation } from "@minecraft/server";
 
 /**
@@ -271,8 +411,8 @@ export const ${toCamelCase(componentName)}OnPlaceEvent = ({previousBlock, block,
 }`};
 
 const onPlayerDestroy = async (name) => {
-	const config = await propertiesAsync();
-    const [,componentName] = name.split(':');
+    const config = await propertiesAsync();
+    const [, componentName] = name.split(':');
     return `import { Block, Dimension, BlockPermutation, Player } from "@minecraft/server";
 
 /**
@@ -284,8 +424,8 @@ export const ${toCamelCase(componentName)}OnPlayerDestroyEvent = ({destroyedBloc
 }`};
 
 const onPlayerInteract = async (name) => {
-	const config = await propertiesAsync();
-    const [,componentName] = name.split(':');
+    const config = await propertiesAsync();
+    const [, componentName] = name.split(':');
     return `import { Block, Dimension, Direction, Vector3, Player } from "@minecraft/server";
 
 /**
@@ -297,21 +437,21 @@ export const ${toCamelCase(componentName)}OnPlayerInteractEvent = ({face, faceLo
 }`};
 
 const onRandomTick = async (name) => {
-	const config = await propertiesAsync();
-    const [,componentName] = name.split(':');
+    const config = await propertiesAsync();
+    const [, componentName] = name.split(':');
     return `import { Block, Dimension } from "@minecraft/server";
 
 /**
  * Evento onRandomTick del componente ${toCamelCase(componentName)}Component${config['addon.name'] ? `\n * Addon: ${Array.isArray(config['addon.name']) ? config['addon.name'][0] : config['addon.name']}` : ''}
  * @param {{block: Block, dimension: Dimension}} event
  */
-export const ${toCamelCase(componentName)}OnRandomTickEvent = ( block, dimension}) => {
+export const ${toCamelCase(componentName)}OnRandomTickEvent = ({block, dimension}) => {
     // Aquí puedes agregar la lógica para manejar el evento
 }`};
 
 const onStepOff = async (name) => {
-	const config = await propertiesAsync();
-    const [,componentName] = name.split(':');
+    const config = await propertiesAsync();
+    const [, componentName] = name.split(':');
     return `import { Block, Dimension, Entity } from "@minecraft/server";
 
 /**
@@ -323,8 +463,8 @@ export const ${toCamelCase(componentName)}OnStepOffEvent = ({entity, block, dime
 }`};
 
 const onStepOn = async (name) => {
-	const config = await propertiesAsync();
-    const [,componentName] = name.split(':');
+    const config = await propertiesAsync();
+    const [, componentName] = name.split(':');
     return `import { Block, Dimension, Entity } from "@minecraft/server";
 
 /**
@@ -336,8 +476,8 @@ export const ${toCamelCase(componentName)}OnStepOnEvent = ({entity, block, dimen
 }`};
 
 const onTick = async (name) => {
-	const config = await propertiesAsync();
-    const [,componentName] = name.split(':');
+    const config = await propertiesAsync();
+    const [, componentName] = name.split(':');
     return `import { Block, Dimension, Entity } from "@minecraft/server";
 
 /**

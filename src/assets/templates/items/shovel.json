@@ -1,0 +1,53 @@
+{
+    "format_version": "1.21.10",
+    "minecraft:item": {
+        "description": {
+            "identifier": "namespace:crimson_shovel",
+            "menu_category": {
+                "category": "equipment",
+                "group": "itemGroup.name.shovel"
+            }
+        },
+        "components": {
+            "minecraft:max_stack_size": 1,
+            "minecraft:icon": {
+                "textures": {
+                    "default": "crimson_shovel"
+                }
+            },
+            "minecraft:damage": {
+                "value": 4
+            },
+            "minecraft:hand_equipped": true,
+            "minecraft:enchantable": {
+                "value": 15,
+                "slot": "shovel"
+            },
+            "minecraft:durability": {
+                "damage_chance": {
+                    "min": 10,
+                    "max": 50
+                },
+                "max_durability": 1048
+            },
+            "minecraft:repairable": {},
+            "minecraft:custom_components": [],
+            "minecraft:digger": {
+                "use_efficiency": true,
+                "destroy_speeds": [
+                    {
+                        "block": {
+                            "tags": "q.any_tag('dirt', 'sand', 'gravel', 'grass', 'snow')"
+                        },
+                        "speed": 1.5
+                    }
+                ]
+            },
+            "minecraft:tags": {
+                "tags": [
+                    "minecraft:is_shovel"
+                ]
+            }
+        }
+    }
+}

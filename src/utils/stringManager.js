@@ -38,3 +38,14 @@ const isValidUUIDv4 = (string) => {
     const uuidV4Regex = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
     return uuidV4Regex.test(string);
 };
+
+
+
+export const customStringify = (obj, spaces = 2) => {
+    const jsonString = JSON.stringify(obj, null, spaces);
+
+    // Limpiar saltos de línea innecesarios dentro de los arrays
+    return jsonString
+        .replace(/(\[\n\s*)/g, '[')
+        .replace(/(\n\s*\])/g, ']');
+}

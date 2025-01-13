@@ -159,3 +159,44 @@ export const updateIndexFile = async (componentType, componentName, componentPat
         console.error('Error al actualizar el archivo index.js:', error);
     }
 };
+
+/**
+ * 
+ * @param {{}} file 
+ * @returns 
+ */
+export const getJsonFile = async (file) => {
+    const filePath = path.join(process.cwd(), file);
+
+    const validation = validateFile(file);
+    if (!validation) return console.log(chalk.red('✖'), chalk.bold(chalk.whiteBright(`El archivo`), chalk.yellow(path.basename(filePath)), chalk.whiteBright('no existe.')))
+    try {
+        const fileContent = await fs.promises.readFile(filePath, 'utf-8');
+
+        return JSON.parse(fileContent);
+    } catch (error) {
+        console.error('Error al actualizar el archivo index.js:', error);
+    }
+};
+
+/**
+ * 
+ * @param {{}} file 
+ * @returns
+ */
+export const getJsonFileOrBool = async (file) => {
+    const filePath = path.join(process.cwd(), file);
+
+    const validation = validateFile(file);
+    if (!validation) {
+        console.log(chalk.red('✖'), chalk.bold(chalk.whiteBright(`El archivo`), chalk.yellow(path.basename(filePath)), chalk.whiteBright('no existe.')))
+        return false;
+    }
+    try {
+        const fileContent = await fs.promises.readFile(filePath, 'utf-8');
+
+        return JSON.parse(fileContent);
+    } catch (error) {
+        console.error('Error al actualizar el archivo index.js:', error);
+    }
+};
