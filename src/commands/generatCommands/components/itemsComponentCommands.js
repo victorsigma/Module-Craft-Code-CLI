@@ -5,27 +5,28 @@ import { clearEvents, makeComponentFile, makeEventFile, updateIndexFile, validat
 import { ONLY_BEHAVIOR, PATH_ITEM_COMPONENTS, PATH_ITEM_EVENTS } from '../../../utils/constants.js';
 import { propertiesAsync } from '../../../utils/readProperties.js';
 import { selectFromArray } from '../../../utils/forms.js';
+import { language } from "../../../utils/i18n.js";
 import { Command } from 'commander';
 import inquirer from 'inquirer';
 import chalk from 'chalk';
 import ora from 'ora';
 
-const itemsComponent = new Command('item')
-    .description('Crea un componente personalizado de item nuevo');
-itemsComponent.option('-n, --name <string>', 'Especifica el nombre del componente del ítem', 'namespace:item_component');
-itemsComponent.option('-d, --description <string>', 'Especifica la descripción del componente del ítem', 'description');
+const itemsComponent = new Command('item').alias('i')
+    .description(language.__("component.item.description"));
+itemsComponent.option('-n, --name <string>', language.__("component.item.option.n"), 'namespace:item_component');
+itemsComponent.option('-d, --description <string>', language.__("component.item.option.n"), 'description');
 
 
 itemsComponent.action(async (options) => {
     const config = await propertiesAsync();
     if (!config) return console.log(
-        chalk.yellowBright('No puedes generar un componente en un proyecto sin el archivo'),
+        chalk.yellowBright(language.__("component.item.exits.1")),
         chalk.bold(chalk.green('addon.properties'))
     );
 
     const behavior = await ONLY_BEHAVIOR()
     if (!behavior) return console.log(
-        chalk.yellowBright('No puedes generar un componente en un proyecto que no sea behavior')
+        chalk.yellowBright(language.__("component.item.exits.2"))
     );
 
     // Asegurar que el nombre tenga un namespace
@@ -33,20 +34,20 @@ itemsComponent.action(async (options) => {
     while (!options.name.includes(':')) {
         if (!config['addon.namespace']) {
             console.error(
-                chalk.red('El nombre del componente debe incluir ":" para separar namespace'),
-                chalk.green('\nNombre actual:'),
+                chalk.red(language.__("addon.namespace.error.1")),
+                chalk.green(language.__("addon.namespace.error.2")),
                 chalk.white(options.name)
             );
 
             const input = [
-                { type: 'input', name: 'name', message: 'Escribe otro nombre:' }
+                { type: 'input', name: 'name', message: language.__("addon.namespace.question") }
             ];
 
             const response = await inquirer.prompt(input);
             options.name = response.name;
         } else {
             if(Array.isArray(config['addon.namespace'])){
-                console.log(chalk.yellow(`Se encontraron multiples namespace`));
+                console.log(chalk.yellow(language.__("addon.namespace.multiple")));
                 const namespace = await selectFromArray(config['addon.namespace']);
                 options.name = `${namespace}:${options.name}`;
             } else {
@@ -57,7 +58,7 @@ itemsComponent.action(async (options) => {
 
     if (options.name === 'namespace:item_component') {
         if(Array.isArray(config['addon.namespace'])){
-            console.log(chalk.yellow(`Se encontraron multiples namespace`));
+            console.log(chalk.yellow(language.__("addon.namespace.multiple")));
             const namespace = await selectFromArray(config['addon.namespace']);
             options.name = namespace
             ? `${namespace}:item_component`
@@ -74,7 +75,7 @@ itemsComponent.action(async (options) => {
         {
             type: 'checkbox',
             name: 'selections',
-            message: 'Selecciona los eventos:',
+            message: language.__("component.item.selections"),
             choices: [
                 { name: 'onBeforeDurabilityDamage', value: 'onBeforeDurabilityDamage' },
                 { name: 'onCompleteUse', value: 'onCompleteUse' },
@@ -90,7 +91,7 @@ itemsComponent.action(async (options) => {
     const response = await inquirer.prompt(questions);
 
     // Validar si el usuario no selecciona ningún evento
-    if (!response.selections.length) return console.log(chalk.red('Debes seleccionar al menos un evento.'));
+    if (!response.selections.length) return console.log(chalk.red(language.__("component.item.invalid")));
 
     response.selections.forEach(evento => {
         console.log(chalk.yellow(`- ${evento}`));
@@ -115,7 +116,7 @@ export const ${toCamelCase(options.name.split(':')[1])}Component = {
     ${events}
 }`;
 
-    const spinner = ora('Creando componente...').start();
+    const spinner = ora(language.__("component.item.spinner.start")).start();
 
     try {
         await makeComponentFile(options.name, PATH_ITEM_COMPONENTS, content);
@@ -137,11 +138,12 @@ export const ${toCamelCase(options.name.split(':')[1])}Component = {
             await makeFile('item_components.json', JSON.stringify(fileData, null, 2))
         }
 
-        spinner.succeed(chalk.bold(chalk.whiteBright(`El componente ${options.name} ha sido creado exitosamente!`)));
+        spinner.succeed(chalk.bold(chalk.whiteBright(language.__("component.item.spinner.success").replace('${options.name}', options.name))));
     } catch (error) {
-        spinner.fail(chalk.red('Error al crear el componente.'));
+        spinner.fail(chalk.red(language.__("component.item.spinner.error")));
         console.error(error);
     }
+    process.exit(0);
 });
 
 

@@ -9,19 +9,30 @@ import init from './commands/initCommands.js';
 import manifest from './commands/generatCommands/common/manifestCommands.js';
 import icon from './commands/generatCommands/common/iconCommands.js';
 import entity from './commands/generatCommands/elements/entitesCommands.js';
+import { language } from './utils/i18n.js';
+
 
 const program = new Command();
 
-program.version(VERSION).description('CLI versátil para generar y gestionar módulos, componentes, eventos y archivos de configuración en proyectos de Minecraft.');
-program.name('Module Craft Code CLI');
+program.version(VERSION).description(language.__('program.description'));
+program.name(language.__('program.name'));
 
 program.addCommand(init);
 program.addCommand(generate);
-program.addCommand(itemsComponent);
-program.addCommand(blocksComponent);
-program.addCommand(lang);
-program.addCommand(manifest);
-program.addCommand(icon);
-program.addCommand(entity);
+
+
+process.on('SIGINT', () => {
+    console.log("\n" + language.__('program.exeption.close.1'));
+    process.exit(0);
+});
+
+process.on('uncaughtException', (err) => {
+    if (err.message.includes('force closed')) {
+        console.log(language.__('program.exeption.close.2'));
+    } else {
+        console.error(language.__('program.exeption.close.3'), err);
+    }
+    process.exit(0);
+});
 
 program.parse(process.argv);

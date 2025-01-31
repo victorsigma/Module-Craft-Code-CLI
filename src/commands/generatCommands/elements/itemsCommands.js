@@ -10,25 +10,28 @@ import { getJsonFile, getJsonFileOrBool, makeSubFile, validateFile } from "../..
 import { propertiesAsync } from "../../../utils/readProperties.js";
 import { toSnackCase } from "../../../utils/stringManager.js";
 import { selectFromArray } from '../../../utils/forms.js';
-import { Command } from "commander";
+import { language } from '../../../utils/i18n.js';
+import { Command, Option } from "commander";
 import inquirer from "inquirer";
 import chalk from "chalk";
 import ora from "ora";
 
 
-const item = new Command('item')
-    .description('Genera un objeto de item')
+const item = new Command('item').alias('i')
+    .description(language.__("element.item.description"))
 
-item.option('-n, --name <string>', 'Especifica el identificador del item', 'namespace:item');
-item.option('-t, --type <item|axe|pickaxe|shovel|sword>', 'Especifica el tipo de item a crear - Solo behavior', 'item');
-item.option('-m, --menu <boolean>', 'Indica si el item tendra una sección personalizada en el menu de Minecraft - Solo behavior', false);
+item.option('-n, --name <string>', language.__("element.item.option.n"), 'namespace:item');
+item.addOption(new Option('-t, --type <string>', language.__("element.item.option.t")).default('item').choices(['item', 'axe', 'pickaxe', 'shovel','sword']));
+item.option('-m, --menu <boolean>', language.__("element.item.option.m"), false);
 
 item.action(async (options) => {
     const config = await propertiesAsync();
-    if (!config) return console.log(
-        chalk.yellowBright('No puedes generar un objeto de item en un proyecto sin el archivo'),
-        chalk.bold(chalk.green('addon.properties'))
-    );
+    if (!config) {
+        console.log(
+            chalk.yellowBright(language.__("element.item.exits.1")),
+            chalk.bold(chalk.green('addon.properties.'))
+        );
+    }
     options.config = config;
     const behavior = await ONLY_BEHAVIOR()
     if (behavior) {
@@ -46,20 +49,20 @@ const behaviorPack = async (options) => {
     while (!options.name.includes(':')) {
         if (!options.config['addon.namespace']) {
             console.error(
-                chalk.red('El nombre de la entidad debe incluir ":" para separar namespace'),
-                chalk.green('\nNombre actual:'),
+                chalk.red(language.__("addon.namespace.error.1")),
+                chalk.green(language.__("addon.namespace.error.2")),
                 chalk.white(options.name)
             );
 
             const input = [
-                { type: 'input', name: 'name', message: 'Escribe otro nombre:' }
+                { type: 'input', name: 'name', message: language.__("addon.namespace.question") }
             ];
 
             const response = await inquirer.prompt(input);
             options.name = response.name;
         } else {
             if (Array.isArray(options.config['addon.namespace'])) {
-                console.log(chalk.yellow(`Se encontraron multiples namespace`));
+                console.log(chalk.yellow(language.__("addon.namespace.multiple")));
                 const namespace = await selectFromArray(options.config['addon.namespace']);
                 options.name = `${namespace}:${options.name}`;
             } else {
@@ -70,7 +73,7 @@ const behaviorPack = async (options) => {
 
     if (options.name === 'namespace:item') {
         if (Array.isArray(options.config['addon.namespace'])) {
-            console.log(chalk.yellow(`Se encontraron multiples namespace`));
+            console.log(chalk.yellow(language.__("addon.namespace.multiple")));
             const namespace = await selectFromArray(options.config['addon.namespace']);
             options.name = namespace
                 ? `${namespace}:item`
@@ -112,7 +115,7 @@ const behaviorPack = async (options) => {
         {
             type: 'confirm',
             name: 'add_components',
-            message: '¿Desea añadir componentes perzonalizados?:',
+            message: language.__("element.item.add_components.questions.1"),
         }
     ];
 
@@ -122,24 +125,24 @@ const behaviorPack = async (options) => {
         const jsonFile = await getJsonFileOrBool("item_components.json");
         const newComponents = []
         if (!jsonFile) {
-            console.log(chalk.red('✖'), chalk.bold(chalk.whiteBright(`No es posible añadir componentes personalizados`)));
+            console.log(chalk.red('✖'), chalk.bold(chalk.whiteBright(language.__("element.item.add_components.error.1"))));
             delete item["minecraft:item"]["components"]["minecraft:custom_components"];
         }
         if (jsonFile.components == undefined || jsonFile.components.length == 0) {
-            console.log(chalk.red('✖'), chalk.bold(chalk.whiteBright(`No hay componentes personalizados en el archivo`, chalk.yellow("item_components.json"))));
+            console.log(chalk.red('✖'), chalk.bold(chalk.whiteBright(language.__("element.item.add_components.error.2"), chalk.yellow("item_components.json"))));
             delete item["minecraft:item"]["components"]["minecraft:custom_components"];
         }
         if (item["minecraft:item"]["components"]["minecraft:custom_components"] != undefined) {
             let addComponents;
             do {
-                console.log(chalk.yellow(`Elegir componente`));
+                console.log(chalk.yellow(language.__("element.item.add_components.message")));
                 const component = await selectFromArray(jsonFile.components);
                 newComponents.push(component)
                 const answers = await inquirer.prompt(
                     {
                         type: 'confirm',
                         name: 'add_components',
-                        message: '¿Desea añadir otro componente perzonalizado?:',
+                        message: language.__("element.item.add_components.questions.2"),
                     }
                 );
                 addComponents = answers.add_components;
@@ -150,14 +153,15 @@ const behaviorPack = async (options) => {
         delete item["minecraft:item"]["components"]["minecraft:custom_components"];
     }
 
-    const spinner = ora('Creando item...').start();
+    const spinner = ora(language.__("element.item.behavior.spinner.start")).start();
     try {
-        if (validateFile(`items/${namespace}/${fileName}`)) return spinner.fail(chalk.bold(chalk.yellowBright(`El archivo ${fileName} ya existe`)));
+        if (validateFile(`items/${namespace}/${fileName}`)) 
+            return spinner.fail(chalk.bold(chalk.yellowBright(language.__("element.item.exits.2").replace("fileName", fileName))));
         await makeSubFile(fileName, `items/${namespace}/`, JSON.stringify(item, null, 2))
 
-        spinner.succeed(chalk.bold(chalk.whiteBright(`El item ${options.name} ha sido creado exitosamente!`)));
+        spinner.succeed(chalk.bold(chalk.whiteBright(language.__("element.item.behavior.spinner.succeed").replace("${options.name}", options.name))));
     } catch (error) {
-        spinner.fail(chalk.red(`Error al crear el item ${options.name}.`));
+        spinner.fail(chalk.red(language.__("element.item.behavior.spinner.error").replace("${options.name}", options.name)));
     }
 }
 
@@ -165,11 +169,11 @@ const behaviorPack = async (options) => {
 const itemDefault = async (options) => {
     const item = base;
     if (JSON.parse(options.menu)) {
-        console.log(chalk.yellow(`Elegir categoría`));
+        console.log(chalk.yellow(language.__("element.item.menu.category")));
         const category = await selectFromArray(CATEGORYS);
         if (category) {
             item["minecraft:item"]["description"]["menu_category"]["category"] = category;
-            console.log(chalk.yellow(`Elegir grupo`));
+            console.log(chalk.yellow(language.__("element.item.menu.group")));
             const group = await selectFromArray(ITEM_GROUP_NAMES[category]);
             if (group) {
                 item["minecraft:item"]["description"]["menu_category"]["group"] = group;
@@ -188,11 +192,11 @@ const itemAxe = async (options) => {
     item["minecraft:item"].description.identifier = options.name;
     item["minecraft:item"].components['minecraft:icon'].textures.default = options.name.split(":")[1];
     if (JSON.parse(options.menu)) {
-        console.log(chalk.yellow(`Elegir categoría`));
+        console.log(chalk.yellow(language.__("element.item.menu.category")));
         const category = await selectFromArray(CATEGORYS);
         if (category) {
             item["minecraft:item"]["description"]["menu_category"]["category"] = category;
-            console.log(chalk.yellow(`Elegir grupo`));
+            console.log(chalk.yellow(language.__("element.item.menu.group")));
             const group = await selectFromArray(ITEM_GROUP_NAMES[category]);
             if (group) {
                 item["minecraft:item"]["description"]["menu_category"]["group"] = group;
@@ -207,32 +211,32 @@ const itemAxe = async (options) => {
         {
             type: 'input',
             name: 'value_damage',
-            message: 'Ingrese el valor de daño (dejar vacío colcara 7):',
+            message: language.__("element.item.axe.questions.1"),
         },
         {
             type: 'input',
             name: 'enchantable_value',
-            message: 'Ingrese el valor de encantamiento (dejar vacío colcara 15):',
+            message: language.__("element.item.axe.questions.2"),
         },
         {
             type: 'input',
             name: 'min_damage_chance',
-            message: 'Ingrese el valor mínimo de daño (dejar vacío colcara 10):',
+            message: language.__("element.item.axe.questions.3"),
         },
         {
             type: 'input',
             name: 'max_damage_chance',
-            message: 'Ingrese el valor máximo de daño (dejar vacío colcara 50):',
+            message: language.__("element.item.axe.questions.4"),
         },
         {
             type: 'input',
             name: 'max_durability',
-            message: 'Ingrese la durabilidad máxima (dejar vacío colcara 1048):',
+            message: language.__("element.item.axe.questions.5"),
         },
         {
             type: 'input',
             name: 'speed',
-            message: 'Ingrese la velocidad de destrucción (dejar vacío colcara 1.0):',
+            message: language.__("element.item.axe.questions.6"),
         },
     ];
 
@@ -264,11 +268,11 @@ const itemPickaxe = async (options) => {
     item["minecraft:item"].description.identifier = options.name;
     item["minecraft:item"].components['minecraft:icon'].textures.default = options.name.split(":")[1];
     if (JSON.parse(options.menu)) {
-        console.log(chalk.yellow(`Elegir categoría`));
+        console.log(chalk.yellow(language.__("element.item.menu.category")));
         const category = await selectFromArray(CATEGORYS);
         if (category) {
             item["minecraft:item"]["description"]["menu_category"]["category"] = category;
-            console.log(chalk.yellow(`Elegir grupo`));
+            console.log(chalk.yellow(language.__("element.item.menu.group")));
             const group = await selectFromArray(ITEM_GROUP_NAMES[category]);
             if (group) {
                 item["minecraft:item"]["description"]["menu_category"]["group"] = group;
@@ -283,32 +287,32 @@ const itemPickaxe = async (options) => {
         {
             type: 'input',
             name: 'value_damage',
-            message: 'Ingrese el valor de daño (dejar vacío colcara 5):',
+            message: language.__("element.item.pickaxe.questions.1"),
         },
         {
             type: 'input',
             name: 'enchantable_value',
-            message: 'Ingrese el valor de encantamiento (dejar vacío colcara 5):',
+            message: language.__("element.item.pickaxe.questions.2"),
         },
         {
             type: 'input',
             name: 'min_damage_chance',
-            message: 'Ingrese el valor mínimo de daño (dejar vacío colcara 10):',
+            message: language.__("element.item.pickaxe.questions.3"),
         },
         {
             type: 'input',
             name: 'max_damage_chance',
-            message: 'Ingrese el valor máximo de daño (dejar vacío colcara 50):',
+            message: language.__("element.item.pickaxe.questions.4"),
         },
         {
             type: 'input',
             name: 'max_durability',
-            message: 'Ingrese la durabilidad máxima (dejar vacío colcara 1048):',
+            message: language.__("element.item.pickaxe.questions.5"),
         },
         {
             type: 'input',
             name: 'speed',
-            message: 'Ingrese la velocidad de destrucción (dejar vacío colcara 1.2):',
+            message: language.__("element.item.pickaxe.questions.6"),
         },
     ];
 
@@ -340,11 +344,11 @@ const itemShovel = async (options) => {
     item["minecraft:item"].description.identifier = options.name;
     item["minecraft:item"].components['minecraft:icon'].textures.default = options.name.split(":")[1];
     if (JSON.parse(options.menu)) {
-        console.log(chalk.yellow(`Elegir categoría`));
+        console.log(language.__("element.item.menu.category"));
         const category = await selectFromArray(CATEGORYS);
         if (category) {
             item["minecraft:item"]["description"]["menu_category"]["category"] = category;
-            console.log(chalk.yellow(`Elegir grupo`));
+            console.log(chalk.yellow(language.__("element.item.menu.group")));
             const group = await selectFromArray(ITEM_GROUP_NAMES[category]);
             if (group) {
                 item["minecraft:item"]["description"]["menu_category"]["group"] = group;
@@ -359,32 +363,32 @@ const itemShovel = async (options) => {
         {
             type: 'input',
             name: 'value_damage',
-            message: 'Ingrese el valor de daño (dejar vacío colcara 4):',
+            message: language.__("element.item.shovel.questions.1"),
         },
         {
             type: 'input',
             name: 'enchantable_value',
-            message: 'Ingrese el valor de encantamiento (dejar vacío colcara 15):',
+            message: language.__("element.item.shovel.questions.2"),
         },
         {
             type: 'input',
             name: 'min_damage_chance',
-            message: 'Ingrese el valor mínimo de daño (dejar vacío colcara 10):',
+            message: language.__("element.item.shovel.questions.3"),
         },
         {
             type: 'input',
             name: 'max_damage_chance',
-            message: 'Ingrese el valor máximo de daño (dejar vacío colcara 50):',
+            message: language.__("element.item.shovel.questions.4"),
         },
         {
             type: 'input',
             name: 'max_durability',
-            message: 'Ingrese la durabilidad máxima (dejar vacío colcara 1048):',
+            message: language.__("element.item.shovel.questions.5"),
         },
         {
             type: 'input',
             name: 'speed',
-            message: 'Ingrese la velocidad de destrucción (dejar vacío colcara 1.5):',
+            message: language.__("element.item.shovel.questions.6"),
         },
     ];
 
@@ -416,11 +420,11 @@ const itemSword = async (options) => {
     item["minecraft:item"].description.identifier = options.name;
     item["minecraft:item"].components['minecraft:icon'].textures.default = options.name.split(":")[1];
     if (JSON.parse(options.menu)) {
-        console.log(chalk.yellow(`Elegir categoría`));
+        console.log(chalk.yellow(language.__("element.item.menu.category")));
         const category = await selectFromArray(CATEGORYS);
         if (category) {
             item["minecraft:item"]["description"]["menu_category"]["category"] = category;
-            console.log(chalk.yellow(`Elegir grupo`));
+            console.log(chalk.yellow(language.__("element.item.menu.group")));
             const group = await selectFromArray(ITEM_GROUP_NAMES[category]);
             if (group) {
                 item["minecraft:item"]["description"]["menu_category"]["group"] = group;
@@ -435,37 +439,37 @@ const itemSword = async (options) => {
         {
             type: 'input',
             name: 'value_damage',
-            message: 'Ingrese el valor de daño (dejar vacío colcara 8):',
+            message: language.__("element.item.sword.questions.1"),
         },
         {
             type: 'input',
             name: 'enchantable_value',
-            message: 'Ingrese el valor de encantamiento (dejar vacío colcara 15):',
+            message: language.__("element.item.sword.questions.2"),
         },
         {
             type: 'input',
             name: 'min_damage_chance',
-            message: 'Ingrese el valor mínimo de daño (dejar vacío colcara 10):',
+            message: language.__("element.item.sword.questions.3"),
         },
         {
             type: 'input',
             name: 'max_damage_chance',
-            message: 'Ingrese el valor máximo de daño (dejar vacío colcara 50):',
+            message: language.__("element.item.sword.questions.4"),
         },
         {
             type: 'input',
             name: 'max_durability',
-            message: 'Ingrese la durabilidad máxima (dejar vacío colcara 1048):',
+            message: language.__("element.item.sword.questions.5"),
         },
         {
             type: 'input',
             name: 'speedWeb',
-            message: 'Ingrese la velocidad de destrucción para telaraña (dejar vacío colcara 15):',
+            message: language.__("element.item.sword.questions.6"),
         },
         {
             type: 'input',
             name: 'speedBamboo',
-            message: 'Ingrese la velocidad de destrucción para bamboo (dejar vacío colcara 10):',
+            message: language.__("element.item.sword.questions.6"),
         },
     ];
 
@@ -501,13 +505,13 @@ const resourcePack = async (options) => {
     while (!options.name.includes(':')) {
         if (!options.config['addon.namespace']) {
             console.error(
-                chalk.red('El nombre de la entidad debe incluir ":" para separar namespace'),
-                chalk.green('\nNombre actual:'),
+                chalk.red(language.__("addon.namespace.error.1")),
+                chalk.green(language.__("addon.namespace.error.2")),
                 chalk.white(options.name)
             );
 
             const input = [
-                { type: 'input', name: 'name', message: 'Escribe otro nombre:' }
+                { type: 'input', name: 'name', message: language.__("addon.namespace.question") }
             ];
 
             const response = await inquirer.prompt(input);
@@ -537,7 +541,7 @@ const resourcePack = async (options) => {
 
     const textureName = options.name.split(':')[1]
 
-    const spinner = ora('Agregando textura del item...').start();
+    const spinner = ora(language.__("element.item.resource.spinner.start")).start();
     try {
         const fileName = `textures/item_texture.json`
         let fileData = {...item_texture};
@@ -550,9 +554,9 @@ const resourcePack = async (options) => {
             await makeSubFile('item_texture.json', `textures/`, JSON.stringify(fileData, null, 2))
         }
 
-        spinner.succeed(chalk.bold(chalk.whiteBright(`La textura ${textureName} ha sido agregada exitosamente!`)));
+        spinner.succeed(chalk.bold(chalk.whiteBright(language.__("element.item.resource.spinner.succeed").replace("${textureName}", textureName))));
     } catch (error) {
-        spinner.fail(chalk.red(`Error al agregar la textura ${textureName}.`));
+        spinner.fail(chalk.red(language.__("element.item.resource.spinner.error").replace("${textureName}", textureName)));
         console.error(error);
     }
 }

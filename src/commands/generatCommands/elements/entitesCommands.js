@@ -3,24 +3,25 @@ import { makeSubFile, validateFile } from "../../../utils/fileOperations.js";
 import { propertiesAsync } from "../../../utils/readProperties.js";
 import { toSnackCase } from "../../../utils/stringManager.js";
 import { selectFromArray } from "../../../utils/forms.js";
+import { language } from "../../../utils/i18n.js";
 import { Command } from "commander";
 import inquirer from "inquirer";
 import chalk from "chalk";
 import ora from "ora";
 
-const entity = new Command('entity')
-    .description('Genera un objeto de entidad')
+const entity = new Command('entity').alias('e')
+    .description(language.__("element.entity.description"))
 
-entity.option('-n, --name <string>', 'Especifica el nombre de la entidad', 'namespace:entity');
-entity.option('-r, --runtime <string>', 'Establece el identificador de Vanilla Minecraft que esta entidad utilizará para construirse a sí misma');
-entity.option('-e, --experimental <boolean>', 'Indica si la entidad estará bajo características experimentales de Minecraft', false);
-entity.option('-sp, --spawnable <boolean>', 'Especifica si el generador de la entidad aparecerá en el inventario de creativo', false);
-entity.option('-su, --summonable <boolean>', 'Indica si la entidad puede ser invocada mediante comandos en el juego', false);
+entity.option('-n, --name <string>', language.__("element.entity.option.n"), 'namespace:entity');
+entity.option('-r, --runtime <string>', language.__("element.entity.option.r"));
+entity.option('-e, --experimental <boolean>', language.__("element.entity.option.e"), false);
+entity.option('-sp, --spawnable <boolean>', language.__("element.entity.option.sp"), false);
+entity.option('-su, --summonable <boolean>', language.__("element.entity.option.su"), false);
 
 entity.action(async (options) => {
     const config = await propertiesAsync();
     if (!config) return console.log(
-        chalk.yellowBright('No puedes generar un objeto de entidad en un proyecto sin el archivo'),
+        chalk.yellowBright(language.__("element.entity.exits.1")),
         chalk.bold(chalk.green('addon.properties'))
     );
 
@@ -45,20 +46,20 @@ const behaviorPack = async (options) => {
     while (!options.name.includes(':')) {
         if (!options.config['addon.namespace']) {
             console.error(
-                chalk.red('El nombre de la entidad debe incluir ":" para separar namespace'),
-                chalk.green('\nNombre actual:'),
+                chalk.red(language.__("addon.namespace.error.1")),
+                chalk.green(language.__("addon.namespace.error.2")),
                 chalk.white(options.name)
             );
 
             const input = [
-                { type: 'input', name: 'name', message: 'Escribe otro nombre:' }
+                { type: 'input', name: 'name', message: language.__("addon.namespace.question") }
             ];
 
             const response = await inquirer.prompt(input);
             options.name = response.name;
         } else {
             if(Array.isArray(options.config['addon.namespace'])){
-                console.log(chalk.yellow(`Se encontraron multiples namespace`));
+                console.log(chalk.yellow(language.__("addon.namespace.multiple")));
                 const namespace = await selectFromArray(options.config['addon.namespace']);
                 options.name = `${namespace}:${options.name}`;
             } else {
@@ -69,7 +70,7 @@ const behaviorPack = async (options) => {
 
     if (options.name === 'namespace:entity') {
         if(Array.isArray(options.config['addon.namespace'])){
-            console.log(chalk.yellow(`Se encontraron multiples namespace`));
+            console.log(chalk.yellow(language.__("addon.namespace.multiple")));
             const namespace = await selectFromArray(options.config['addon.namespace']);
             options.name = namespace
             ? `${namespace}:entity`
@@ -98,15 +99,14 @@ const behaviorPack = async (options) => {
     entity["minecraft:entity"].description.is_summonable = JSON.parse(options.summonable) ? true : false;
 
     
-    const spinner = ora('Creando entidad...').start();
+    const spinner = ora(language.__("element.entity.spinner.start")).start();
     try {
-        if(validateFile(`entities/${namespace}/${fileName}`)) return spinner.fail(chalk.bold(chalk.yellowBright(`El archivo ${fileName} ya existe`)));
+        if(validateFile(`entities/${namespace}/${fileName}`)) return spinner.fail(chalk.bold(chalk.yellowBright(language.__("element.entity.exits.2").replace("fileName", fileName))));
         await makeSubFile(fileName, `entities/${namespace}/`, JSON.stringify(entity, null, 2))
 
-        spinner.succeed(chalk.bold(chalk.whiteBright(`La entidad ${options.name} ha sido creado exitosamente!`)));
+        spinner.succeed(chalk.bold(chalk.whiteBright(language.__("element.entity.spinner.succeed").replace("${options.name}", options.name))));
     } catch (error) {
-        spinner.fail(chalk.red('Error al crear la entidad ${options.name}.'));
-        console.error(error);
+        spinner.fail(chalk.red(language.__("element.entity.spinner.error").replace("${options.name}", options.name)));
     }
 }
 
@@ -118,20 +118,20 @@ const resourcePack = async (options) => {
     while (!options.name.includes(':')) {
         if (!options.config['addon.namespace']) {
             console.error(
-                chalk.red('El nombre de la entidad debe incluir ":" para separar namespace'),
-                chalk.green('\nNombre actual:'),
+                chalk.red(language.__("addon.namespace.error.1")),
+                chalk.green(language.__("addon.namespace.error.2")),
                 chalk.white(options.name)
             );
 
             const input = [
-                { type: 'input', name: 'name', message: 'Escribe otro nombre:' }
+                { type: 'input', name: 'name', message: language.__("addon.namespace.question") }
             ];
 
             const response = await inquirer.prompt(input);
             options.name = response.name;
         } else {
             if(Array.isArray(options.config['addon.namespace'])){
-                console.log(chalk.yellow(`Se encontraron multiples namespace`));
+                console.log(chalk.yellow(language.__("addon.namespace.multiple")));
                 const namespace = await selectFromArray(options.config['addon.namespace']);
                 options.name = `${namespace}:${options.name}`;
             } else {
@@ -142,7 +142,7 @@ const resourcePack = async (options) => {
 
     if (options.name === 'namespace:entity') {
         if(Array.isArray(options.config['addon.namespace'])){
-            console.log(chalk.yellow(`Se encontraron multiples namespace`));
+            console.log(chalk.yellow(language.__("addon.namespace.multiple")));
             const namespace = await selectFromArray(options.config['addon.namespace']);
             options.name = namespace
             ? `${namespace}:entity`
@@ -161,14 +161,14 @@ const resourcePack = async (options) => {
     entity.format_version = "1.10.0";
     entity["minecraft:client_entity"].description.identifier = options.name;
 
-    const spinner = ora('Creando entidad...').start();
+    const spinner = ora(language.__("element.entity.spinner.start")).start();
     try {
-        if(validateFile(`entity/${namespace}/${fileName}`)) return spinner.fail(chalk.bold(chalk.yellowBright(`El archivo ${fileName} ya existe`)));
+        if(validateFile(`entity/${namespace}/${fileName}`)) return spinner.fail(chalk.bold(chalk.yellowBright(language.__("element.entity.exits.2").replace("fileName", fileName))));
         await makeSubFile(fileName, `entity/${namespace}/`, JSON.stringify(entity, null, 2))
 
-        spinner.succeed(chalk.bold(chalk.whiteBright(`La entidad ${options.name} ha sido creado exitosamente!`)));
+        spinner.succeed(chalk.bold(chalk.whiteBright(language.__("element.entity.spinner.succeed").replace("${options.name}", options.name))));
     } catch (error) {
-        spinner.fail(chalk.red(`Error al crear la entidad ${options.name}.`));
+        spinner.fail(chalk.red(language.__("element.entity.spinner.error").replace("${options.name}", options.name)));
     }
 }
 

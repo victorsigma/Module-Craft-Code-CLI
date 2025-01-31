@@ -1,21 +1,22 @@
 import { propertiesAsync } from "../utils/readProperties.js";
 import { makeFile } from "../utils/fileOperations.js";
 import { Command, Option } from "commander";
+import { language } from '../utils/i18n.js';
 import inquirer from "inquirer";
 import chalk from "chalk";
 import ora from "ora";
 
 
 const init = new Command('init').alias('i')
-    .description('Inicializa el proyecto con un archivo addon.properties');
-init.option('-n, --name <string>', 'Especifica el nombre del addon', 'New Addon');
-init.option('-s, --namespace <string>', 'Especifica el namespace del addon', 'namespace');
-init.option('-d, --description <string>', 'Especifica la descripción del addon', 'Addon Description');
-init.addOption(new Option('-t, --type <string>', 'Especifica el tipo de proyecto').default('behavior').choices(['behavior', 'resource', 'skin']));
+    .description(language.__("init.description"));
+init.option('-n, --name <string>', language.__("init.option.n"), 'New Addon');
+init.option('-s, --namespace <string>', language.__("init.option.s"), 'namespace');
+init.option('-d, --description <string>', language.__("init.option.d"), 'Addon Description');
+init.addOption(new Option('-t, --type <string>', language.__("init.option.t")).default('behavior').choices(['behavior', 'resource', 'skin']));
 
 init.action(async (options) => {
     const config = await propertiesAsync();
-    if (config) return console.log(chalk.yellowBright('No puedes inicializar otro proyecto el archivo'), chalk.bold(chalk.green('addon.properties'), chalk.yellowBright('ya existe')));
+    if (config) return console.log(chalk.yellowBright(language.__("init.exits.1")), chalk.bold(chalk.green(language.__("init.exits.2")), chalk.yellowBright(language.__("init.exits.3"))));
     const addon = {
         name: options.name,
         namespace: undefined,
@@ -28,7 +29,7 @@ init.action(async (options) => {
             {
                 type: 'confirm',
                 name: 'namespace',
-                message: 'Quieres colocar un namespace?:'
+                message: language.__("init.questions.1")
             },
         ];
 
@@ -39,7 +40,7 @@ init.action(async (options) => {
                 {
                     type: 'input',
                     name: 'namespace',
-                    message: 'Escribe tu namespace:',
+                    message: language.__("init.questions.2"),
                 }
             ];
 
@@ -62,14 +63,14 @@ addon.type=${addon.type}`.replace(/\r\n|\n/g, "\n");
     console.log(chalk.yellow(`- Description: ${addon.description}`));
     if (addon.namespace) console.log(chalk.yellow(`- Spacename: ${addon.namespace}`));
     if (addon.type) console.log(chalk.yellow(`- Type: ${addon.type}`));
-    const spinner = ora('Creando addon.properties...').start();
+    const spinner = ora(language.__("init.spinner.start")).start();
 
     try {
         await makeFile('addon.properties', content);
 
-        spinner.succeed(chalk.bold(chalk.whiteBright(`Proyecto inicializado correctamente!`)));
+        spinner.succeed(chalk.bold(chalk.whiteBright(language.__("init.spinner.succeed"))));
     } catch (error) {
-        spinner.fail(chalk.red('Error al crear addon.properties.'));
+        spinner.fail(chalk.red(language.__("init.spinner.error")));
         console.error(error);
     }
 });

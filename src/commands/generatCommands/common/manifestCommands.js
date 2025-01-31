@@ -3,22 +3,23 @@ import { v4 as uuidv4 } from 'uuid';
 import { MODULE_VERSION, ONLY_BEHAVIOR, ONLY_RESOURCE, ONLY_SKIN, VERSION } from "../../../utils/constants.js";
 import { makeFile, validateFile } from "../../../utils/fileOperations.js";
 import { propertiesAsync } from "../../../utils/readProperties.js";
+import { language } from "../../../utils/i18n.js";
 import inquirer from "inquirer";
 import ora from "ora";
 import chalk from "chalk";
 
-const manifest = new Command('manifest')
-    .description('Genera un archivo manifest para behavior | resource | skin')
+const manifest = new Command('manifest').alias("man")
+    .description(language.__("common.manifest.description"))
 
-manifest.option('-l, --link <string>', 'Vincula un resource_pack con un behavior_pack');
-manifest.option('-s, --scripts <boolean>', 'Habilita los scripts en un behavior_pack');
-manifest.option('-c, --capabilities <boolean>', 'Habilita las capacidades en un resource_pack');
+manifest.option('-l, --link <string>', language.__("common.manifest.option.l"));
+manifest.option('-s, --scripts <boolean>', language.__("common.manifest.option.s"));
+manifest.option('-c, --capabilities <boolean>', language.__("common.manifest.option.c"));
 
 
 manifest.action(async (options) => {
     const config = await propertiesAsync();
     if (!config) return console.log(
-        chalk.yellowBright('No puedes generar un archivo manifest en un proyecto sin el archivo'),
+        chalk.yellowBright(language.__("common.manifest.exits.1")),
         chalk.bold(chalk.green('addon.properties'))
     );
 
@@ -38,12 +39,13 @@ manifest.action(async (options) => {
     if (skin) {
         await skinPack(options);
     }
+    process.exit(0);
 })
 
 
 
 const behaviorPack = async (options) => {
-    if (validateFile(`manifest.json`)) return console.log(chalk.bold(chalk.yellowBright('El archivo manifest.json ya existe')));
+    if (validateFile(`manifest.json`)) return console.log(chalk.bold(chalk.yellowBright(language.__("common.manifest.exits.2"))));
     let scripts = '';
     let modules = '';
     options.modules = [];
@@ -54,7 +56,7 @@ const behaviorPack = async (options) => {
                 {
                     type: 'checkbox',
                     name: 'selections',
-                    message: 'Selecciona los modulos:',
+                    message: language.__("common.manifest.selections.1"),
                     choices: [
                         { name: 'minecraft/common', value: '@minecraft/common' },
                         { name: 'minecraft/debug-utilities', value: '@minecraft/debug-utilities' },
@@ -70,7 +72,7 @@ const behaviorPack = async (options) => {
 
             response = await inquirer.prompt(questions);
             if (response.selections.length === 0) {
-                console.log(chalk.red('Debes seleccionar al menos un modulo.'));
+                console.log(chalk.red(language.__("common.manifest.alert.1")));
             }
         }
         while (response.selections.length === 0)
@@ -147,19 +149,19 @@ const behaviorPack = async (options) => {
 	}
 }`;
 
-    const spinner = ora('Creando manifiesto...').start();
+    const spinner = ora(language.__("common.manifest.spinner.start")).start();
     try {
         await makeFile(`manifest.json`, content);
 
-        spinner.succeed(chalk.bold(chalk.whiteBright(`El manifiesto ha sido creado exitosamente!`)));
+        spinner.succeed(chalk.bold(chalk.whiteBright(language.__("common.manifest.spinner.succeed"))));
     } catch (error) {
-        spinner.fail(chalk.red('Error al crear el manifiesto.'));
+        spinner.fail(chalk.red(language.__("common.manifest.spinnner.error")));
         console.error(error);
     }
 }
 
 const resourcePack = async (options) => {
-    if (validateFile(`manifest.json`)) return console.log(chalk.bold(chalk.yellowBright('El archivo manifest.json ya existe')));
+    if (validateFile(`manifest.json`)) return console.log(chalk.bold(chalk.yellowBright(language.__("common.manifest.exits.2"))));
     let capabilities = [];
     if (options.capabilities) {
         let response
@@ -168,7 +170,7 @@ const resourcePack = async (options) => {
                 {
                     type: 'checkbox',
                     name: 'selections',
-                    message: 'Selecciona las capacidades:',
+                    message: language.__("common.manifest.selections.2"),
                     choices: [
                         { name: 'Physically Based Rendering', value: 'pbr' },
                         { name: 'Ray Tracing', value: 'raytraced' },
@@ -179,7 +181,7 @@ const resourcePack = async (options) => {
 
             response = await inquirer.prompt(questions);
             if (!response.selections.length) {
-                console.log(chalk.red('Debes seleccionar una capacidad.'));
+                console.log(chalk.red(language.__("common.manifest.alert.2")));
             }
         }
         while (!response.selections.length)
@@ -209,20 +211,20 @@ const resourcePack = async (options) => {
 		}
 	}
 }`
-    const spinner = ora('Creando manifiesto...').start();
+    const spinner = ora(language.__("common.manifest.spinner.start")).start();
     try {
         await makeFile(`manifest.json`, content);
 
-        spinner.succeed(chalk.bold(chalk.whiteBright(`El manifiesto ha sido creado exitosamente!`)));
+        spinner.succeed(chalk.bold(chalk.whiteBright(language.__("common.manifest.spinner.succeed"))));
     } catch (error) {
-        spinner.fail(chalk.red('Error al crear el manifiesto.'));
+        spinner.fail(chalk.red(language.__("common.manifest.spinnner.error")));
         console.error(error);
     }
 }
 
 const skinPack = async (options) => {
 
-    if (validateFile(`manifest.json`)) return console.log(chalk.bold(chalk.yellowBright('El archivo manifest.json ya existe')));
+    if (validateFile(`manifest.json`)) return console.log(chalk.bold(chalk.yellowBright(language.__("common.manifest.exits.2"))));
     const content =
         `{
     "format_version": 1,
@@ -239,13 +241,13 @@ const skinPack = async (options) => {
         }
     ]
 }`
-    const spinner = ora('Creando manifiesto...').start();
+    const spinner = ora(language.__("common.manifest.spinner.start")).start();
     try {
         await makeFile(`manifest.json`, content);
 
-        spinner.succeed(chalk.bold(chalk.whiteBright(`El manifiesto ha sido creado exitosamente!`)));
+        spinner.succeed(chalk.bold(chalk.whiteBright(language.__("common.manifest.spinner.succeed"))));
     } catch (error) {
-        spinner.fail(chalk.red('Error al crear el manifiesto.'));
+        spinner.fail(chalk.red(language.language.__("common.manifest.spinnner.error")));
         console.error(error);
     }
 }

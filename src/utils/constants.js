@@ -1,10 +1,20 @@
+/**
+ * constants.js
+ *
+ * Este archivo define constantes y funciones utilizadas en un proyecto para la gestión de componentes, eventos y configuraciones en entornos relacionados con Minecraft. También incluye plantillas para eventos personalizados.
+ */
+
 import { myRequire } from "./exports.js";
 import { propertiesAsync } from "./readProperties.js";
 import { toCamelCase } from "./stringManager.js";
+
+// Obtiene la versión del paquete desde package.json
 const { version } = myRequire('../../package.json');
 
+/** Versión del módulo */
 export const VERSION = version;
 
+/** Rutas para componentes y texturas de ítems y bloques */
 export const PATH_ITEM_COMPONENTS = 'scripts/components/items';
 export const PATH_ITEM_TEXTURES = 'textures/items';
 
@@ -14,11 +24,18 @@ export const PATH_BLOCK_TEXTURES = 'textures/blocks';
 export const PATH_ITEM_EVENTS = 'scripts/events/items';
 export const PATH_BLOCK_EVENTS = 'scripts/events/blocks';
 
+/**
+ * Verifica si el tipo de complemento es solo de comportamiento
+ * @returns {Promise<boolean>} - Verdadero si el tipo es "behavior"
+ */
 export const ONLY_BEHAVIOR = async () => {
     const config = await propertiesAsync();
     return config['addon.type'] == 'behavior';
 }
 
+/**
+ * Estructura básica para una entidad de comportamiento
+ */
 export const BEHAVIOR_ENTITY = {
     "format_version": "",
     "minecraft:entity": {
@@ -34,11 +51,18 @@ export const BEHAVIOR_ENTITY = {
     }
 }
 
+/**
+ * Verifica si el tipo de complemento es solo de recursos
+ * @returns {Promise<boolean>} - Verdadero si el tipo es "resource"
+ */
 export const ONLY_RESOURCE = async () => {
     const config = await propertiesAsync();
     return config['addon.type'] == 'resource';
 }
 
+/**
+ * Estructura básica para una entidad de recurso
+ */
 export const RESOURCE_ENTITY = {
     "format_version": "",
     "minecraft:client_entity": {
@@ -68,12 +92,18 @@ export const RESOURCE_ENTITY = {
 }
 
 
-
+/**
+ * Verifica si el tipo de complemento es solo de skins
+ * @returns {Promise<boolean>} - Verdadero si el tipo es "skin"
+ */
 export const ONLY_SKIN = async () => {
     const config = await propertiesAsync();
     return config['addon.type'] == 'skin';
 }
 
+/**
+ * Plantillas para eventos personalizados en componentes
+ */
 export const EVENT_TEMPLATES = {
     'onBeforeDurabilityDamage': (name) => onBeforeDurabilityDamage(name),
     'onCompleteUse': (name) => onCompleteUse(name),
@@ -93,6 +123,7 @@ export const EVENT_TEMPLATES = {
     'onTick': (name) => onTick(name),
 }
 
+/** Versión de módulos utilizados */
 export const MODULE_VERSION = {
     '@minecraft/common': '1.2.0',
     '@minecraft/debug-utilities': '1.0.0-beta',
@@ -104,12 +135,14 @@ export const MODULE_VERSION = {
     '@minecraft/server-editor': '0.1.0-beta',
 }
 
+/** Librerías */
 export const LIBS = [
     "bedrockSystem",
     "blockManager",
     "itemManager",
 ]
 
+/** Idiomas soportados */
 export const LANGS = [
     "da_DK",
     "de_DE",
@@ -141,8 +174,10 @@ export const LANGS = [
     "ko_KR",
 ]
 
+/** Categorías de ítems */
 export const CATEGORYS = ["construction", "nature", "equipment", "items"]
 
+/** Nombres de grupos de ítems */
 export const ITEM_GROUP_NAMES = {
     "construction": [
         "itemGroup.name.brick",
@@ -273,11 +308,12 @@ export const ITEM_GROUP_NAMES = {
     ]
 };
 
-
+/** Materiales de bloques */
 export const BLOCK_MATERIALS = [
     "opaque", "double_sided", "blend", "alpha_test"
 ]
 
+/** Ejemplos de plantillas para el eventos */
 const onBeforeDurabilityDamage = async (name) => {
     const config = await propertiesAsync();
     const [, componentName] = name.split(':');

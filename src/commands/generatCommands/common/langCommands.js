@@ -1,35 +1,36 @@
 import { propertiesAsync } from "../../../utils/readProperties.js";
 import { makeSubFile, validateFile } from "../../../utils/fileOperations.js";
 import { LANGS } from "../../../utils/constants.js";
-import { Command } from "commander";
+import { language } from "../../../utils/i18n.js";
+import { Command, Option } from "commander";
 import inquirer from "inquirer";
 import chalk from "chalk";
 import ora from "ora";
 import fs from 'fs';
 
-const lang = new Command('lang')
-    .description('Genera un archivo de idioma')
+const lang = new Command('lang').alias('lan')
+    .description(language.__("common.lang.description"))
 
-lang.option('-r, --region <string>', 'Especifica la región para la localización de idioma');
+lang.addOption(new Option('-r, --region <string>', language.__("common.lang.option.r")).choices(LANGS));
 
 lang.action(async (options) => {
     const config = await propertiesAsync();
     if (!config) {
         return console.log(
-            chalk.yellowBright('No puedes generar un archivo de localización en un proyecto sin el archivo'),
+            chalk.yellowBright(language.__("common.lang.exits.1")),
             chalk.bold(chalk.green('addon.properties'))
         );
     }
 
     if (!LANGS.includes(options.region)) {
         console.log(
-            chalk.yellowBright('La localización no fue seleciona o no es valida')
+            chalk.yellowBright(language.__("common.lang.exits.2")),
         );
         const questions = [
             {
                 type: 'list',
                 name: 'selection',
-                message: 'Selecciona la localización:',
+                message: language.__("common.lang.selections"),
                 choices: [
                     { value: "da_DK", name: "Danish, Denmark" },
                     { value: "de_DE", name: "German, Germany" },
@@ -74,11 +75,11 @@ lang.action(async (options) => {
         `pack.name=${Array.isArray(config['addon.name']) ? config['addon.name'][0] : config['addon.name']}
 pack.description=${Array.isArray(config['addon.description']) ? config['addon.description'][0] : config['addon.description']}`
 
-    const spinner = ora('Creando localización...').start();
+    const spinner = ora(language.__("common.lang.spinner.start")).start();
 
     try {
 
-        if (validateFile(`texts/${options.region}.lang`)) return spinner.fail(chalk.bold(chalk.yellowBright('La localización ya existe')));
+        if (validateFile(`texts/${options.region}.lang`)) return spinner.fail(chalk.bold(chalk.yellowBright(language.__("common.lang.exits.3"))));
         await makeSubFile(`${options.region}.lang`, 'texts/', content);
 
         if (!validateFile(`texts/languages.json`)) {
@@ -95,9 +96,9 @@ pack.description=${Array.isArray(config['addon.description']) ? config['addon.de
             makeSubFile('languages.json', 'texts/', JSON.stringify(languages, null, 2))
         }
 
-        spinner.succeed(chalk.bold(chalk.whiteBright(`La localización ${options.region} ha sido creado exitosamente!`)));
+        spinner.succeed(chalk.bold(chalk.whiteBright(language.__("common.lang.spinner.succeed").replace("${options.region}", options.region))));
     } catch (error) {
-        spinner.fail(chalk.red('Error al crear el componente.'));
+        spinner.fail(chalk.red(language.__("common.lang.spinner.error")));
         console.error(error);
     }
 })

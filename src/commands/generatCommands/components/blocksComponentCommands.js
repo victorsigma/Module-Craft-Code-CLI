@@ -9,24 +9,25 @@ import { Command } from 'commander';
 import inquirer from 'inquirer';
 import chalk from 'chalk';
 import ora from 'ora';
+import { language } from "../../../utils/i18n.js";
 
-const blocksComponent = new Command('block')
-    .description('Crea un componente personalizado de block nuevo');
-blocksComponent.option('-n, --name <string>', 'Especifica el nombre del componente del bloque', 'namespace:block_component');
-blocksComponent.option('-d, --description <string>', 'Especifica la descripción del componente del bloque', 'description');
+const blocksComponent = new Command('block').alias('b')
+    .description(language.__("component.block.description"));
+blocksComponent.option('-n, --name <string>', language.__("component.block.option.n"), 'namespace:block_component');
+blocksComponent.option('-d, --description <string>', language.__("component.block.option.d"), 'description');
 
 
 blocksComponent.action(async (options) => {
     const config = await propertiesAsync();
     if (!config) return console.log(
-        chalk.yellowBright('No puedes generar un componente en un proyecto sin el archivo'),
+        chalk.yellowBright(language.__("component.block.exits.1")),
         chalk.bold(chalk.green('addon.properties'))
     );
 
 
     const behavior = await ONLY_BEHAVIOR()
     if (!behavior) return console.log(
-        chalk.yellowBright('No puedes generar un componente en un proyecto que no sea behavior')
+        chalk.yellowBright(language.__("component.block.exits.2"))
     );
 
     // Asegurar que el nombre tenga un namespace
@@ -34,20 +35,20 @@ blocksComponent.action(async (options) => {
     while (!options.name.includes(':')) {
         if (!config['addon.namespace']) {
             console.error(
-                chalk.red('El nombre del componente debe incluir ":" para separar namespace'),
-                chalk.green('\nNombre actual:'),
+                chalk.red(language.__("addon.namespace.error.1")),
+                chalk.green(language.__("addon.namespace.error.2")),
                 chalk.white(options.name)
             );
 
             const input = [
-                { type: 'input', name: 'name', message: 'Escribe otro nombre:' }
+                { type: 'input', name: 'name', message: language.__("addon.namespace.question") }
             ];
 
             const response = await inquirer.prompt(input);
             options.name = response.name;
         } else {
             if(Array.isArray(config['addon.namespace'])){
-                console.log(chalk.yellow(`Se encontraron multiples namespace`));
+                console.log(chalk.yellow(language.__("addon.namespace.multiple")));
                 const namespace = await selectFromArray(config['addon.namespace']);
                 options.name = `${namespace}:${options.name}`;
             } else {
@@ -58,7 +59,7 @@ blocksComponent.action(async (options) => {
 
     if (options.name === 'namespace:block_component') {
         if(Array.isArray(config['addon.namespace'])){
-            console.log(chalk.yellow(`Se encontraron multiples namespace`));
+            console.log(chalk.yellow(language.__("addon.namespace.multiple")));
             const namespace = await selectFromArray(config['addon.namespace']);
             options.name = namespace
             ? `${namespace}:block_component`
@@ -74,7 +75,7 @@ blocksComponent.action(async (options) => {
         {
             type: 'checkbox',
             name: 'selections',
-            message: 'Selecciona los eventos:',
+            message: language.__("component.block.selections"),
             choices: [
                 { name: 'beforeOnPlayerPlace', value: 'beforeOnPlayerPlace' },
                 { name: 'onEntityFallOn', value: 'onEntityFallOn' },
@@ -92,7 +93,7 @@ blocksComponent.action(async (options) => {
     const response = await inquirer.prompt(questions);
 
     // Validar si el usuario no selecciona ningún evento
-    if (!response.selections.length) return console.log(chalk.red('Debes seleccionar al menos un evento.'));
+    if (!response.selections.length) return console.log(chalk.red(language.__("component.block.invalid")));
 
 
     response.selections.forEach(evento => {
@@ -118,7 +119,7 @@ export const ${toCamelCase(options.name.split(':')[1])}Component = {
     ${events}
 }`;
 
-    const spinner = ora('Creando componente...').start();
+    const spinner = ora(language.__("component.block.spinner.start")).start();
 
     try {
         await makeComponentFile(options.name, PATH_BLOCK_COMPONENTS, content);
@@ -140,11 +141,12 @@ export const ${toCamelCase(options.name.split(':')[1])}Component = {
             await makeFile('block_components.json', JSON.stringify(fileData, null, 2))
         }
 
-        spinner.succeed(chalk.bold(chalk.whiteBright(`El componente ${options.name} ha sido creado exitosamente!`)));
+        spinner.succeed(chalk.bold(chalk.whiteBright(language.__("component.block.spinner.success").replace('${options.name}', options.name))));
     } catch (error) {
-        spinner.fail(chalk.red('Error al crear el componente.'));
+        spinner.fail(chalk.red(language.__("component.block.spinner.error")));
         console.error(error);
     }
+    process.exit(0);
 });
 
 

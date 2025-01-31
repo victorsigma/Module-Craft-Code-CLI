@@ -1,3 +1,4 @@
+import { language } from '../utils/i18n.js';
 import inquirer from "inquirer";
 
 /**
@@ -14,7 +15,7 @@ export const selectFromArray = async (array) => {
         {
             type: 'list',
             name: 'selection',
-            message: 'Seleccionar:',
+            message: language.__("form.selection"),
             choices
         }
     ];

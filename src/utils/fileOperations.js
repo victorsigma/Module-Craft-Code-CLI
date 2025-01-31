@@ -97,7 +97,7 @@ export const cloneFile = async (sourceFileName, destinationPath) => {
     const __filename = fileURLToPath(import.meta.url);
     const __dirname = path.dirname(__filename);
     // Ruta al archivo de origen dentro del directorio de la CLI
-    const sourcePath = path.join(__dirname, `../../src/assets/${sourceFileName}`);
+    const sourcePath = path.join(__dirname, `../assets/${sourceFileName}`);
     
     try {
         // Verifica si la ruta de destino existe
