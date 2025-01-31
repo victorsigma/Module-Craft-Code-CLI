@@ -4,15 +4,13 @@
 
 ### Comandos
 
-<full-line></full-line>
-
 ## Init
 
 Inicializa el proyecto con un archivo `addon.properties`.
 
-> **<text-red>mccc </text-red> <text-green>init</text-green> <text-yellow>[</text-yellow><span>opciones</span><text-yellow>]</text-yellow>**
+> **mccc init [opciones]**
 >
-> **<text-red>mccc </text-red> <text-green>i</text-green> <text-yellow>[</text-yellow><span>opciones</span><text-yellow>]</text-yellow>**
+> **mccc i [opciones]**
 
 Opciones
 > * `-n, --name <string>`: Especifica el nombre del addon (por defecto: `"New Addon"`).
@@ -26,9 +24,9 @@ Opciones
 
 Genera componentes personalizados, elementos y bloques.
 
-> **<text-red>mccc </text-red> <text-green>generate</text-green> <text-yellow>[</text-yellow><span>comando</span><text-yellow>]</text-yellow> <text-yellow>[</text-yellow><span>opciones</span><text-yellow>]</text-yellow>**
+> **mccc generate [comando] [opciones]**
 >
-> **<text-red>mccc </text-red> <text-green>g</text-green> <text-yellow>[</text-yellow><span>comando</span><text-yellow>]</text-yellow> <text-yellow>[</text-yellow><span>opciones</span><text-yellow>]</text-yellow>**
+> **mccc g [comando] [opciones]**
 
 Subcomandos
 > * `component`: Genera un componente personalizado.
@@ -41,9 +39,9 @@ Subcomandos
 
 Genera un componente personalizado.
 
-> **<text-red>mccc </text-red> <text-green>generate</text-green> <text-green>component</text-green> <text-yellow>[</text-yellow><span>comando</span><text-yellow>]</text-yellow> <text-yellow>[</text-yellow><span>opciones</span><text-yellow>]</text-yellow>**
+> **mccc generate component [comando] [opciones]**
 >
-> **<text-red>mccc </text-red> <text-green>g</text-green> <text-green>c</text-green> <text-yellow>[</text-yellow><span>comando</span><text-yellow>]</text-yellow> <text-yellow>[</text-yellow><span>opciones</span><text-yellow>]</text-yellow>**
+> **mccc g c [comando] [opciones]**
 
 Subcomandos
 > * `block`: Crea un componente personalizado para un bloque.
@@ -59,9 +57,9 @@ Opciones
 
 Crea un componente personalizado para un bloque.
 
-> **<text-red>mccc </text-red> <text-green>generate</text-green> <text-green>component</text-green> <text-green>block</text-green> <text-yellow>[</text-yellow><span>opciones</span><text-yellow>]</text-yellow>**
+> **mccc generate component block [opciones]**
 >
-> **<text-red>mccc </text-red> <text-green>g</text-green> <text-green>c</text-green> <text-green>block</text-green> <text-yellow>[</text-yellow><span>opciones</span><text-yellow>]</text-yellow>**
+> **mccc g c block [opciones]**
 
 <mid-line></mid-line>
 
@@ -69,9 +67,9 @@ Crea un componente personalizado para un bloque.
 
 Crea un componente personalizado para un item.
 
-> **<text-red>mccc </text-red> <text-green>generate</text-green> <text-green>component</text-green> <text-green>item</text-green> <text-yellow>[</text-yellow><span>opciones</span><text-yellow>]</text-yellow>**
+> **mccc generate component item [opciones]**
 >
-> **<text-red>mccc </text-red> <text-green>g</text-green> <text-green>c</text-green> <text-green>item</text-green> <text-yellow>[</text-yellow><span>opciones</span><text-yellow>]</text-yellow>**
+> **mccc g c item [opciones]**
 
 
 <full-line></full-line>
@@ -80,9 +78,9 @@ Crea un componente personalizado para un item.
 
 Genera archivos comunes.
 
-> **<text-red>mccc </text-red> <text-green>generate</text-green> <text-green>common</text-green> <text-yellow>[</text-yellow><span>comando</span><text-yellow>]</text-yellow> <text-yellow>[</text-yellow><span>opciones</span><text-yellow>]</text-yellow>**
+> **mccc generate common [comando] [opciones]**
 >
-> **<text-red>mccc </text-red> <text-green>g</text-green> <text-green>cm</text-green> <text-yellow>[</text-yellow><span>comando</span><text-yellow>]</text-yellow> <text-yellow>[</text-yellow><span>opciones</span><text-yellow>]</text-yellow>**
+> **mccc g cm [comando] [opciones]**
 
 Subcomandos
 > * `lang`: Genera un archivo de idioma.
@@ -96,9 +94,9 @@ Subcomandos
 
 Genera un archivo de idioma.
 
-> **<text-red>mccc </text-red> <text-green>generate</text-green> <text-green>common</text-green> <text-green>lang</text-green> <text-yellow>[</text-yellow><span>opciones</span><text-yellow>]</text-yellow>**
+> **mccc generate common lang [opciones]**
 >
-> **<text-red>mccc </text-red> <text-green>g</text-green> <text-green>cm</text-green> <text-green>lang</text-green> <text-yellow>[</text-yellow><span>opciones</span><text-yellow>]</text-yellow>**
+> **mccc g cm lang [opciones]**
 
 
 
@@ -111,9 +109,9 @@ Opciones
 
 Genera un archivo `manifest.json`.
 
-> **<text-red>mccc </text-red> <text-green>generate</text-green> <text-green>common</text-green> <text-green>manifest</text-green> <text-yellow>[</text-yellow><span>opciones</span><text-yellow>]</text-yellow>**
+> **mccc generate common manifest [opciones]**
 >
-> **<text-red>mccc </text-red> <text-green>g</text-green> <text-green>cm</text-green> <text-green>manifest</text-green> <text-yellow>[</text-yellow><span>opciones</span><text-yellow>]</text-yellow>**
+> **mccc g cm manifest [opciones]**
 
 Opciones
 > * `-l, --link <string>`: Vincula un resource_pack con un behavior_pack.
@@ -126,9 +124,9 @@ Opciones
 
 Genera una librería.
 
-> **<text-red>mccc </text-red> <text-green>generate</text-green> <text-green>common</text-green> <text-green>library</text-green> <text-yellow>[</text-yellow><span>opciones</span><text-yellow>]</text-yellow>**
+> **mccc generate common library [opciones]**
 >
-> **<text-red>mccc </text-red> <text-green>g</text-green> <text-green>cm</text-green> <text-green>library</text-green> <text-yellow>[</text-yellow><span>opciones</span><text-yellow>]</text-yellow>**
+> **mccc g cm library [opciones]**
 
 Opciones
 > * `-m, --module <string>`: Especifica la librería que se va a agregar. Opciones: `bedrockSystem`, `blockManager`, `itemManager`.
@@ -139,9 +137,9 @@ Opciones
 
 Establece un icono genérico para tu proyecto.
 
-> **<text-red>mccc </text-red> <text-green>generate</text-green> <text-green>common</text-green> <text-green>icon</text-green> <text-yellow>[</text-yellow><span>opciones</span><text-yellow>]</text-yellow>**
+> **mccc generate common icon [opciones]**
 >
-> **<text-red>mccc </text-red> <text-green>g</text-green> <text-green>cm</text-green> <text-green>icon</text-green> <text-yellow>[</text-yellow><span>opciones</span><text-yellow>]</text-yellow>**
+> **mccc g cm icon [opciones]**
 
 Opciones
 > * `-r, --random <boolean>`: Habilita la selección aleatoria de íconos (por defecto: `false`).
@@ -152,9 +150,9 @@ Opciones
 
 Genera objetos de tipo `entity`, `item`, `block`.
 
-> **<text-red>mccc </text-red> <text-green>generate</text-green> <text-green>element</text-green> <text-yellow>[</text-yellow><span>comando</span><text-yellow>]</text-yellow> <text-yellow>[</text-yellow><span>opciones</span><text-yellow>]</text-yellow>**
+> **mccc generate element [comando] [opciones]**
 >
-> **<text-red>mccc </text-red> <text-green>g</text-green> <text-green>e</text-green> <text-yellow>[</text-yellow><span>comando</span><text-yellow>]</text-yellow> <text-yellow>[</text-yellow><span>opciones</span><text-yellow>]</text-yellow>**
+> **mccc g e [comando] [opciones]**
 
 Subcomandos
 
@@ -168,9 +166,9 @@ Subcomandos
 
 Genera un objeto de entidad.
 
-> **<text-red>mccc </text-red> <text-green>generate</text-green> <text-green>element</text-green> <text-green>entity</text-green> <text-yellow>[</text-yellow><span>opciones</span><text-yellow>]</text-yellow>**
+> **mccc generate element entity [opciones]**
 >
-> **<text-red>mccc </text-red> <text-green>g</text-green> <text-green>e</text-green> <text-green>entity</text-green> <text-yellow>[</text-yellow><span>opciones</span><text-yellow>]</text-yellow>**
+> **mccc g e entity [opciones]**
 
 Opciones
 > * `-n, --name <string>`: Especifica el identificador de la entidad (por defecto: `"namespace:entity"`).
@@ -185,9 +183,9 @@ Opciones
 
 Genera un objeto item.
 
-> **<text-red>mccc </text-red> <text-green>generate</text-green> <text-green>element</text-green> <text-green>item</text-green> <text-yellow>[</text-yellow><span>opciones</span><text-yellow>]</text-yellow>**
+> **mccc generate element item [opciones]**
 >
-> **<text-red>mccc </text-red> <text-green>g</text-green> <text-green>e</text-green> <text-green>item</text-green> <text-yellow>[</text-yellow><span>opciones</span><text-yellow>]</text-yellow>**
+> **mccc g e item [opciones]**
 
 Opciones
 > * `-n, --name <string>`: Especifica el identificador del item (por defecto: `"namespace:item"`).
@@ -200,9 +198,9 @@ Opciones
 
 Genera un objeto de bloque.
 
-> **<text-red>mccc </text-red> <text-green>generate</text-green> <text-green>element</text-green> <text-green>block</text-green> <text-yellow>[</text-yellow><span>opciones</span><text-yellow>]</text-yellow>**
+> **mccc generate element block [opciones]**
 >
-> **<text-red>mccc </text-red> <text-green>g</text-green> <text-green>e</text-green> <text-green>block</text-green> <text-yellow>[</text-yellow><span>opciones</span><text-yellow>]</text-yellow>**
+> **mccc g e block [opciones]**
 
 Opciones
 > * `-n, --name <string>`: Especifica el identificador del bloque (por defecto: `"namespace:block"`).
