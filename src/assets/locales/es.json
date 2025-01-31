@@ -189,7 +189,7 @@
         }
     },
     "component": {
-        "description": "Generar un componentes personalizado [block|item].",
+        "description": "Generar un componente personalizado [block|item].",
         "block": {
             "description": "Crea un componente personalizado para un bloque.",
             "option": {
