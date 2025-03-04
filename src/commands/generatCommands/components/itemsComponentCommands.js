@@ -1,7 +1,7 @@
 import item_components from "../../../assets/jsons/item_components.json" with { type: 'json' };
 
 import { toCamelCase, toSnackCase, uppercaseFirstLetter } from '../../../utils/stringManager.js';
-import { clearEvents, makeComponentFile, makeEventFile, updateIndexFile, validateFile } from '../../../utils/fileOperations.js';
+import { clearEvents, makeComponentFile, makeEventFile, makeFile, updateIndexFile, validateFile } from '../../../utils/fileOperations.js';
 import { ONLY_BEHAVIOR, PATH_ITEM_COMPONENTS, PATH_ITEM_EVENTS } from '../../../utils/constants.js';
 import { propertiesAsync } from '../../../utils/readProperties.js';
 import { selectFromArray } from '../../../utils/forms.js';
@@ -138,7 +138,7 @@ export const ${toCamelCase(options.name.split(':')[1])}Component = {
             await makeFile('item_components.json', JSON.stringify(fileData, null, 2))
         }
 
-        spinner.succeed(chalk.bold(chalk.whiteBright(language.__("component.item.spinner.success").replace('${options.name}', options.name))));
+        spinner.succeed(chalk.bold(chalk.whiteBright(language.__("component.item.spinner.succeed").replace('${options.name}', options.name))));
     } catch (error) {
         spinner.fail(chalk.red(language.__("component.item.spinner.error")));
         console.error(error);

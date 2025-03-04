@@ -469,7 +469,7 @@ const itemSword = async (options) => {
         {
             type: 'input',
             name: 'speedBamboo',
-            message: language.__("element.item.sword.questions.6"),
+            message: language.__("element.item.sword.questions.7"),
         },
     ];
 

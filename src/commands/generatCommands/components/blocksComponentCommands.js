@@ -141,7 +141,7 @@ export const ${toCamelCase(options.name.split(':')[1])}Component = {
             await makeFile('block_components.json', JSON.stringify(fileData, null, 2))
         }
 
-        spinner.succeed(chalk.bold(chalk.whiteBright(language.__("component.block.spinner.success").replace('${options.name}', options.name))));
+        spinner.succeed(chalk.bold(chalk.whiteBright(language.__("component.block.spinner.succeed").replace('${options.name}', options.name))));
     } catch (error) {
         spinner.fail(chalk.red(language.__("component.block.spinner.error")));
         console.error(error);

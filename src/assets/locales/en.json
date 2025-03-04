@@ -1,337 +1,351 @@
 {
-    "program": {
-        "name": "Module Craft Code CLI",
-        "description": "Versatile CLI for generating and managing modules, components, events and configuration files in Minecraft projects.",
-        "exeption": {
-            "close": {
-                "1": "Program interrupted by the user.",
-                "2": "Input interrupted by the user.",
-                "3": "Error not controlled:"
-            }
-        }
-    },
-    "init": {
-        "description": "Initializes the project with an addon.properties file.",
-        "option": {
-            "n": "Specifies the name of the addon.",
-            "s": "Specifies the addon namespace.",
-            "d": "Specifies the addon description.",
-            "t": "Specifies the project type."
-        },
-        "exits": {
-            "1": "You can't initialize another project, the file",
-            "2": "addon.properties",
-            "3": "already exists"
-        },
-        "questions": {
-            "1": "Do you want to place a namespace?:",
-            "2": "Write your namespace:"
-        },
-        "spinner": {
-            "start": "Creating addon.properties...",
-            "succeed": "Project successfully initialized!",
-            "error": "Error creating addon.properties."
-        }
-    },
-    "generate": {
-        "description": "Subcommands [component, common, element]"
-    },
-    "form": {
-        "selection": "Select:"
-    },
-    "element": {
-        "description": "Generate object of type [entity|item|block].",
-        "item": {
-            "description": "Generates an item object",
-            "option": {
-                "n": "Specifies the item identifier",
-                "t": "Specify the type of item to create - Only behavior",
-                "m": "Indicates if the item will have a custom section in the Minecraft menu - Only behavior"
-            },
-            "exits": {
-                "1": "You can't generate an item in a project without the file",
-                "2": "The file fileName already exists."
-            },
-            "add_components": {
-                "questions": {
-                    "1": "Do you want to add customized components?:",
-                    "2": "Would you like to add another customized component?:"
-                },
-                "error": {
-                    "1": "It is not possible to add customized components",
-                    "2": "No custom components in the file"
-                },
-                "message": "Select component"
-            },
-            "menu": {
-                "category": "Select category",
-                "group": "Select group"
-            },
-            "behavior": {
-                "spinner": {
-                    "start": "Creating item...",
-                    "succeed": "The item ${options.name} has been successfully created!!",
-                    "error": "Error creating the item ${options.name}."
-                }
-            },
-            "resource": {
-                "spinner": {
-                    "start": "Adding item texture...",
-                    "succeed": "The texture ${textureName} has been successfully added!!",
-                    "error": "Error adding texture ${textureName}."
-                }
-            },
-            "axe": {
-                "questions": {
-                    "1": "Enter the damage value (leave empty mask 7):",
-                    "2": "Enter the enchantment value (leave empty mask 15):",
-                    "3": "Enter the minimum damage value (leave empty mask 10):",
-                    "4": "Enter the maximum damage value (leave empty mask 50):",
-                    "5": "Enter the maximum durability (leave empty mask 1048):",
-                    "6": "Enter the destruction speed (leave empty mask 1.0):"
-                }
-            },
-            "pickaxe": {
-                "questions": {
-                    "1": "Enter the damage value (leave empty mask 5):",
-                    "2": "Enter the enchantment value (leave empty mask 5):",
-                    "3": "Enter the minimum damage value (leave empty mask 10):",
-                    "4": "Enter the maximum damage value (leave empty mask 50):",
-                    "5": "Enter the maximum durability (leave empty mask 1048):",
-                    "6": "Enter the destruction speed (leave empty mask 1.2):"
-                }
-            },
-            "shovel": {
-                "questions": {
-                    "1": "Enter the damage value (leave empty mask 4):",
-                    "2": "Enter the enchantment value (leave empty mask 15):",
-                    "3": "Enter the minimum damage value (leave empty mask 10):",
-                    "4": "Enter the maximum damage value (leave empty mask 50):",
-                    "5": "Enter the maximum durability (leave empty mask 1048):",
-                    "6": "Enter the destruction speed (leave empty mask 1.5):"
-                }
-            },
-            "sword": {
-                "questions": {
-                    "1": "Enter the damage value (leave empty mask 8):",
-                    "2": "Enter the enchantment value (leave empty mask 15):",
-                    "3": "Enter the minimum damage value (leave empty mask 10):",
-                    "4": "Enter the maximum damage value (leave empty mask 50):",
-                    "5": "Enter the maximum durability (leave empty mask 1048):",
-                    "6": "Enter the speed of destruction for spider web (leave empty mask 15):",
-                    "7": "Enter the destruction speed for bamboo (leave empty mask 10):"
-                }
-            }
-        },
-        "entity": {
-            "description": "Generates an entity object",
-            "option": {
-                "n": "Specifies the entity identifier",
-                "r": "Sets the Vanilla Minecraft identifier that this entity will use to build itself.",
-                "e": "Specifies whether the entity will be under experimental features of Minecraft.",
-                "sp": "Specifies whether the entity generator will appear in the creative inventory.",
-                "su": "Specifies whether the entity can be invoked by commands in the game."
-            },
-            "exits": {
-                "1": "You can't generate an entity in a project without the file",
-                "2": "The file fileName already exists."
-            },
-            "spinner": {
-                "start": "Creating entity...",
-                "succeed": "The entity ${options.name} has been successfully created!!",
-                "error": "Error creating the entity ${options.name}."
-            }
-        },
-        "block": {
-            "description": "Generates an block object",
-            "option": {
-                "n": "Specifies the block identifier",
-                "m": "Indicates if the block will have a custom section in the Minecraft menu - Only behavior",
-                "l": "Defines how a block behaves when detecting a liquid - Only behavior",
-                "r": "Defines the texture material of the block - Only behavior"
-            },
-            "exits": {
-                "1": "You can't generate an block in a project without the file",
-                "2": "The file fileName already exists."
-            },
-            "add_components": {
-                "questions": {
-                    "1": "Do you want to add customized components?:",
-                    "2": "Would you like to add another customized component?:"
-                },
-                "error": {
-                    "1": "It is not possible to add customized components",
-                    "2": "No custom components in the file"
-                },
-                "message": "Select component"
-            },
-            "menu": {
-                "category": "Select category",
-                "group": "Select group"
-            },
-            "behavior": {
-                "spinner": {
-                    "start": "Creating block...",
-                    "succeed": "The block ${options.name} has been successfully created!!",
-                    "error": "Error creating the block ${options.name}."
-                }
-            },
-            "resource": {
-                "spinner": {
-                    "start": "Adding block texture...",
-                    "succeed": "The texture ${textureName} has been successfully added!!",
-                    "error": "Error adding texture ${textureName}."
-                }
-            },
-            "questions": {
-                "1": "Enter the extraction time (leave empty mask 4):"
-            }
-        }
-    },
-    "component": {
-        "description": "Generate a customized component [block|item].",
-        "block": {
-            "description": "Creates a custom component for a block.",
-            "option": {
-                "n": "Specifies the name of the block component",
-                "d": "Specifies the description of the block component"
-            },
-            "exits": {
-                "1": "You can't generate a block component in a project without the file.",
-                "2": "You can't generate a component in a project that is not behavior."
-            },
-            "selections": "Select events:",
-            "invalid": "You must select at least one event.",
-            "spinner": {
-                "start": "Creating component...",
-                "succeed": "The ${options.name} component has been successfully created!",
-                "error": "Error creating the component."
-            }
-        },
-        "item": {
-            "description": "Creates a custom component for a item.",
-            "option": {
-                "n": "Specifies the name of the item component",
-                "d": "Specifies the description of the item component"
-            },
-            "exits": {
-                "1": "You can't generate a item component in a project without the file.",
-                "2": "You can't generate a component in a project that is not behavior."
-            },
-            "selections": "Select events:",
-            "invalid": "You must select at least one event.",
-            "spinner": {
-                "start": "Creating component...",
-                "succeed": "The ${options.name} component has been successfully created!",
-                "error": "Error creating the component."
-            }
-        }
-    },
-    "common": {
-        "description": "Generate one or more files of the common category [lang|manifest|library|icon].",
-        "lang": {
-            "description": "Generates a language file.",
-            "option": {
-                "r": "Specifies the region for language localization"
-            },
-            "exits": {
-                "1": "You can't generate a language file in a project without the file",
-                "2": "Location was not selected or is not valid.",
-                "3": "The file already exists."
-            },
-            "selections": "Select the location:",
-            "spinner": {
-                "start": "Creating language file...",
-                "succeed": "The language file ${options.region} has been successfully created!",
-                "error": "Error creating the language file."
-            }
-        },
-        "manifest": {
-            "description": "Generates a manifest file for behavior | resource | skin",
-            "option": {
-                "l": "Links a resource_pack to a behavior_pack",
-                "s": "Enables scripts in a behavior_pack",
-                "c": "Enables the capabilities in a resource_pack"
-            },
-            "exits": {
-                "1": "You can't generate a manifest file in a project without the file",
-                "2": "The manifest.json file already exists."
-            },
-            "selections": {
-                "1": "Select the modules:",
-                "2": "Select the capabilities:"
-            },
-            "alert": {
-                "1": "No modules have been selected",
-                "2": "No capacities have been selected"
-            },
-            "spinner": {
-                "start": "Creating manifest file...",
-                "succeed": "The manifest.json file has been successfully created!",
-                "error": "Error creating manifest.json file."
-            }
-        },
-        "library": {
-            "description": "Generates a library file",
-            "option": {
-                "m": "Specifies the library to be added"
-            },
-            "exits": {
-                "1": "You can't generate a library file in a project without the file",
-                "2": "You can't add a library in a project that is not behavior.",
-                "3": "The file already exists."
-            },
-            "errors": {
-                "1": "The library was not selected or is not valid."
-            },
-            "selections": "Select the library:",
-            "build": {
-                "header": "The file",
-                "succeed": "has been successfully created!",
-                "error": "could not be added.",
-                "exits": "already exists."
-            },
-            "create": {
-                "header": "The library",
-                "succeed": "was successfully added.",
-                "error": "can't be added."
-            }
-        },
-        "icon": {
-            "description": "Set a generic icon for your project",
-            "option": {
-                "r": "Enables random selection of icons"
-            },
-            "exits": {
-                "1": "You can't add an icon in a project without the file",
-                "2": "You can't add an icon in a project that is not a behavior or resource.",
-                "3": "The file icon_pack.png already exists."
-            },
-            "icons": {
-                "sword": "Sword ⚔️",
-                "pickaxe": "Pickaxe ⛏️",
-                "axe": "Axe 🪓",
-                "shovel": "Shovel 🥄",
-                "hoe": "Hoe 🏒",
-                "pearl": "Pearl 🟠"
-            },
-            "random": "Random icon selected.",
-            "selections": "Select an icon:",
-            "selection": "Selected icon.",
-            "create": {
-                "succeed": "The icon ${iconsNames[options.icon]} has been set correctly for your project.",
-                "error": "The icon ${iconsNames[options.icon]} was not set correctly for your project."
-            }
-        }
-    },
-    "addon": {
-        "namespace": {
-            "error": {
-                "1": "The name must include \":\" to separate namespace",
-                "2": "\nCurrent name:"
-            },
-            "question": "Write another name:",
-            "multiple": "Several namespaces have been found"
-        }
-    }
+	"program": {
+		"name": "Module Craft Code CLI",
+		"description": "Versatile CLI for generating and managing modules, components, events and configuration files in Minecraft projects.",
+		"exeption": {
+			"close": {
+				"1": "Program interrupted by the user.",
+				"2": "Input interrupted by the user.",
+				"3": "Error not controlled:"
+			}
+		}
+	},
+	"init": {
+		"description": "Initializes the project with an addon.properties file.",
+		"option": {
+			"n": "Specifies the name of the addon.",
+			"s": "Specifies the addon namespace.",
+			"d": "Specifies the addon description.",
+			"t": "Specifies the project type."
+		},
+		"exits": {
+			"1": "You can't initialize another project, the file",
+			"2": "addon.properties",
+			"3": "already exists"
+		},
+		"questions": {
+			"1": "Do you want to place a namespace?:",
+			"2": "Write your namespace:"
+		},
+		"spinner": {
+			"start": "Creating addon.properties...",
+			"succeed": "Project successfully initialized!",
+			"error": "Error creating addon.properties."
+		}
+	},
+	"generate": {
+		"description": "Subcommands [component, common, element]"
+	},
+	"form": {
+		"selection": "Select:"
+	},
+	"element": {
+		"description": "Generate object of type [entity|item|block].",
+		"item": {
+			"description": "Generates an item object",
+			"option": {
+				"n": "Specifies the item identifier",
+				"t": "Specify the type of item to create - Only behavior",
+				"m": "Indicates if the item will have a custom section in the Minecraft menu - Only behavior"
+			},
+			"exits": {
+				"1": "You can't generate an item in a project without the file",
+				"2": "The file fileName already exists."
+			},
+			"add_components": {
+				"questions": {
+					"1": "Do you want to add customized components?:",
+					"2": "Would you like to add another customized component?:"
+				},
+				"error": {
+					"1": "It is not possible to add customized components",
+					"2": "No custom components in the file"
+				},
+				"message": "Select component"
+			},
+			"menu": {
+				"category": "Select category",
+				"group": "Select group"
+			},
+			"behavior": {
+				"spinner": {
+					"start": "Creating item...",
+					"succeed": "The item ${options.name} has been successfully created!!",
+					"error": "Error creating the item ${options.name}."
+				}
+			},
+			"resource": {
+				"spinner": {
+					"start": "Adding item texture...",
+					"succeed": "The texture ${textureName} has been successfully added!!",
+					"error": "Error adding texture ${textureName}."
+				}
+			},
+			"axe": {
+				"questions": {
+					"1": "Enter the damage value (leave empty mask 7):",
+					"2": "Enter the enchantment value (leave empty mask 15):",
+					"3": "Enter the minimum damage value (leave empty mask 10):",
+					"4": "Enter the maximum damage value (leave empty mask 50):",
+					"5": "Enter the maximum durability (leave empty mask 1048):",
+					"6": "Enter the destruction speed (leave empty mask 1.0):"
+				}
+			},
+			"pickaxe": {
+				"questions": {
+					"1": "Enter the damage value (leave empty mask 5):",
+					"2": "Enter the enchantment value (leave empty mask 5):",
+					"3": "Enter the minimum damage value (leave empty mask 10):",
+					"4": "Enter the maximum damage value (leave empty mask 50):",
+					"5": "Enter the maximum durability (leave empty mask 1048):",
+					"6": "Enter the destruction speed (leave empty mask 1.2):"
+				}
+			},
+			"shovel": {
+				"questions": {
+					"1": "Enter the damage value (leave empty mask 4):",
+					"2": "Enter the enchantment value (leave empty mask 15):",
+					"3": "Enter the minimum damage value (leave empty mask 10):",
+					"4": "Enter the maximum damage value (leave empty mask 50):",
+					"5": "Enter the maximum durability (leave empty mask 1048):",
+					"6": "Enter the destruction speed (leave empty mask 1.5):"
+				}
+			},
+			"sword": {
+				"questions": {
+					"1": "Enter the damage value (leave empty mask 8):",
+					"2": "Enter the enchantment value (leave empty mask 15):",
+					"3": "Enter the minimum damage value (leave empty mask 10):",
+					"4": "Enter the maximum damage value (leave empty mask 50):",
+					"5": "Enter the maximum durability (leave empty mask 1048):",
+					"6": "Enter the speed of destruction for spider web (leave empty mask 15):",
+					"7": "Enter the destruction speed for bamboo (leave empty mask 10):"
+				}
+			}
+		},
+		"entity": {
+			"description": "Generates an entity object",
+			"option": {
+				"n": "Specifies the entity identifier",
+				"r": "Sets the Vanilla Minecraft identifier that this entity will use to build itself.",
+				"e": "Specifies whether the entity will be under experimental features of Minecraft.",
+				"sp": "Specifies whether the entity generator will appear in the creative inventory.",
+				"su": "Specifies whether the entity can be invoked by commands in the game."
+			},
+			"exits": {
+				"1": "You can't generate an entity in a project without the file",
+				"2": "The file fileName already exists."
+			},
+			"spinner": {
+				"start": "Creating entity...",
+				"succeed": "The entity ${options.name} has been successfully created!!",
+				"error": "Error creating the entity ${options.name}."
+			}
+		},
+		"block": {
+			"description": "Generates an block object",
+			"option": {
+				"n": "Specifies the block identifier",
+				"m": "Indicates if the block will have a custom section in the Minecraft menu - Only behavior",
+				"l": "Defines how a block behaves when detecting a liquid - Only behavior",
+				"r": "Defines the texture material of the block - Only behavior"
+			},
+			"exits": {
+				"1": "You can't generate an block in a project without the file",
+				"2": "The file fileName already exists."
+			},
+			"add_components": {
+				"questions": {
+					"1": "Do you want to add customized components?:",
+					"2": "Would you like to add another customized component?:"
+				},
+				"error": {
+					"1": "It is not possible to add customized components",
+					"2": "No custom components in the file"
+				},
+				"message": "Select component"
+			},
+			"menu": {
+				"category": "Select category",
+				"group": "Select group"
+			},
+			"behavior": {
+				"spinner": {
+					"start": "Creating block...",
+					"succeed": "The block ${options.name} has been successfully created!!",
+					"error": "Error creating the block ${options.name}."
+				}
+			},
+			"resource": {
+				"spinner": {
+					"start": "Adding block texture...",
+					"succeed": "The texture ${textureName} has been successfully added!!",
+					"error": "Error adding texture ${textureName}."
+				}
+			},
+			"questions": {
+				"1": "Enter the extraction time (leave empty mask 4):"
+			}
+		}
+	},
+	"component": {
+		"description": "Generate a customized component [block|item].",
+		"block": {
+			"description": "Creates a custom component for a block.",
+			"option": {
+				"n": "Specifies the name of the block component",
+				"d": "Specifies the description of the block component"
+			},
+			"exits": {
+				"1": "You can't generate a block component in a project without the file.",
+				"2": "You can't generate a component in a project that is not behavior."
+			},
+			"selections": "Select events:",
+			"invalid": "You must select at least one event.",
+			"spinner": {
+				"start": "Creating component...",
+				"succeed": "The ${options.name} component has been successfully created!",
+				"error": "Error creating the component."
+			}
+		},
+		"item": {
+			"description": "Creates a custom component for a item.",
+			"option": {
+				"n": "Specifies the name of the item component",
+				"d": "Specifies the description of the item component"
+			},
+			"exits": {
+				"1": "You can't generate a item component in a project without the file.",
+				"2": "You can't generate a component in a project that is not behavior."
+			},
+			"selections": "Select events:",
+			"invalid": "You must select at least one event.",
+			"spinner": {
+				"start": "Creating component...",
+				"succeed": "The ${options.name} component has been successfully created!",
+				"error": "Error creating the component."
+			}
+		}
+	},
+	"common": {
+		"description": "Generate one or more files of the common category [lang|manifest|library|icon].",
+		"lang": {
+			"description": "Generates a language file.",
+			"option": {
+				"r": "Specifies the region for language localization"
+			},
+			"exits": {
+				"1": "You can't generate a language file in a project without the file",
+				"2": "Location was not selected or is not valid.",
+				"3": "The file already exists."
+			},
+			"selections": "Select the location:",
+			"spinner": {
+				"start": "Creating language file...",
+				"succeed": "The language file ${options.region} has been successfully created!",
+				"error": "Error creating the language file."
+			}
+		},
+		"manifest": {
+			"description": "Generates a manifest file for behavior | resource | skin",
+			"option": {
+				"l": "Links a resource_pack to a behavior_pack",
+				"s": "Enables scripts in a behavior_pack",
+				"c": "Enables the capabilities in a resource_pack"
+			},
+			"exits": {
+				"1": "You can't generate a manifest file in a project without the file",
+				"2": "The manifest.json file already exists."
+			},
+			"selections": {
+				"1": "Select the modules:",
+				"2": "Select the capabilities:"
+			},
+			"alert": {
+				"1": "No modules have been selected",
+				"2": "No capacities have been selected"
+			},
+			"spinner": {
+				"start": "Creating manifest file...",
+				"succeed": "The manifest.json file has been successfully created!",
+				"error": "Error creating manifest.json file."
+			}
+		},
+		"library": {
+			"description": "Generates a library file",
+			"option": {
+				"m": "Specifies the library to be added"
+			},
+			"exits": {
+				"1": "You can't generate a library file in a project without the file",
+				"2": "You can't add a library in a project that is not behavior.",
+				"3": "The file already exists."
+			},
+			"errors": {
+				"1": "The library was not selected or is not valid."
+			},
+			"selections": "Select the library:",
+			"build": {
+				"header": "The file",
+				"succeed": "has been successfully created!",
+				"error": "could not be added.",
+				"exists": "already exists."
+			},
+			"create": {
+				"header": "The library",
+				"succeed": "was successfully added.",
+				"error": "can't be added."
+			}
+		},
+		"icon": {
+			"description": "Set a generic icon for your project",
+			"option": {
+				"r": "Enables random selection of icons"
+			},
+			"exits": {
+				"1": "You can't add an icon in a project without the file",
+				"2": "You can't add an icon in a project that is not a behavior or resource.",
+				"3": "The file icon_pack.png already exists."
+			},
+			"icons": {
+				"sword": "Sword ⚔️",
+				"pickaxe": "Pickaxe ⛏️",
+				"axe": "Axe 🪓",
+				"shovel": "Shovel 🥄",
+				"hoe": "Hoe 🏒",
+				"pearl": "Pearl 🟠"
+			},
+			"random": "Random icon selected.",
+			"selections": "Select an icon:",
+			"selection": "Selected icon.",
+			"create": {
+				"succeed": "The icon ${iconsNames[options.icon]} has been set correctly for your project.",
+				"error": "The icon ${iconsNames[options.icon]} was not set correctly for your project."
+			}
+		}
+	},
+	"addon": {
+		"namespace": {
+			"error": {
+				"1": "The name must include \":\" to separate namespace",
+				"2": "\nCurrent name:"
+			},
+			"question": "Write another name:",
+			"multiple": "Several namespaces have been found"
+		}
+	},
+	"setting": {
+		"description": "Set the program settings.",
+		"option": {
+			"l": "Specifies the language of the program"
+		},
+		"questions": {
+			"1": "Select a language:"
+		},
+		"spinner": {
+			"start": "Saving configuration...",
+			"succeed": "Configuration saved successfully!",
+			"error": "Error saving configuration."
+		}
+	}
 }

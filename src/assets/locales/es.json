@@ -1,337 +1,351 @@
 {
-    "program": {
-        "name": "Module Craft Code CLI",
-        "description": "CLI versátil para generar y gestionar módulos, componentes, eventos y archivos de configuración en proyectos de Minecraft.",
-        "exeption": {
-            "close": {
-                "1": "Programa interrumpido por el usuario.",
-                "2": "Entrada interrumpida por el usuario.",
-                "3": "Error no controlado:"
-            }
-        }
-    },
-    "init": {
-        "description": "Inicializa el proyecto con un archivo addon.properties.",
-        "option": {
-            "n": "Especifica el nombre del addon",
-            "s": "Especifica el namespace del addon",
-            "d": "Especifica la descripción del addon",
-            "t": "Especifica el tipo de proyecto"
-        },
-        "exits": {
-            "1": "No puedes inicializar otro proyecto, el archivo",
-            "2": "addon.properties",
-            "3": "ya existe"
-        },
-        "questions": {
-            "1": "¿Quieres colocar un namespace?:",
-            "2": "Escribe tu namespace:"
-        },
-        "spinner": {
-            "start": "Creando addon.properties...",
-            "succeed": "Proyecto inicializado correctamente!",
-            "error": "Error al crear addon.properties."
-        }
-    },
-    "generate": {
-        "description": "Subcomandos [component, common, element]"
-    },
-    "form": {
-        "selection": "Seleccionar:"
-    },
-    "element": {
-        "description": "Generar objeto de tipo [entity|item|block].",
-        "item": {
-            "description": "Genera un objeto item",
-            "option": {
-                "n": "Especifica el identificador del item",
-                "t": "Especifica el tipo de item a crear - Solo behavior",
-                "m": "Indica si el item tendrá una sección personalizada en el menu de Minecraft - Solo behavior"
-            },
-            "exits": {
-                "1": "No puedes generar un item en un proyecto sin el archivo",
-                "2": "El archivo fileName ya existe."
-            },
-            "add_components": {
-                "questions": {
-                    "1": "¿Desea añadir componentes perzonalizados?:",
-                    "2": "¿Desea añadir otro componente perzonalizado?:"
-                },
-                "error": {
-                    "1": "No es posible añadir componentes personalizados",
-                    "2": "No hay componentes personalizados en el archivo"
-                },
-                "message": "Elegir componente"
-            },
-            "menu": {
-                "category": "Elegir categoría",
-                "group": "Elegir grupo"
-            },
-            "behavior": {
-                "spinner": {
-                    "start": "Creando item...",
-                    "succeed": "El item ${options.name} ha sido creado exitosamente!!",
-                    "error": "Error al crear el item ${options.name}."
-                }
-            },
-            "resource": {
-                "spinner": {
-                    "start": "Agregando textura del item...",
-                    "succeed": "La textura ${textureName} ha sido agregada exitosamente!!",
-                    "error": "Error al agregar la textura ${textureName}."
-                }
-            },
-            "axe": {
-                "questions": {
-                    "1": "Ingrese el valor de daño (dejar vacío colcara 7):",
-                    "2": "Ingrese el valor de encantamiento (dejar vacío colcara 15):",
-                    "3": "Ingrese el valor mínimo de daño (dejar vacío colcara 10):",
-                    "4": "Ingrese el valor máximo de daño (dejar vacío colcara 50):",
-                    "5": "Ingrese la durabilidad máxima (dejar vacío colcara 1048):",
-                    "6": "Ingrese la velocidad de destrucción (dejar vacío colcara 1.0):"
-                }
-            },
-            "pickaxe": {
-                "questions": {
-                    "1": "Ingrese el valor de daño (dejar vacío colcara 5):",
-                    "2": "Ingrese el valor de encantamiento (dejar vacío colcara 5):",
-                    "3": "Ingrese el valor mínimo de daño (dejar vacío colcara 10):",
-                    "4": "Ingrese el valor máximo de daño (dejar vacío colcara 50):",
-                    "5": "Ingrese la durabilidad máxima (dejar vacío colcara 1048):",
-                    "6": "Ingrese la velocidad de destrucción (dejar vacío colcara 1.2):"
-                }
-            },
-            "shovel": {
-                "questions": {
-                    "1": "Ingrese el valor de daño (dejar vacío colcara 4):",
-                    "2": "Ingrese el valor de encantamiento (dejar vacío colcara 15):",
-                    "3": "Ingrese el valor mínimo de daño (dejar vacío colcara 10):",
-                    "4": "Ingrese el valor máximo de daño (dejar vacío colcara 50):",
-                    "5": "Ingrese la durabilidad máxima (dejar vacío colcara 1048):",
-                    "6": "Ingrese la velocidad de destrucción (dejar vacío colcara 1.5):"
-                }
-            },
-            "sword": {
-                "questions": {
-                    "1": "Ingrese el valor de daño (dejar vacío colcara 8):",
-                    "2": "Ingrese el valor de encantamiento (dejar vacío colcara 15):",
-                    "3": "Ingrese el valor mínimo de daño (dejar vacío colcara 10):",
-                    "4": "Ingrese el valor máximo de daño (dejar vacío colcara 50):",
-                    "5": "Ingrese la durabilidad máxima (dejar vacío colcara 1048):",
-                    "6": "Ingrese la velocidad de destrucción para telaraña (dejar vacío colcara 15):",
-                    "7": "Ingrese la velocidad de destrucción para bamboo (dejar vacío colcara 10):"
-                }
-            }
-        },
-        "entity": {
-            "description": "Genera un objeto de entidad",
-            "option": {
-                "n": "Especifica el identificador de la entidad",
-                "r": "Establece el identificador de Vanilla Minecraft que esta entidad utilizará para construirse a sí misma",
-                "e": "Especifica si la entidad estará bajo características experimentales de Minecraft",
-                "sp": "Especifica si el generador de la entidad aparecerá en el inventario de creativo",
-                "su": "Especifica si la entidad puede ser invocada mediante comandos en el juego"
-            },
-            "exits": {
-                "1": "No puedes generar un objeto de entidad en un proyecto sin el archivo",
-                "2": "El archivo fileName ya existe."
-            },
-            "spinner": {
-                "start": "Creando entidad...",
-                "succeed": "La entidad ${options.name} ha sido creado exitosamente!!",
-                "error": "Error al crear la entidad ${options.name}."
-            }
-        },
-        "block": {
-            "description": "Genera un objeto de bloque",
-            "option": {
-                "n": "Especifica el identificador del bloque",
-                "m": "Indica si el bloque tendra una sección personalizada en el menu de Minecraft - Solo behavior",
-                "l": "Define cómo se comporta un bloque al detectar un líquido - Solo behavior",
-                "r": "Define el material de la textura del bloque - Solo behavior"
-            },
-            "exits": {
-                "1": "No puedes generar un bloque en un proyecto sin el archivo",
-                "2": "El archivo fileName ya existe."
-            },
-            "add_components": {
-                "questions": {
-                    "1": "¿Desea añadir componentes perzonalizados?:",
-                    "2": "¿Desea añadir otro componente perzonalizado?:"
-                },
-                "error": {
-                    "1": "No es posible añadir componentes personalizados",
-                    "2": "No hay componentes personalizados en el archivo"
-                },
-                "message": "Elegir componente"
-            },
-            "menu": {
-                "category": "Elegir categoría",
-                "group": "Elegir grupo"
-            },
-            "behavior": {
-                "spinner": {
-                    "start": "Creando bloque...",
-                    "succeed": "El bloque ${options.name} ha sido creado exitosamente!!",
-                    "error": "Error al crear el bloque ${options.name}."
-                }
-            },
-            "resource": {
-                "spinner": {
-                    "start": "Agregando textura del bloque...",
-                    "succeed": "La textura ${textureName} ha sido agregada exitosamente!!",
-                    "error": "Error al agregar la textura ${textureName}."
-                }
-            },
-            "questions": {
-                "1": "Ingrese el tiempo de extracción (dejar vacío colcara 4):"
-            }
-        }
-    },
-    "component": {
-        "description": "Generar un componente personalizado [block|item].",
-        "block": {
-            "description": "Crea un componente personalizado para un bloque.",
-            "option": {
-                "n": "Especifica el nombre del componente del bloque",
-                "d": "Especifica la descripción del componente del bloque"
-            },
-            "exits": {
-                "1": "No puedes generar un componente de bloque en un proyecto sin el archivo.",
-                "2": "No puedes generar un componente en un proyecto que no sea behavior."
-            },
-            "selections": "Selecciona los eventos:",
-            "invalid": "Debes seleccionar al menos un evento.",
-            "spinner": {
-                "start": "Creando componente...",
-                "succeed": "El componente ${options.name} ha sido creado exitosamente!",
-                "error": "Error al crear el componente."
-            }
-        },
-        "item": {
-            "description": "Crea un componente personalizado para un item.",
-            "option": {
-                "n": "Especifica el nombre del componente del item",
-                "d": "Especifica la descripción del componente del item"
-            },
-            "exits": {
-                "1": "No puedes generar un componente de item en un proyecto sin el archivo.",
-                "2": "No puedes generar un componente en un proyecto que no sea behavior."
-            },
-            "selections": "Selecciona los eventos:",
-            "invalid": "Debes seleccionar al menos un evento.",
-            "spinner": {
-                "start": "Creando componente...",
-                "succeed": "El componente ${options.name} ha sido creado exitosamente!",
-                "error": "Error al crear el componente."
-            }
-        }
-    },
-    "common": {
-        "description": "Generar uno o más archivos de la categoría común [lang|manifest|library|icon].",
-        "lang": {
-            "description": "Genera un archivo de idioma",
-            "option": {
-                "r": "Especifica la región para la localización del idioma"
-            },
-            "exits": {
-                "1": "No puedes generar un archivo de idioma en un proyecto sin el archivo",
-                "2": "La localización no fue seleciona o no es valida.",
-                "3": "El archivo ya existe."
-            },
-            "selections": "Selecciona la localización:",
-            "spinner": {
-                "start": "Creando archivo de idioma...",
-                "succeed": "El archivo de idioma ${options.region} ha sido creado exitosamente!",
-                "error": "Error al crear el archivo de idioma."
-            }
-        },
-        "manifest": {
-            "description": "Genera un archivo manifest para behavior | resource | skin",
-            "option": {
-                "l": "Vincula un resource_pack con un behavior_pack",
-                "s": "Habilita los scripts en un behavior_pack",
-                "c": "Habilita las capacidades en un resource_pack"
-            },
-            "exits": {
-                "1": "No puedes generar un archivo manifest en un proyecto sin el archivo",
-                "2": "El archivo manifest.json ya existe."
-            },
-            "selections": {
-                "1": "Selecciona los modulos:",
-                "2": "Selecciona las capacidades:"
-            },
-            "alert": {
-                "1": "No se han seleccionado modulos",
-                "2": "No se han seleccionado capacidades"
-            },
-            "spinner": {
-                "start": "Creando archivo manifest...",
-                "succeed": "El archivo manifest.json ha sido creado exitosamente!",
-                "error": "Error al crear el archivo manifest.json."
-            }
-        },
-        "library": {
-            "description": "Genera un archivo de librería",
-            "option": {
-                "m": "Especifica la librería que se va a agregar"
-            },
-            "exits": {
-                "1": "No puedes generar un archivo de librería en un proyecto sin el archivo",
-                "2": "No puedes agregar una libreria en un proyecto que no sea behavior",
-                "3": "El archivo ya existe."
-            },
-            "errors": {
-                "1": "La libreria no fue seleciona o no es valida"
-            },
-            "selections": "Selecciona la librería:",
-            "build": {
-                "header": "El archivo",
-                "succeed": "ha sido creado exitosamente!",
-                "error": "no pudo ser agregado.",
-                "exits": "ya existe."
-            },
-            "create": {
-                "header": "La libreria",
-                "succeed": "fue agregada exitosamente.",
-                "error": "no puedo ser agregada."
-            }
-        },
-        "icon": {
-            "description": "Establece un icono generico para tu proyecto",
-            "option": {
-                "r": "Habilita la selección aleatoria de íconos"
-            },
-            "exits": {
-                "1": "No puedes agregar un icono en un proyecto sin el archivo",
-                "2": "No puedes agregar un icono en un proyecto que no sea behavior o resource.",
-                "3": "El archivo icon_pack.png ya existe."
-            },
-            "icons": {
-                "sword": "Espada ⚔️",
-                "pickaxe": "Pico ⛏️",
-                "axe": "Hacha 🪓",
-                "shovel": "Pala 🥄",
-                "hoe": "Azada 🏒",
-                "pearl": "Perla 🟠"
-            },
-            "random": "Ícono aleatorio seleccionado.",
-            "selections": "Selecciona un ícono:",
-            "selection": "Ícono seleccionado.",
-            "create": {
-                "succeed": "El ícono ${iconsNames[options.icon]} ha sido establecido correctamente para tu proyecto.",
-                "error": "El ícono ${iconsNames[options.icon]} no fue establecido correctamente para tu proyecto."
-            }
-        }
-    },
-    "addon": {
-        "namespace": {
-            "error": {
-                "1": "El nombre debe incluir \":\" para separar namespace",
-                "2": "\nNombre actual:"
-            },
-            "question": "Escribe otro nombre:",
-            "multiple": "Se han encontrado varios namespace"
-        }
-    }
+	"program": {
+		"name": "Module Craft Code CLI",
+		"description": "CLI versátil para generar y gestionar módulos, componentes, eventos y archivos de configuración en proyectos de Minecraft.",
+		"exeption": {
+			"close": {
+				"1": "Programa interrumpido por el usuario.",
+				"2": "Entrada interrumpida por el usuario.",
+				"3": "Error no controlado:"
+			}
+		}
+	},
+	"init": {
+		"description": "Inicializa el proyecto con un archivo addon.properties.",
+		"option": {
+			"n": "Especifica el nombre del addon",
+			"s": "Especifica el namespace del addon",
+			"d": "Especifica la descripción del addon",
+			"t": "Especifica el tipo de proyecto"
+		},
+		"exits": {
+			"1": "No puedes inicializar otro proyecto, el archivo",
+			"2": "addon.properties",
+			"3": "ya existe"
+		},
+		"questions": {
+			"1": "¿Quieres colocar un namespace?:",
+			"2": "Escribe tu namespace:"
+		},
+		"spinner": {
+			"start": "Creando addon.properties...",
+			"succeed": "Proyecto inicializado correctamente!",
+			"error": "Error al crear addon.properties."
+		}
+	},
+	"generate": {
+		"description": "Subcomandos [component, common, element]"
+	},
+	"form": {
+		"selection": "Seleccionar:"
+	},
+	"element": {
+		"description": "Generar objeto de tipo [entity|item|block].",
+		"item": {
+			"description": "Genera un objeto item",
+			"option": {
+				"n": "Especifica el identificador del item",
+				"t": "Especifica el tipo de item a crear - Solo behavior",
+				"m": "Indica si el item tendrá una sección personalizada en el menu de Minecraft - Solo behavior"
+			},
+			"exits": {
+				"1": "No puedes generar un item en un proyecto sin el archivo",
+				"2": "El archivo fileName ya existe."
+			},
+			"add_components": {
+				"questions": {
+					"1": "¿Desea añadir componentes perzonalizados?:",
+					"2": "¿Desea añadir otro componente perzonalizado?:"
+				},
+				"error": {
+					"1": "No es posible añadir componentes personalizados",
+					"2": "No hay componentes personalizados en el archivo"
+				},
+				"message": "Elegir componente"
+			},
+			"menu": {
+				"category": "Elegir categoría",
+				"group": "Elegir grupo"
+			},
+			"behavior": {
+				"spinner": {
+					"start": "Creando item...",
+					"succeed": "El item ${options.name} ha sido creado exitosamente!!",
+					"error": "Error al crear el item ${options.name}."
+				}
+			},
+			"resource": {
+				"spinner": {
+					"start": "Agregando textura del item...",
+					"succeed": "La textura ${textureName} ha sido agregada exitosamente!!",
+					"error": "Error al agregar la textura ${textureName}."
+				}
+			},
+			"axe": {
+				"questions": {
+					"1": "Ingrese el valor de daño (dejar vacío colcara 7):",
+					"2": "Ingrese el valor de encantamiento (dejar vacío colcara 15):",
+					"3": "Ingrese el valor mínimo de daño (dejar vacío colcara 10):",
+					"4": "Ingrese el valor máximo de daño (dejar vacío colcara 50):",
+					"5": "Ingrese la durabilidad máxima (dejar vacío colcara 1048):",
+					"6": "Ingrese la velocidad de destrucción (dejar vacío colcara 1.0):"
+				}
+			},
+			"pickaxe": {
+				"questions": {
+					"1": "Ingrese el valor de daño (dejar vacío colcara 5):",
+					"2": "Ingrese el valor de encantamiento (dejar vacío colcara 5):",
+					"3": "Ingrese el valor mínimo de daño (dejar vacío colcara 10):",
+					"4": "Ingrese el valor máximo de daño (dejar vacío colcara 50):",
+					"5": "Ingrese la durabilidad máxima (dejar vacío colcara 1048):",
+					"6": "Ingrese la velocidad de destrucción (dejar vacío colcara 1.2):"
+				}
+			},
+			"shovel": {
+				"questions": {
+					"1": "Ingrese el valor de daño (dejar vacío colcara 4):",
+					"2": "Ingrese el valor de encantamiento (dejar vacío colcara 15):",
+					"3": "Ingrese el valor mínimo de daño (dejar vacío colcara 10):",
+					"4": "Ingrese el valor máximo de daño (dejar vacío colcara 50):",
+					"5": "Ingrese la durabilidad máxima (dejar vacío colcara 1048):",
+					"6": "Ingrese la velocidad de destrucción (dejar vacío colcara 1.5):"
+				}
+			},
+			"sword": {
+				"questions": {
+					"1": "Ingrese el valor de daño (dejar vacío colcara 8):",
+					"2": "Ingrese el valor de encantamiento (dejar vacío colcara 15):",
+					"3": "Ingrese el valor mínimo de daño (dejar vacío colcara 10):",
+					"4": "Ingrese el valor máximo de daño (dejar vacío colcara 50):",
+					"5": "Ingrese la durabilidad máxima (dejar vacío colcara 1048):",
+					"6": "Ingrese la velocidad de destrucción para telaraña (dejar vacío colcara 15):",
+					"7": "Ingrese la velocidad de destrucción para bamboo (dejar vacío colcara 10):"
+				}
+			}
+		},
+		"entity": {
+			"description": "Genera un objeto de entidad",
+			"option": {
+				"n": "Especifica el identificador de la entidad",
+				"r": "Establece el identificador de Vanilla Minecraft que esta entidad utilizará para construirse a sí misma",
+				"e": "Especifica si la entidad estará bajo características experimentales de Minecraft",
+				"sp": "Especifica si el generador de la entidad aparecerá en el inventario de creativo",
+				"su": "Especifica si la entidad puede ser invocada mediante comandos en el juego"
+			},
+			"exits": {
+				"1": "No puedes generar un objeto de entidad en un proyecto sin el archivo",
+				"2": "El archivo fileName ya existe."
+			},
+			"spinner": {
+				"start": "Creando entidad...",
+				"succeed": "La entidad ${options.name} ha sido creado exitosamente!!",
+				"error": "Error al crear la entidad ${options.name}."
+			}
+		},
+		"block": {
+			"description": "Genera un objeto de bloque",
+			"option": {
+				"n": "Especifica el identificador del bloque",
+				"m": "Indica si el bloque tendra una sección personalizada en el menu de Minecraft - Solo behavior",
+				"l": "Define cómo se comporta un bloque al detectar un líquido - Solo behavior",
+				"r": "Define el material de la textura del bloque - Solo behavior"
+			},
+			"exits": {
+				"1": "No puedes generar un bloque en un proyecto sin el archivo",
+				"2": "El archivo fileName ya existe."
+			},
+			"add_components": {
+				"questions": {
+					"1": "¿Desea añadir componentes perzonalizados?:",
+					"2": "¿Desea añadir otro componente perzonalizado?:"
+				},
+				"error": {
+					"1": "No es posible añadir componentes personalizados",
+					"2": "No hay componentes personalizados en el archivo"
+				},
+				"message": "Elegir componente"
+			},
+			"menu": {
+				"category": "Elegir categoría",
+				"group": "Elegir grupo"
+			},
+			"behavior": {
+				"spinner": {
+					"start": "Creando bloque...",
+					"succeed": "El bloque ${options.name} ha sido creado exitosamente!!",
+					"error": "Error al crear el bloque ${options.name}."
+				}
+			},
+			"resource": {
+				"spinner": {
+					"start": "Agregando textura del bloque...",
+					"succeed": "La textura ${textureName} ha sido agregada exitosamente!!",
+					"error": "Error al agregar la textura ${textureName}."
+				}
+			},
+			"questions": {
+				"1": "Ingrese el tiempo de extracción (dejar vacío colcara 4):"
+			}
+		}
+	},
+	"component": {
+		"description": "Generar un componente personalizado [block|item].",
+		"block": {
+			"description": "Crea un componente personalizado para un bloque.",
+			"option": {
+				"n": "Especifica el nombre del componente del bloque",
+				"d": "Especifica la descripción del componente del bloque"
+			},
+			"exits": {
+				"1": "No puedes generar un componente de bloque en un proyecto sin el archivo.",
+				"2": "No puedes generar un componente en un proyecto que no sea behavior."
+			},
+			"selections": "Selecciona los eventos:",
+			"invalid": "Debes seleccionar al menos un evento.",
+			"spinner": {
+				"start": "Creando componente...",
+				"succeed": "El componente ${options.name} ha sido creado exitosamente!",
+				"error": "Error al crear el componente."
+			}
+		},
+		"item": {
+			"description": "Crea un componente personalizado para un item.",
+			"option": {
+				"n": "Especifica el nombre del componente del item",
+				"d": "Especifica la descripción del componente del item"
+			},
+			"exits": {
+				"1": "No puedes generar un componente de item en un proyecto sin el archivo.",
+				"2": "No puedes generar un componente en un proyecto que no sea behavior."
+			},
+			"selections": "Selecciona los eventos:",
+			"invalid": "Debes seleccionar al menos un evento.",
+			"spinner": {
+				"start": "Creando componente...",
+				"succeed": "El componente ${options.name} ha sido creado exitosamente!",
+				"error": "Error al crear el componente."
+			}
+		}
+	},
+	"common": {
+		"description": "Generar uno o más archivos de la categoría común [lang|manifest|library|icon].",
+		"lang": {
+			"description": "Genera un archivo de idioma",
+			"option": {
+				"r": "Especifica la región para la localización del idioma"
+			},
+			"exits": {
+				"1": "No puedes generar un archivo de idioma en un proyecto sin el archivo",
+				"2": "La localización no fue seleciona o no es valida.",
+				"3": "El archivo ya existe."
+			},
+			"selections": "Selecciona la localización:",
+			"spinner": {
+				"start": "Creando archivo de idioma...",
+				"succeed": "El archivo de idioma ${options.region} ha sido creado exitosamente!",
+				"error": "Error al crear el archivo de idioma."
+			}
+		},
+		"manifest": {
+			"description": "Genera un archivo manifest para behavior | resource | skin",
+			"option": {
+				"l": "Vincula un resource_pack con un behavior_pack",
+				"s": "Habilita los scripts en un behavior_pack",
+				"c": "Habilita las capacidades en un resource_pack"
+			},
+			"exits": {
+				"1": "No puedes generar un archivo manifest en un proyecto sin el archivo",
+				"2": "El archivo manifest.json ya existe."
+			},
+			"selections": {
+				"1": "Selecciona los modulos:",
+				"2": "Selecciona las capacidades:"
+			},
+			"alert": {
+				"1": "No se han seleccionado modulos",
+				"2": "No se han seleccionado capacidades"
+			},
+			"spinner": {
+				"start": "Creando archivo manifest...",
+				"succeed": "El archivo manifest.json ha sido creado exitosamente!",
+				"error": "Error al crear el archivo manifest.json."
+			}
+		},
+		"library": {
+			"description": "Genera un archivo de librería",
+			"option": {
+				"m": "Especifica la librería que se va a agregar"
+			},
+			"exits": {
+				"1": "No puedes generar un archivo de librería en un proyecto sin el archivo",
+				"2": "No puedes agregar una libreria en un proyecto que no sea behavior",
+				"3": "El archivo ya existe."
+			},
+			"errors": {
+				"1": "La libreria no fue seleciona o no es valida"
+			},
+			"selections": "Selecciona la librería:",
+			"build": {
+				"header": "El archivo",
+				"succeed": "ha sido creado exitosamente!",
+				"error": "no pudo ser agregado.",
+				"exists": "ya existe."
+			},
+			"create": {
+				"header": "La libreria",
+				"succeed": "fue agregada exitosamente.",
+				"error": "no puedo ser agregada."
+			}
+		},
+		"icon": {
+			"description": "Establece un icono generico para tu proyecto",
+			"option": {
+				"r": "Habilita la selección aleatoria de íconos"
+			},
+			"exits": {
+				"1": "No puedes agregar un icono en un proyecto sin el archivo",
+				"2": "No puedes agregar un icono en un proyecto que no sea behavior o resource.",
+				"3": "El archivo icon_pack.png ya existe."
+			},
+			"icons": {
+				"sword": "Espada ⚔️",
+				"pickaxe": "Pico ⛏️",
+				"axe": "Hacha 🪓",
+				"shovel": "Pala 🥄",
+				"hoe": "Azada 🏒",
+				"pearl": "Perla 🟠"
+			},
+			"random": "Ícono aleatorio seleccionado.",
+			"selections": "Selecciona un ícono:",
+			"selection": "Ícono seleccionado.",
+			"create": {
+				"succeed": "El ícono ${iconsNames[options.icon]} ha sido establecido correctamente para tu proyecto.",
+				"error": "El ícono ${iconsNames[options.icon]} no fue establecido correctamente para tu proyecto."
+			}
+		}
+	},
+	"addon": {
+		"namespace": {
+			"error": {
+				"1": "El nombre debe incluir \":\" para separar namespace",
+				"2": "\nNombre actual:"
+			},
+			"question": "Escribe otro nombre:",
+			"multiple": "Se han encontrado varios namespace"
+		}
+	},
+	"setting": {
+		"description": "Configura las opciones del programa",
+		"option": {
+			"l": "Establece el idioma del programa"
+		},
+		"questions": {
+			"1": "Selecciona un idioma:"
+		},
+		"spinner": {
+			"start": "Guardando configuración...",
+			"succeed": "Configuración guardada correctamente!",
+			"error": "Error al guardar la configuración."
+		}
+	}
 }
