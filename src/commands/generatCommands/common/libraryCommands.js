@@ -1,4 +1,4 @@
-import { cloneFile, validateFile } from "../../../utils/fileOperations.js";
+import { cloneFile, validateFileAsync } from "../../../utils/fileOperations.js";
 import { propertiesAsync } from "../../../utils/readProperties.js";
 import { LIBS, ONLY_BEHAVIOR } from "../../../utils/constants.js";
 import { Command, Option } from "commander";
@@ -48,7 +48,7 @@ library.action(async (options) => {
 
     switch (options.module) {
         case "bedrockSystem":
-            const validationFormatter = validateFile('scripts/libs/formatter.js');
+            const validationFormatter = await validateFileAsync('scripts/libs/formatter.js');
             let fc1 = false;
             let fc2 = false;
             if (!validationFormatter) {
@@ -61,7 +61,7 @@ library.action(async (options) => {
             } else {
                 console.log(chalk.green('✔'), chalk.bold(chalk.whiteBright(language.__("common.library.build.header")), chalk.yellow('formatter.js'), chalk.whiteBright(language.__(`common.library.build.exists`))))
             }
-            const validationBedrockSystem = validateFile('scripts/libs/bedrockSystem.js');
+            const validationBedrockSystem = await validateFileAsync('scripts/libs/bedrockSystem.js');
             if (!validationBedrockSystem) {
                 fc2 = await cloneFile('js/libs/bedrockSystem.js', 'scripts/libs/bedrockSystem.js')
                 if (fc2) {
@@ -76,7 +76,7 @@ library.action(async (options) => {
             create = (fc1 && fc2);
             break;
         case "blockManager":
-            const validationBlockManager = validateFile('scripts/libs/blockManager.js');
+            const validationBlockManager = await validateFileAsync('scripts/libs/blockManager.js');
             let fc3 = false;
             if (!validationBlockManager) {
                 fc3 = await cloneFile('js/libs/blockManager.js', 'scripts/libs/blockManager.js')
@@ -91,7 +91,7 @@ library.action(async (options) => {
             create = fc3;
             break;
         case "itemManager":
-            const validationItemManager = validateFile('scripts/libs/itemManager.js');
+            const validationItemManager = await validateFileAsync('scripts/libs/itemManager.js');
             let fc4 = false;
             if (!validationItemManager) {
                 fc4 = await cloneFile('js/libs/itemManager.js', 'scripts/libs/itemManager.js')

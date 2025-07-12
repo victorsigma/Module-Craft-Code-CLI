@@ -131,7 +131,7 @@ export const MODULE_VERSION = {
     '@minecraft/server-gametest': '1.0.0-beta',
     '@minecraft/server-net': '1.0.0-beta',
     '@minecraft/server-ui': '1.3.0',
-    '@minecraft/server': '1.14.0',
+    '@minecraft/server': '1.19.0',
     '@minecraft/server-editor': '0.1.0-beta',
 }
 
@@ -462,7 +462,7 @@ export const ${toCamelCase(componentName)}OnPlayerDestroyEvent = ({destroyedBloc
 const onPlayerInteract = async (name) => {
     const config = await propertiesAsync();
     const [, componentName] = name.split(':');
-    return `import { Block, Dimension, Direction, Vector3, Player } from "@minecraft/server";
+    return `import { Block, Dimension, Direction, Player } from "@minecraft/server";
 
 /**
  * Evento onPlayerInteract del componente ${toCamelCase(componentName)}Component${config['addon.name'] ? `\n * Addon: ${Array.isArray(config['addon.name']) ? config['addon.name'][0] : config['addon.name']}` : ''}

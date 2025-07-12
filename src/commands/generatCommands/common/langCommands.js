@@ -1,5 +1,5 @@
 import { propertiesAsync } from "../../../utils/readProperties.js";
-import { makeSubFile, validateFile } from "../../../utils/fileOperations.js";
+import { makeSubFile, validateFileAsync } from "../../../utils/fileOperations.js";
 import { LANGS } from "../../../utils/constants.js";
 import { language } from "../../../utils/i18n.js";
 import { Command, Option } from "commander";
@@ -79,10 +79,10 @@ pack.description=${Array.isArray(config['addon.description']) ? config['addon.de
 
     try {
 
-        if (validateFile(`texts/${options.region}.lang`)) return spinner.fail(chalk.bold(chalk.yellowBright(language.__("common.lang.exits.3"))));
+        if (await validateFileAsync(`texts/${options.region}.lang`)) return spinner.fail(chalk.bold(chalk.yellowBright(language.__("common.lang.exits.3"))));
         await makeSubFile(`${options.region}.lang`, 'texts/', content);
 
-        if (!validateFile(`texts/languages.json`)) {
+        if (!await validateFileAsync(`texts/languages.json`)) {
             const languages = [options.region];
 
             makeSubFile('languages.json', 'texts/', JSON.stringify(languages, null, 2))

@@ -6,7 +6,7 @@ import sword from "../../../assets/templates/items/sword.json" with { type: 'jso
 import item_texture from "../../../assets/jsons/item_texture.json" with { type: 'json' };
 
 import { CATEGORYS, ITEM_GROUP_NAMES, ONLY_BEHAVIOR, ONLY_RESOURCE, PATH_ITEM_TEXTURES } from '../../../utils/constants.js';
-import { getJsonFile, getJsonFileOrBool, makeSubFile, validateFile } from "../../../utils/fileOperations.js";
+import { getJsonFile, getJsonFileOrBool, makeSubFile, validateFileAsync } from "../../../utils/fileOperations.js";
 import { propertiesAsync } from "../../../utils/readProperties.js";
 import { toSnackCase } from "../../../utils/stringManager.js";
 import { selectFromArray } from '../../../utils/forms.js';
@@ -155,7 +155,7 @@ const behaviorPack = async (options) => {
 
     const spinner = ora(language.__("element.item.behavior.spinner.start")).start();
     try {
-        if (validateFile(`items/${namespace}/${fileName}`)) 
+        if (await validateFileAsync(`items/${namespace}/${fileName}`)) 
             return spinner.fail(chalk.bold(chalk.yellowBright(language.__("element.item.exits.2").replace("fileName", fileName))));
         await makeSubFile(fileName, `items/${namespace}/`, JSON.stringify(item, null, 2))
 
@@ -545,7 +545,7 @@ const resourcePack = async (options) => {
     try {
         const fileName = `textures/item_texture.json`
         let fileData = {...item_texture};
-        if (validateFile(fileName)) {
+        if (await validateFileAsync(fileName)) {
             fileData = await getJsonFile(fileName);
             fileData.texture_data[textureName] = {"textures": `${PATH_ITEM_TEXTURES}/${textureName}`}
             await makeSubFile('item_texture.json', `textures/`, JSON.stringify(fileData, null, 2))

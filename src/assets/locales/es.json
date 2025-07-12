@@ -347,5 +347,37 @@
 			"succeed": "Configuración guardada correctamente!",
 			"error": "Error al guardar la configuración."
 		}
+	},
+	"operations": {
+		"error": {
+			"1": "✖ Error: El archivo de origen no existe",
+			"2": "✖ Error: Permisos insuficientes para escribir en el destino",
+			"3": "✖ Error al clonar el archivo:",
+			"4": "Error al actualizar el archivo index.js:",
+			"5": "Error al actualizar el archivo:",
+			"6": "Error al actualizar los ajustes:",
+			"7": "Error al eliminar o crear el directorio:"
+		},
+		"notfound": {
+			"1": "El archivo",
+			"2": "no existe."
+		},
+		"make": {
+			"index": {
+				"1": "El archivo",
+				"2": "index.js",
+				"3": "fue creado de forma automática al no existir previamente."
+			},
+			"component": {
+				"1": "El componente",
+				"2": "ha sido agregado correctamente a index.js"
+			}
+		},
+		"has": {
+			"component": {
+				"1": "El componente",
+				"2": "ya está registrado."
+			}
+		}
 	}
 }

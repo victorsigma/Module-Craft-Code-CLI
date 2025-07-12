@@ -1,16 +1,26 @@
 # Module Craft Code CLI
 
-### CLI versátil para generar y gestionar módulos, componentes, eventos y archivos de configuración en proyectos de Minecraft.
+### Versatile CLI for generating and managing modules, components, events, and configuration files in Minecraft projects.
+
+[![NPM](https://img.shields.io/npm/v/module-craft-code-cli?color=blue&label=Module%20Craft%20Code%20CLI)](https://www.npmjs.com/package/module-craft-code-cli)
+[![GitHub tags](https://img.shields.io/github/tag/victorsigma/module-craft-code-cli?color=blue)](https://github.com/victorsigma/Module-Craft-Code-CLI/tags)
+
+[![Readme ES](https://img.shields.io/badge/readme-español-blue)](https://github.com/victorsigma/Module-Craft-Code-CLI/blob/main/README_ES.md)
+[![GitHub stars](https://img.shields.io/github/stars/victorsigma/module-craft-code-cli?color=blue)](https://github.com/victorsigma/Module-Craft-Code-CLI/stargazers)
+
+
 
 ### Comandos
 
 ## Init
 
-Inicializa el proyecto con un archivo `addon.properties`.
+Initializes the project with a `addon.properties`.
 
-> **mccc init [opciones]**
->
-> **mccc i [opciones]**
+```shell
+mccc init [opciones]
+
+mccc i [opciones]
+```
 
 Opciones
 > * `-n, --name <string>`: Especifica el nombre del addon (por defecto: `"New Addon"`).
@@ -18,194 +28,217 @@ Opciones
 > * `-d, --description <string>`: Especifica la descripción del addon (por defecto: `"Addon Description"`).
 > * `-t, --type <string>`: Especifica el tipo de proyecto (por defecto: `"behavior"`). Opciones: `behavior`, `resource`, `skin`.
 
-<full-line></full-line>
+## Setting
+
+Sets global configurations for the CLI.
+
+```shell
+mccc setting [opciones]
+
+mccc s [opciones]
+```
+
+Opciones
+> * `-l, --lang <string>`: Specifies the program language. Options: `"es"`, `"es"`.
+
 
 ## Generate
 
-Genera componentes personalizados, elementos y bloques.
+Generates custom components, elements, and blocks.
 
-> **mccc generate [comando] [opciones]**
->
-> **mccc g [comando] [opciones]**
+```shell
+mccc generate [comando] [opciones]
+
+mccc g [comando] [opciones]
+```
 
 Subcomandos
-> * `component`: Genera un componente personalizado.
-> * `common`: Genera archivos comunes como `lang`, `manifest`, `library`, `icon`.
-> * `element`: Genera objetos de tipo `entity`, `item`, `block`.
+> * `component`: Generates a custom component.
+> * `common`: Generates common files such as `lang`, `manifest`, `library`, `icon`.
+> * `element`: Generates objects of type `entity`, `item`, `block`.
 
-<full-line></full-line>
 
 ## Component
 
-Genera un componente personalizado.
+Generates a custom component.
 
-> **mccc generate component [comando] [opciones]**
->
-> **mccc g c [comando] [opciones]**
+```shell
+mccc generate component [comando] [opciones]
+
+mccc g c [comando] [opciones]
+```
 
 Subcomandos
-> * `block`: Crea un componente personalizado para un bloque.
-> * `item`: Crea un componente personalizado para un item.
+> * `block`: Creates a custom component for a block.
+> * `item`: Creates a custom component for an item.
 
 Opciones
 > * `-n, --name <string>`: Especifica el nombre del componente (por defecto: `"namespace:component"`).
 > * `-d, --description <string>`: Especifica la descripción del componente (por defecto: `"description`").
 
-<mid-line></mid-line>
 
 ### Block
 
-Crea un componente personalizado para un bloque.
+Creates a custom component for a block.
 
-> **mccc generate component block [opciones]**
->
-> **mccc g c block [opciones]**
+```shell
+mccc generate component block [opciones]
 
-<mid-line></mid-line>
+mccc g c block [opciones]
+```
 
 ### Item
 
-Crea un componente personalizado para un item.
+Creates a custom component for an item.
 
-> **mccc generate component item [opciones]**
->
-> **mccc g c item [opciones]**
+```shell
+mccc generate component item [opciones]
+
+mccc g c item [opciones]
+```
 
 
-<full-line></full-line>
 
 ## Common
 
-Genera archivos comunes.
+Generates common files.
 
-> **mccc generate common [comando] [opciones]**
->
-> **mccc g cm [comando] [opciones]**
+```shell
+mccc generate common [comando] [opciones]
+
+mccc g cm [comando] [opciones]
+```
 
 Subcomandos
-> * `lang`: Genera un archivo de idioma.
-> * `manifest`: Genera un archivo manifest.
-> * `library`: Genera una librería.
-> * `icon`: Establece un icono genérico para tu proyecto.
+> * `lang`: Generates a language file.
+> * `manifest`: Generates a manifest.
+> * `library`: Generates a library.
+> * `icon`: Sets a generic icon for your project.
 
-<mid-line></mid-line>
+
 
 ### Lang
 
-Genera un archivo de idioma.
+Generates a language file.
 
-> **mccc generate common lang [opciones]**
->
-> **mccc g cm lang [opciones]**
+```shell
+mccc generate common lang [opciones]
 
+mccc g cm lang [opciones]
+```
 
 
 Opciones
-> * `-r, --region <string>`: Especifica la región para la localización de idioma.
+> * `-r, --region <string>`: Specifies the region for language localization.
 
-<mid-line></mid-line>
 
 ### Manifest
 
-Genera un archivo `manifest.json`.
+Generates a `manifest.json`.
 
-> **mccc generate common manifest [opciones]**
->
-> **mccc g cm manifest [opciones]**
+```shell
+mccc generate common manifest [opciones]
+
+mccc g cm manifest [opciones]
+```
 
 Opciones
-> * `-l, --link <string>`: Vincula un resource_pack con un behavior_pack.
-> * `-s, --scripts <boolean>`: Habilita los scripts en un behavior_pack.
-> * `-c, --capabilities <boolean>`: Habilita las capacidades en un resource_pack.
+> * `-l, --link <string>`: Links a resource_pack with a behavior_pack.
+> * `-s, --scripts <boolean>`: Enables scripts in a behavior_pack.
+> * `-c, --capabilities <boolean>`: Enables capabilities in a resource_pack.
 
-<mid-line></mid-line>
 
 ### Library
 
-Genera una librería.
+Generates a library.
 
-> **mccc generate common library [opciones]**
->
-> **mccc g cm library [opciones]**
+```shell
+mccc generate common library [opciones]
+
+mccc g cm library [opciones]
+```
 
 Opciones
 > * `-m, --module <string>`: Especifica la librería que se va a agregar. Opciones: `bedrockSystem`, `blockManager`, `itemManager`.
 
-<mid-line></mid-line>
 
 ### Icon
 
-Establece un icono genérico para tu proyecto.
+Sets a generic icon for your project.
 
-> **mccc generate common icon [opciones]**
->
-> **mccc g cm icon [opciones]**
+```shell
+mccc generate common icon [opciones]
+
+mccc g cm icon [opciones]
+```
 
 Opciones
-> * `-r, --random <boolean>`: Habilita la selección aleatoria de íconos (por defecto: `false`).
+> * `-r, --random <boolean>`: Enables random icon selection (por defecto: `false`).
 
-<full-line></full-line>
 
 ## Element
 
-Genera objetos de tipo `entity`, `item`, `block`.
+Generates objects of type `entity`, `item`, `block`.
 
-> **mccc generate element [comando] [opciones]**
->
-> **mccc g e [comando] [opciones]**
+```shell
+mccc generate element [comando] [opciones]
+
+mccc g e [comando] [opciones]
+```
 
 Subcomandos
 
-> * `entity`: Genera un objeto de entidad.
-> * `item`: Genera un objeto item.
-> * `block`: Genera un objeto de bloque.
+> * `entity`: Generates an entity object.
+> * `item`: Generates an item object.
+> * `block`: Generates a block object.
 
-<mid-line></mid-line>
 
 ### Entity
 
-Genera un objeto de entidad.
+Generates an entity object.
 
-> **mccc generate element entity [opciones]**
->
-> **mccc g e entity [opciones]**
+```shell
+mccc generate element entity [opciones]
+
+mccc g e entity [opciones]
+```
 
 Opciones
 > * `-n, --name <string>`: Especifica el identificador de la entidad (por defecto: `"namespace:entity"`).
-> * `-r, --runtime <string>`: Establece el identificador de Vanilla Minecraft que esta entidad utilizará para construirse a sí misma.
-> * `-e, --experimental <boolean>`: Especifica si la entidad estará bajo características experimentales de Minecraft (por defecto: `false`).
-> * `-sp, --spawnable <boolean>`: Especifica si el generador de la entidad aparecerá en el inventario de creativo (por defecto: `false`).
-> * `-su, --summonable <boolean>`: Especifica si la entidad puede ser invocada mediante comandos en el juego (por defecto: `false`).
+> * `-r, --runtime <string>`: Sets the Vanilla Minecraft identifier this entity will use to build itself.
+> * `-e, --experimental <boolean>`: Specifies if the entity will use experimental Minecraft features (por defecto: `false`).
+> * `-sp, --spawnable <boolean>`: Specifies if the entity's spawn egg will appear in the creative inventory (por defecto: `false`).
+> * `-su, --summonable <boolean>`: Specifies if the entity can be summoned using in-game commands (por defecto: `false`).
 
-<mid-line></mid-line>
 
 ### Item
 
-Genera un objeto item.
+Generates an item object.
 
-> **mccc generate element item [opciones]**
->
-> **mccc g e item [opciones]**
+```shell
+mccc generate element item [opciones]
+
+mccc g e item [opciones]
+```
 
 Opciones
 > * `-n, --name <string>`: Especifica el identificador del item (por defecto: `"namespace:item"`).
-> * `-t, --type <string>`: Especifica el tipo de item a crear (por defecto: `"item"`). Opciones: `item`, `axe`, `pickaxe`, `shovel`, `sword`.
-> * `-m, --menu <boolean>`: Indica si el item tendrá una sección personalizada en el menú de Minecraft (por defecto: `false`).
+> * `-t, --type <string>`: Specifies the item type to create (por defecto: `"item"`). Opciones: `item`, `axe`, `pickaxe`, `shovel`, `sword`.
+> * `-m, --menu <boolean>`: Indicates whether the item will have a custom section in the Minecraft menu (por defecto: `false`).
 
-<mid-line></mid-line>
 
 ### Block
 
-Genera un objeto de bloque.
+Generates a block object.
 
-> **mccc generate element block [opciones]**
->
-> **mccc g e block [opciones]**
+```shell
+mccc generate element block [opciones]
+
+mccc g e block [opciones]
+```
 
 Opciones
 > * `-n, --name <string>`: Especifica el identificador del bloque (por defecto: `"namespace:block"`).
-> * `-m, --menu <boolean>`: Indica si el bloque tendrá una sección personalizada en el menú de Minecraft (por defecto: `false`).
-> * `-l, --liquid <boolean>`: Define cómo se comporta un bloque al detectar un líquido (por defecto: `false`).
-> * `-r, --render <string>`: Define el material de la textura del bloque (por defecto: `"opaque"`). Opciones: `opaque`, `double_sided`, `blend`, `alpha_test`.
-
-<full-line></full-line>
+> * `-m, --menu <boolean>`: Indicates whether the block will have a custom section in the Minecraft menu (por defecto: `false`).
+> * `-l, --liquid <boolean>`: Defines how the block behaves when detecting liquid (por defecto: `false`).
+> * `-r, --render <string>`: Defines the block's texture material (por defecto: `"opaque"`). Opciones: `opaque`, `double_sided`, `blend`, `alpha_test`.

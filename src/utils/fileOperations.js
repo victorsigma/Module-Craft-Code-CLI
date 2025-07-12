@@ -1,6 +1,7 @@
 import { EVENT_TEMPLATES } from "./constants.js";
 import { toCamelCase } from "./stringManager.js";
 import { fileURLToPath } from 'url';
+import { language } from "./i18n.js";
 import chalk from "chalk";
 import path from "path";
 import fs from 'fs';
@@ -31,6 +32,16 @@ export const validateFile = (dir) => {
 	return fs.existsSync(dir);
 }
 
+export const validateFileAsync = async (dir) => {
+	try {
+		await fs.promises.access(dir, fs.constants.F_OK);
+		return true;
+	} catch (error) {
+		return false;
+	}
+}
+
+
 
 export const clearEvents = async (dir) => {
 	try {
@@ -40,7 +51,7 @@ export const clearEvents = async (dir) => {
 		// Crear el directorio de nuevo
 		await fs.promises.mkdir(dir, { recursive: true });
 	} catch (error) {
-		console.error(`Error al eliminar o crear el directorio: ${error.message}`);
+		console.error(`${language.__("operations.error.7")} ${error.message}`);
 	}
 }
 
@@ -88,10 +99,15 @@ export const makeSubFile = async (name, currentPath, content) => {
 }
 
 export const validateFileAndCreate = async (dir, content) => {
-	if (!fs.existsSync(dir)) {
-		await makeFile(dir, content)
-	}
-	return true;
+	try {
+        // Usar fs.promises.access para comprobar si el archivo existe de forma asíncrona
+        await fs.promises.access(dir, fs.constants.F_OK);
+        return false; // El archivo ya existe, no hace falta crear nada
+    } catch (error) {
+        // Si no existe, crea el archivo
+        await makeFile(dir, content);
+        return true; // El archivo ha sido creado
+    }
 }
 
 export const cloneFile = async (sourceFileName, destinationPath) => {
@@ -99,7 +115,7 @@ export const cloneFile = async (sourceFileName, destinationPath) => {
 	const __dirname = path.dirname(__filename);
 	// Ruta al archivo de origen dentro del directorio de la CLI
 	const sourcePath = path.join(__dirname, `../assets/${sourceFileName}`);
-	
+
 	try {
 		// Verifica si la ruta de destino existe
 		const dirpath = path.dirname(destinationPath);
@@ -110,11 +126,11 @@ export const cloneFile = async (sourceFileName, destinationPath) => {
 		return true;
 	} catch (error) {
 		if (error.code === 'ENOENT') {
-			console.error(chalk.red('✖ Error: El archivo de origen no existe'), sourceFileName);
+			console.error(chalk.red(language.__("operations.error.1")), sourceFileName);
 		} else if (error.code === 'EACCES') {
-			console.error(chalk.red('✖ Error: Permisos insuficientes para escribir en el destino'), destinationPath);
+			console.error(chalk.red(language.__("operations.error.2")), destinationPath);
 		} else {
-			console.error(chalk.red('✖ Error al clonar el archivo:'), error);
+			console.error(chalk.red(language.__("operations.error.3")), error);
 		}
 		return false;
 	}
@@ -123,11 +139,11 @@ export const cloneFile = async (sourceFileName, destinationPath) => {
 export const updateIndexFile = async (componentType, componentName, componentPath) => {
 	const filePath = path.join(process.cwd(), 'scripts/index.js');
 
-	const validation = validateFile('scripts/index.js');
+	const validation = await validateFileAsync('scripts/index.js');
 	if (!validation) {
 		await cloneFile('js/index.js', 'scripts/index.js')
 
-		console.log(chalk.green('✔'), chalk.bold(chalk.whiteBright(`El archivo`), chalk.yellow('index.js'), chalk.whiteBright('fue creado de forma automática al no existir previamente.')))
+		console.log(chalk.green('✔'), chalk.bold(chalk.whiteBright(language.__("operations.make.index.1")), chalk.yellow(language.__("operations.make.index.2")), chalk.whiteBright(language.__("operations.make.index.3"))))
 	}
 	try {
 		const fileContent = await fs.promises.readFile(filePath, 'utf-8');
@@ -137,7 +153,7 @@ export const updateIndexFile = async (componentType, componentName, componentPat
 		const componentRegister = `initEvent.${componentType}ComponentRegistry.registerCustomComponent('${componentName.toLowerCase()}', ${toCamelCase(componentName.split(':')[1])}Component);\n`;
 
 		// Verificar si el componente ya está registrado para evitar duplicados
-		if (fileContent.includes(componentRegister)) return console.log(chalk.green('✔'), chalk.bold(chalk.whiteBright(`El componente ${componentName} ya está registrado.`)));
+		if (fileContent.includes(componentRegister)) return console.log(chalk.green('✔'), chalk.bold(chalk.whiteBright(`${language.__("operations.has.component.1")} ${componentName} ${language.__("operations.has.component.2")}`)));
 
 
 		// Insertar el import del componente
@@ -155,9 +171,10 @@ export const updateIndexFile = async (componentType, componentName, componentPat
 		// Escribir el archivo actualizado
 		await fs.promises.writeFile(filePath, updatedContent, 'utf-8');
 
-		console.log(chalk.green('✔'), chalk.bold(chalk.whiteBright(`El componente ${componentName} ha sido agregado correctamente a index.js`)));
+		console.log(chalk.green('✔'), chalk.bold(chalk.whiteBright(`${language.__("operations.make.component.1")} ${componentName} ${language.__("operations.make.component.2")}`)));
 	} catch (error) {
-		console.error('Error al actualizar el archivo index.js:', error);
+		console.error(language.__("operations.error.4"), error);
+		console.error("2", error);
 	}
 };
 
@@ -169,14 +186,14 @@ export const updateIndexFile = async (componentType, componentName, componentPat
 export const getJsonFile = async (file) => {
 	const filePath = path.join(process.cwd(), file);
 
-	const validation = validateFile(file);
-	if (!validation) return console.log(chalk.red('✖'), chalk.bold(chalk.whiteBright(`El archivo`), chalk.yellow(path.basename(filePath)), chalk.whiteBright('no existe.')))
+	const validation = await validateFileAsync(file);
+	if (!validation) return console.log(chalk.red('✖'), chalk.bold(chalk.whiteBright(language.__("operations.notfound.1")), chalk.yellow(path.basename(filePath)), chalk.whiteBright(language.__("operations.notfound.2"))))
 	try {
 		const fileContent = await fs.promises.readFile(filePath, 'utf-8');
 
 		return JSON.parse(fileContent);
 	} catch (error) {
-		console.error('Error al actualizar el archivo index.js:', error);
+		console.error(language.__("operations.error.5"), error);
 	}
 };
 
@@ -188,9 +205,9 @@ export const getJsonFile = async (file) => {
 export const getJsonFileOrBool = async (file) => {
 	const filePath = path.join(process.cwd(), file);
 
-	const validation = validateFile(file);
+	const validation = await validateFileAsync(file);
 	if (!validation) {
-		console.log(chalk.red('✖'), chalk.bold(chalk.whiteBright(`El archivo`), chalk.yellow(path.basename(filePath)), chalk.whiteBright('no existe.')))
+		console.log(chalk.red('✖'), chalk.bold(chalk.whiteBright(language.__("operations.notfound.1")), chalk.yellow(path.basename(filePath)), chalk.whiteBright(language.__("operations.notfound.2"))))
 		return false;
 	}
 	try {
@@ -198,7 +215,7 @@ export const getJsonFileOrBool = async (file) => {
 
 		return JSON.parse(fileContent);
 	} catch (error) {
-		console.error('Error al actualizar el archivo index.js:', error);
+		console.error(language.__("operations.error.5"), error);
 	}
 };
 
@@ -208,11 +225,11 @@ export const updateSettings = async (key, value) => {
 		const __dirname = path.dirname(__filename);
 		// Ruta al archivo de origen dentro del directorio de la CLI
 		const sourcePath = path.join(__dirname, `../assets/settings.json`);
-		
+
 		settings[key] = value;
 
 		await makeFile(sourcePath, JSON.stringify(settings, null, 2));
 	} catch (error) {
-		console.error('Error al actualizar los ajustes:', error);
+		console.error(language.__("operations.error.6"), error);
 	}
 }

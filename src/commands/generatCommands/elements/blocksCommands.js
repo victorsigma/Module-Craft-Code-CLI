@@ -2,7 +2,7 @@ import base from "../../../assets/templates/blocks/block.json" with { type: 'jso
 import terrain_texture from "../../../assets/jsons/terrain_texture.json" with { type: 'json' };
 
 import { BLOCK_MATERIALS, CATEGORYS, ITEM_GROUP_NAMES, ONLY_BEHAVIOR, ONLY_RESOURCE, PATH_BLOCK_TEXTURES } from "../../../utils/constants.js";
-import { getJsonFile, getJsonFileOrBool, makeSubFile, validateFile } from "../../../utils/fileOperations.js";
+import { getJsonFile, getJsonFileOrBool, makeSubFile, validateFileAsync } from "../../../utils/fileOperations.js";
 import { propertiesAsync } from "../../../utils/readProperties.js";
 import { toSnackCase } from "../../../utils/stringManager.js";
 import { selectFromArray } from "../../../utils/forms.js";
@@ -163,7 +163,7 @@ const behaviorPack = async (options) => {
 
     const spinner = ora(language.__("element.block.behavior.spinner.start")).start();
     try {
-        if (validateFile(`blocks/${namespace}/${fileName}`)) return spinner.fail(chalk.bold(chalk.yellowBright(language.__("element.block.exits.2").replace("fileName", fileName))));
+        if (await validateFileAsync(`blocks/${namespace}/${fileName}`)) return spinner.fail(chalk.bold(chalk.yellowBright(language.__("element.block.exits.2").replace("fileName", fileName))));
         await makeSubFile(fileName, `blocks/${namespace}/`, JSON.stringify(block, null, 2))
 
         spinner.succeed(chalk.bold(chalk.whiteBright(language.__("element.block.behavior.spinner.succeed").replace("${options.name}", options.name))));
@@ -220,7 +220,7 @@ const resourcePack = async (options) => {
     try {
         const fileName = `textures/terrain_texture.json`
         let fileData = {...terrain_texture};
-        if (validateFile(fileName)) {
+        if (await validateFileAsync(fileName)) {
             fileData = await getJsonFile(fileName);
             fileData.texture_data[textureName] = {"textures": `${PATH_BLOCK_TEXTURES}/${textureName}`}
             await makeSubFile('terrain_texture.json', `textures/`, JSON.stringify(fileData, null, 2))

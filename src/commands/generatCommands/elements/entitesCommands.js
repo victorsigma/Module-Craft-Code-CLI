@@ -1,5 +1,5 @@
 import { BEHAVIOR_ENTITY, ONLY_BEHAVIOR, ONLY_RESOURCE, RESOURCE_ENTITY } from "../../../utils/constants.js";
-import { makeSubFile, validateFile } from "../../../utils/fileOperations.js";
+import { makeSubFile, validateFileAsync } from "../../../utils/fileOperations.js";
 import { propertiesAsync } from "../../../utils/readProperties.js";
 import { toSnackCase } from "../../../utils/stringManager.js";
 import { selectFromArray } from "../../../utils/forms.js";
@@ -101,7 +101,7 @@ const behaviorPack = async (options) => {
     
     const spinner = ora(language.__("element.entity.spinner.start")).start();
     try {
-        if(validateFile(`entities/${namespace}/${fileName}`)) return spinner.fail(chalk.bold(chalk.yellowBright(language.__("element.entity.exits.2").replace("fileName", fileName))));
+        if(await validateFileAsync(`entities/${namespace}/${fileName}`)) return spinner.fail(chalk.bold(chalk.yellowBright(language.__("element.entity.exits.2").replace("fileName", fileName))));
         await makeSubFile(fileName, `entities/${namespace}/`, JSON.stringify(entity, null, 2))
 
         spinner.succeed(chalk.bold(chalk.whiteBright(language.__("element.entity.spinner.succeed").replace("${options.name}", options.name))));
@@ -163,7 +163,7 @@ const resourcePack = async (options) => {
 
     const spinner = ora(language.__("element.entity.spinner.start")).start();
     try {
-        if(validateFile(`entity/${namespace}/${fileName}`)) return spinner.fail(chalk.bold(chalk.yellowBright(language.__("element.entity.exits.2").replace("fileName", fileName))));
+        if(await validateFileAsync(`entity/${namespace}/${fileName}`)) return spinner.fail(chalk.bold(chalk.yellowBright(language.__("element.entity.exits.2").replace("fileName", fileName))));
         await makeSubFile(fileName, `entity/${namespace}/`, JSON.stringify(entity, null, 2))
 
         spinner.succeed(chalk.bold(chalk.whiteBright(language.__("element.entity.spinner.succeed").replace("${options.name}", options.name))));

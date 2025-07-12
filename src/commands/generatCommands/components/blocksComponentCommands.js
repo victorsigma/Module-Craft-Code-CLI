@@ -1,7 +1,7 @@
 import block_components from "../../../assets/jsons/block_components.json" with { type: 'json' };
 
 import { toCamelCase, toSnackCase, uppercaseFirstLetter } from '../../../utils/stringManager.js';
-import { clearEvents, getJsonFile, makeComponentFile, makeEventFile, makeFile, updateIndexFile, validateFile } from '../../../utils/fileOperations.js';
+import { clearEvents, getJsonFile, makeComponentFile, makeEventFile, makeFile, updateIndexFile, validateFileAsync } from '../../../utils/fileOperations.js';
 import { ONLY_BEHAVIOR, PATH_BLOCK_COMPONENTS, PATH_BLOCK_EVENTS } from '../../../utils/constants.js';
 import { propertiesAsync } from '../../../utils/readProperties.js';
 import { selectFromArray } from '../../../utils/forms.js';
@@ -128,13 +128,13 @@ export const ${toCamelCase(options.name.split(':')[1])}Component = {
             await makeEventFile(options.name, response.selections[i], PATH_BLOCK_EVENTS);
         }
 
-        updateIndexFile('block', options.name, `./components/blocks/${toCamelCase(options.name.split(':')[1])}`);
-
         const fileName = `block_components.json`
         let fileData = {...block_components};
-        if (validateFile(fileName)) {
+        if (await validateFileAsync(fileName)) {
             fileData = await getJsonFile(fileName);
-            fileData.components.push(options.name)
+            if (!fileData.components.includes(options.name)) {
+                fileData.components.push(options.name)
+            }
             await makeFile('block_components.json', JSON.stringify(fileData, null, 2))
         } else {
             fileData.components.push(options.name)
@@ -142,6 +142,7 @@ export const ${toCamelCase(options.name.split(':')[1])}Component = {
         }
 
         spinner.succeed(chalk.bold(chalk.whiteBright(language.__("component.block.spinner.succeed").replace('${options.name}', options.name))));
+        await updateIndexFile('block', options.name, `./components/blocks/${toCamelCase(options.name.split(':')[1])}`);
     } catch (error) {
         spinner.fail(chalk.red(language.__("component.block.spinner.error")));
         console.error(error);

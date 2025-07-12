@@ -1,7 +1,7 @@
 import { Command } from "commander";
 import { v4 as uuidv4 } from 'uuid';
 import { MODULE_VERSION, ONLY_BEHAVIOR, ONLY_RESOURCE, ONLY_SKIN, VERSION } from "../../../utils/constants.js";
-import { makeFile, validateFile } from "../../../utils/fileOperations.js";
+import { makeFile, validateFileAsync } from "../../../utils/fileOperations.js";
 import { propertiesAsync } from "../../../utils/readProperties.js";
 import { language } from "../../../utils/i18n.js";
 import inquirer from "inquirer";
@@ -45,7 +45,7 @@ manifest.action(async (options) => {
 
 
 const behaviorPack = async (options) => {
-    if (validateFile(`manifest.json`)) return console.log(chalk.bold(chalk.yellowBright(language.__("common.manifest.exits.2"))));
+    if (await validateFileAsync(`manifest.json`)) return console.log(chalk.bold(chalk.yellowBright(language.__("common.manifest.exits.2"))));
     let scripts = '';
     let modules = '';
     options.modules = [];
@@ -161,7 +161,7 @@ const behaviorPack = async (options) => {
 }
 
 const resourcePack = async (options) => {
-    if (validateFile(`manifest.json`)) return console.log(chalk.bold(chalk.yellowBright(language.__("common.manifest.exits.2"))));
+    if (await validateFileAsync(`manifest.json`)) return console.log(chalk.bold(chalk.yellowBright(language.__("common.manifest.exits.2"))));
     let capabilities = [];
     if (options.capabilities) {
         let response
@@ -224,7 +224,7 @@ const resourcePack = async (options) => {
 
 const skinPack = async (options) => {
 
-    if (validateFile(`manifest.json`)) return console.log(chalk.bold(chalk.yellowBright(language.__("common.manifest.exits.2"))));
+    if (await validateFileAsync(`manifest.json`)) return console.log(chalk.bold(chalk.yellowBright(language.__("common.manifest.exits.2"))));
     const content =
         `{
     "format_version": 1,

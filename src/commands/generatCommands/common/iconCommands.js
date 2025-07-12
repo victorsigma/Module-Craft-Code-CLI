@@ -1,4 +1,4 @@
-import { cloneFile, validateFile } from "../../../utils/fileOperations.js";
+import { cloneFile, validateFileAsync } from "../../../utils/fileOperations.js";
 import { ONLY_BEHAVIOR, ONLY_RESOURCE } from "../../../utils/constants.js";
 import { propertiesAsync } from "../../../utils/readProperties.js";
 import { language } from "../../../utils/i18n.js";
@@ -43,7 +43,7 @@ icon.action(async (options) => {
         'pack_icon_6': language.__("common.icon.icons.pearl"),
     };
 
-    if(validateFile('pack_icon.png')) return console.log(chalk.bold(chalk.yellowBright(language.__("common.icon.exits.3"))));
+    if(await validateFileAsync('pack_icon.png')) return console.log(chalk.bold(chalk.yellowBright(language.__("common.icon.exits.3"))));
 
     if (options.random) {
         // Selecciona un ícono aleatorio

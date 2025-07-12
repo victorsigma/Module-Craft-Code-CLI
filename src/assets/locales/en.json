@@ -347,5 +347,37 @@
 			"succeed": "Configuration saved successfully!",
 			"error": "Error saving configuration."
 		}
+	},
+	"operations": {
+		"error": {
+			"1": "✖ Error: Source file does not exist",
+			"2": "✖ Error: Insufficient permissions to write to destination",
+			"3": "✖ Error cloning the file:",
+			"4": "Error updating index.js file:",
+			"5": "Error updating file:",
+			"6": "Error updating settings:",
+			"7": "Error deleting or creating the directory:"
+		},
+		"notfound": {
+			"1": "File",
+			"2": "does not exist."
+		},
+		"make": {
+			"index": {
+				"1": "The file",
+				"2": "index.js",
+				"3": "was created automatically as it did not exist previously."
+			},
+			"component": {
+				"1": "The component",
+				"2": "has been successfully added to index.js"
+			}
+		},
+		"has": {
+			"component": {
+				"1": "The component",
+				"2": "is already registered."
+			}
+		}
 	}
 }
