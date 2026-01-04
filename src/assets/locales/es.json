@@ -146,6 +146,7 @@
 			"description": "Genera un objeto de bloque",
 			"option": {
 				"n": "Especifica el identificador del bloque",
+				"p": "Especifica el tipo de bloque a crear - Solo behavior",
 				"m": "Indica si el bloque tendra una sección personalizada en el menu de Minecraft - Solo behavior",
 				"l": "Define cómo se comporta un bloque al detectar un líquido - Solo behavior",
 				"r": "Define el material de la textura del bloque - Solo behavior"
@@ -193,7 +194,7 @@
 		"block": {
 			"description": "Crea un componente personalizado para un bloque.",
 			"option": {
-				"n": "Especifica el nombre del componente del bloque",
+				"n": "Especifica el nombre del componente del bloque (Solo prefab none)",
 				"d": "Especifica la descripción del componente del bloque"
 			},
 			"exits": {
@@ -322,6 +323,21 @@
 				"succeed": "El ícono ${iconsNames[options.icon]} ha sido establecido correctamente para tu proyecto.",
 				"error": "El ícono ${iconsNames[options.icon]} no fue establecido correctamente para tu proyecto."
 			}
+		},
+		"model": {
+			"option": {
+				"t": "Especifica el tipo de modelo a crear - Solo resource"
+			},
+			"exits": {
+				"1": "No puedes generar un archivo de modelo en un proyecto sin el archivo",
+				"2": "No puedes generar un modelo en un proyecto que no sea resource.",
+				"3": "El archivo fileName ya existe."
+			},
+			"spinner": {
+				"start": "Creando modelo...",
+				"succeed": "El modelo ha sido creado exitosamente!",
+				"error": "Error al crear el modelo."
+			}
 		}
 	},
 	"addon": {
@@ -356,7 +372,8 @@
 			"4": "Error al actualizar el archivo index.js:",
 			"5": "Error al actualizar el archivo:",
 			"6": "Error al actualizar los ajustes:",
-			"7": "Error al eliminar o crear el directorio:"
+			"7": "Error al eliminar o crear el directorio:",
+			"8": "Error al obtener los datos del archivo"
 		},
 		"notfound": {
 			"1": "El archivo",

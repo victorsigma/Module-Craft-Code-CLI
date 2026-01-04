@@ -3,7 +3,12 @@ import path from 'path';
 
 /**
  * Obtiene las propiedades de la aplicación de manera asincrona.
- * @returns {Promise<Array<string>>}
+ * @returns {Promise<{
+ *      ["addon.name"]: string,
+ *      ["addon.description"]: string,
+ *      ["addon.namespace"]: string | Array<string>,
+ *      ["addon.type"]: "resource" | "behavior"> 
+ * } | undefined>}
  */
 export const propertiesAsync = async () => {
     const filePath = path.join('./addon.properties');

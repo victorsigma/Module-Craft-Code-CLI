@@ -1,10 +1,10 @@
 import { cloneFile, validateFileAsync } from "../../../utils/fileOperations.js";
 import { propertiesAsync } from "../../../utils/readProperties.js";
 import { LIBS, ONLY_BEHAVIOR } from "../../../utils/constants.js";
+import { language } from "../../../utils/i18n.js";
 import { Command, Option } from "commander";
 import inquirer from "inquirer";
 import chalk from "chalk";
-import { language } from "../../../utils/i18n.js";
 
 const library = new Command('library').alias('lib')
     .description(language.__("common.library.description"));
@@ -35,6 +35,8 @@ library.action(async (options) => {
                     { value: "bedrockSystem", name: "Bedrock System" },
                     { value: "blockManager", name: "Block Manager" },
                     { value: "itemManager", name: "Item Manager" },
+                    { value: "vectorManager", name: "Vector Manager" },
+                    { value: "worldFuntions", name: "World Funtions" },
                 ],
             },
         ];
@@ -44,8 +46,19 @@ library.action(async (options) => {
     }
 
     console.log(chalk.yellow(`- ${options.module}`));
-    let create = false;
+    
+    const create = await processLibrary(options);
 
+    if (create) {
+        console.log(chalk.green('✔'), chalk.bold(chalk.whiteBright(language.__("common.library.create.header")), chalk.yellow(options.module), chalk.whiteBright(language.__("common.library.create.succeed"))))
+    } else {
+        console.log(chalk.red('✖'), chalk.bold(chalk.whiteBright(language.__("common.library.create.header")), chalk.yellow(options.module), chalk.whiteBright(language.__("common.library.create.error"))))
+    }
+})
+
+
+const processLibrary = async (options) => {
+    let create = false;
     switch (options.module) {
         case "bedrockSystem":
             const validationFormatter = await validateFileAsync('scripts/libs/formatter.js');
@@ -76,45 +89,29 @@ library.action(async (options) => {
             create = (fc1 && fc2);
             break;
         case "blockManager":
-            const validationBlockManager = await validateFileAsync('scripts/libs/blockManager.js');
-            let fc3 = false;
-            if (!validationBlockManager) {
-                fc3 = await cloneFile('js/libs/blockManager.js', 'scripts/libs/blockManager.js')
-                if (fc3) {
-                    console.log(chalk.green('✔'), chalk.bold(chalk.whiteBright(language.__("common.library.build.header")), chalk.yellow('blockManager.js'), chalk.whiteBright(language.__(`common.library.build.succeed`))))
-                } else {
-                    console.log(chalk.red('✖'), chalk.bold(chalk.whiteBright(language.__("common.library.build.header")), chalk.yellow('blockManager.js'), chalk.whiteBright(language.__(`common.library.build.error`))))
-                }
-            } else {
-                console.log(chalk.green('✔'), chalk.bold(chalk.whiteBright(language.__("common.library.build.header")), chalk.yellow('blockManager.js'), chalk.whiteBright(language.__(`common.library.build.exists`))))
-            }
-            create = fc3;
-            break;
         case "itemManager":
-            const validationItemManager = await validateFileAsync('scripts/libs/itemManager.js');
-            let fc4 = false;
-            if (!validationItemManager) {
-                fc4 = await cloneFile('js/libs/itemManager.js', 'scripts/libs/itemManager.js')
-                if (fc4) {
-                    console.log(chalk.green('✔'), chalk.bold(chalk.whiteBright(language.__("common.library.build.header")), chalk.yellow('itemManager.js'), chalk.whiteBright(language.__(`common.library.build.succeed`))))
+        case "vectorManager":
+        case "worldFuntions":
+            const existLibrary = await validateFileAsync(`scripts/libs/${options.module}.js`);
+            let fc = false;
+            if (!existLibrary) {
+                fc = await cloneFile(`js/libs/${options.module}.js`, `scripts/libs/${options.module}.js`)
+                if (fc) {
+                    console.log(chalk.green('✔'), chalk.bold(chalk.whiteBright(language.__("common.library.build.header")), chalk.yellow(`${options.module}.js`), chalk.whiteBright(language.__(`common.library.build.succeed`))))
                 } else {
-                    console.log(chalk.red('✖'), chalk.bold(chalk.whiteBright(language.__("common.library.build.header")), chalk.yellow('itemManager.js'), chalk.whiteBright(language.__(`common.library.build.error`))))
+                    console.log(chalk.red('✖'), chalk.bold(chalk.whiteBright(language.__("common.library.build.header")), chalk.yellow(`${options.module}.js`), chalk.whiteBright(language.__(`common.library.build.error`))))
                 }
             } else {
-                console.log(chalk.green('✔'), chalk.bold(chalk.whiteBright(language.__("common.library.build.header")), chalk.yellow('itemManager.js'), chalk.whiteBright(language.__(`common.library.build.exists`))))
+                console.log(chalk.green('✔'), chalk.bold(chalk.whiteBright(language.__("common.library.build.header")), chalk.yellow(`${options.module}.js`), chalk.whiteBright(language.__(`common.library.build.exists`))))
             }
 
-            create = fc4;
+            create = fc;
             break;
         default:
             break;
     }
 
-    if (create) {
-        console.log(chalk.green('✔'), chalk.bold(chalk.whiteBright(language.__("common.library.create.header")), chalk.yellow(options.module), chalk.whiteBright(language.__("common.library.create.succeed"))))
-    } else {
-        console.log(chalk.red('✖'), chalk.bold(chalk.whiteBright(language.__("common.library.create.header")), chalk.yellow(options.module), chalk.whiteBright(language.__("common.library.create.error"))))
-    }
-})
+    return create
+} 
 
 export default library;

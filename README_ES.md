@@ -114,6 +114,7 @@ Subcomandos
 > * `manifest`: Genera un archivo manifest.
 > * `library`: Genera una librería.
 > * `icon`: Establece un icono genérico para tu proyecto.
+> * `model`: Genera un archivo de modelo.
 
 
 
@@ -176,6 +177,20 @@ Opciones
 > * `-r, --random <boolean>`: Habilita la selección aleatoria de íconos (por defecto: `false`).
 
 
+### Model
+
+Genera un archivo de modelo.
+
+```shell
+mccc generate common model [opciones]
+
+mccc g cm mo [opciones]
+```
+
+Opciones
+> * `-t, --type <string>`: Especifica el tipo de modelo a crear - Solo resource pack (por defecto: `"slab"`). Opciones: `slab`, `stair`.
+
+
 ## Element
 
 Genera objetos de tipo `entity`, `item`, `block`.
@@ -223,7 +238,7 @@ mccc g e item [opciones]
 
 Opciones
 > * `-n, --name <string>`: Especifica el identificador del item (por defecto: `"namespace:item"`).
-> * `-t, --type <string>`: Especifica el tipo de item a crear (por defecto: `"item"`). Opciones: `item`, `axe`, `pickaxe`, `shovel`, `sword`.
+> * `-t, --type <string>`: Especifica el tipo de item a crear (por defecto: `"item"`). Opciones: `item`, `axe`, `pickaxe`, `shovel`, `slab`, `sword`.
 > * `-m, --menu <boolean>`: Indica si el item tendrá una sección personalizada en el menú de Minecraft (por defecto: `false`).
 
 
@@ -239,6 +254,7 @@ mccc g e block [opciones]
 
 Opciones
 > * `-n, --name <string>`: Especifica el identificador del bloque (por defecto: `"namespace:block"`).
+> * `-p, --prefab <string>`: Especifica el prefab que el bloque utilizará (por defecto: `"block"`). Opciones: `block`, `slab`, `stair`. PD: Las escaleras estan en beta.
 > * `-m, --menu <boolean>`: Indica si el bloque tendrá una sección personalizada en el menú de Minecraft (por defecto: `false`).
 > * `-l, --liquid <boolean>`: Define cómo se comporta un bloque al detectar un líquido (por defecto: `false`).
 > * `-r, --render <string>`: Define el material de la textura del bloque (por defecto: `"opaque"`). Opciones: `opaque`, `double_sided`, `blend`, `alpha_test`.

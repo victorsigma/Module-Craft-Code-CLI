@@ -54,14 +54,15 @@ export const checkAnyNeighborHasTag = (block, tag) => {
         !blockNeighborNorth || !blockNeighborSouth) return;
 
     return (
+        blockNeighborUp.hasTag(tag) ||
+        blockNeighborDown.hasTag(tag) ||
         blockNeighborEast.hasTag(tag) ||
         blockNeighborWest.hasTag(tag) ||
         blockNeighborNorth.hasTag(tag) ||
-        blockNeighborSouth.hasTag(tag) ||
-        blockNeighborUp.hasTag(tag) ||
-        blockNeighborDown.hasTag(tag)
+        blockNeighborSouth.hasTag(tag)
     );
 };
+
 
 /**
  * Verifica si algún vecino es del tipo determinado
@@ -146,7 +147,7 @@ export const checkAllNeighborHasBlockType = (block, id) => {
 
 
 /**
- * Verifica si vecino de arriba o abajo tiene la etiqueta especificada
+ * Verifica si algún vecino tiene la etiqueta especificada
  * @param {Block} block
  * @param {string} tag 
  * @returns {boolean}
@@ -166,7 +167,7 @@ export const checkTopOrBottomNeighborHasTag = (block, tag) => {
 
 
 /**
- * Verifica si vecino de arriba o abajo es del tipo determinado
+ * Verifica si algún vecino es del tipo determinado
  * @param {Block} block
  * @param {string} id 
  * @returns {boolean}

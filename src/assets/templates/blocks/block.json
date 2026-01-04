@@ -5,7 +5,7 @@
             "identifier": "namespace:block",
             "menu_category": {
                 "category": "construction",
-                "group": "itemGroup.name.copper"
+                "group": "minecraft:itemGroup.name.copper"
             },
             "states": {}
         },

@@ -130,8 +130,8 @@ export const MODULE_VERSION = {
     '@minecraft/server-admin': '1.0.0-beta',
     '@minecraft/server-gametest': '1.0.0-beta',
     '@minecraft/server-net': '1.0.0-beta',
-    '@minecraft/server-ui': '1.3.0',
-    '@minecraft/server': '1.19.0',
+    '@minecraft/server-ui': '2.0.0',
+    '@minecraft/server': '2.0.0',
     '@minecraft/server-editor': '0.1.0-beta',
 }
 

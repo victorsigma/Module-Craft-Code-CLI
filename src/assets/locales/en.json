@@ -146,6 +146,7 @@
 			"description": "Generates an block object",
 			"option": {
 				"n": "Specifies the block identifier",
+				"p": "Specify the type of block to create - Only behavior",
 				"m": "Indicates if the block will have a custom section in the Minecraft menu - Only behavior",
 				"l": "Defines how a block behaves when detecting a liquid - Only behavior",
 				"r": "Defines the texture material of the block - Only behavior"
@@ -193,7 +194,7 @@
 		"block": {
 			"description": "Creates a custom component for a block.",
 			"option": {
-				"n": "Specifies the name of the block component",
+				"n": "Specifies the name of the block component (Only prefab none)",
 				"d": "Specifies the description of the block component"
 			},
 			"exits": {
@@ -322,6 +323,21 @@
 				"succeed": "The icon ${iconsNames[options.icon]} has been set correctly for your project.",
 				"error": "The icon ${iconsNames[options.icon]} was not set correctly for your project."
 			}
+		},
+		"model": {
+			"option": {
+				"t": "Specifies the type of model to create - Only resource"
+			},
+			"exits": {
+				"1": "You can't generate a model in a project without the file",
+				"2": "You can't generate a model in a project that is not resource.",
+				"3": "The file fileName already exists."
+			},
+			"spinner": {
+				"start": "Creating model...",
+				"succeed": "The model has been successfully created!",
+				"error": "Error creating the model."
+			}
 		}
 	},
 	"addon": {
@@ -356,7 +372,8 @@
 			"4": "Error updating index.js file:",
 			"5": "Error updating file:",
 			"6": "Error updating settings:",
-			"7": "Error deleting or creating the directory:"
+			"7": "Error deleting or creating the directory:",
+			"8": "Error get file data"
 		},
 		"notfound": {
 			"1": "File",

@@ -1,0 +1,27 @@
+{
+    "format_version": "1.21.120",
+    "minecraft:item": {
+        "description": {
+            "identifier": "namespace:slab",
+            "menu_category": {
+                "category": "construction",
+                "group": "minecraft:itemGroup.name.slab"
+            }
+        },
+        "components": {
+            "minecraft:stacked_by_data": true,
+            "minecraft:block_placer": {
+                "block": "namespace:slab",
+                "replace_block_item": true
+            },
+            "namespace:slab_item": {
+                "sound": "use.stone"
+            },
+            "minecraft:tags": {
+                "tags": [
+                    "namespace:slabs"
+                ]
+            }
+        }
+    }
+}

@@ -79,6 +79,18 @@ export const makeEventFile = async (name, event, currentPath) => {
 	}
 }
 
+export const makeEventFileWithPrefab = async (name, content, event, currentPath) => {
+	const fileName = `${currentPath}/${toCamelCase(name.split(':')[1])}/${event}Event.js`;
+
+	await validateDirectory(`${currentPath}/${toCamelCase(name.split(':')[1])}`);
+
+	try {
+		await fs.promises.writeFile(fileName, content, 'utf-8');
+	} catch (error) {
+		throw error;
+	}
+}
+
 export const makeFile = async (name, content) => {
 	const fileName = name;
 	try {
@@ -100,14 +112,14 @@ export const makeSubFile = async (name, currentPath, content) => {
 
 export const validateFileAndCreate = async (dir, content) => {
 	try {
-        // Usar fs.promises.access para comprobar si el archivo existe de forma asíncrona
-        await fs.promises.access(dir, fs.constants.F_OK);
-        return false; // El archivo ya existe, no hace falta crear nada
-    } catch (error) {
-        // Si no existe, crea el archivo
-        await makeFile(dir, content);
-        return true; // El archivo ha sido creado
-    }
+		// Usar fs.promises.access para comprobar si el archivo existe de forma asíncrona
+		await fs.promises.access(dir, fs.constants.F_OK);
+		return false; // El archivo ya existe, no hace falta crear nada
+	} catch (error) {
+		// Si no existe, crea el archivo
+		await makeFile(dir, content);
+		return true; // El archivo ha sido creado
+	}
 }
 
 export const cloneFile = async (sourceFileName, destinationPath) => {
@@ -135,6 +147,29 @@ export const cloneFile = async (sourceFileName, destinationPath) => {
 		return false;
 	}
 };
+
+/**
+ * 
+ * @param {*} file 
+ * @returns {Promise<string|undefined>}
+ */
+export const getTextFileEvent = async (file) => {
+	const __filename = fileURLToPath(import.meta.url);
+	const __dirname = path.dirname(__filename);
+	// Ruta al archivo de origen dentro del directorio de la CLI
+	const filePath = path.join(__dirname, `../assets/js/events/${file}`);
+
+	const validation = await validateFileAsync(filePath);
+
+	if (!validation) return console.log(chalk.red('✖'), chalk.bold(chalk.whiteBright(language.__("operations.notfound.1")), chalk.yellow(path.basename(filePath)), chalk.whiteBright(language.__("operations.notfound.2"))))
+	try {
+		const fileContent = await fs.promises.readFile(filePath, 'utf-8');
+		
+		return fileContent;
+	} catch (error) {
+		return undefined;
+	}
+}
 
 export const updateIndexFile = async (componentType, componentName, componentPath) => {
 	const filePath = path.join(process.cwd(), 'scripts/index.js');

@@ -17,28 +17,28 @@
 Initializes the project with a `addon.properties`.
 
 ```shell
-mccc init [opciones]
+mccc init [options]
 
-mccc i [opciones]
+mccc i [options]
 ```
 
-Opciones
-> * `-n, --name <string>`: Especifica el nombre del addon (por defecto: `"New Addon"`).
-> * `-s, --namespace <string>`: Especifica el namespace del addon (por defecto: `"namespace"`).
-> * `-d, --description <string>`: Especifica la descripción del addon (por defecto: `"Addon Description"`).
-> * `-t, --type <string>`: Especifica el tipo de proyecto (por defecto: `"behavior"`). Opciones: `behavior`, `resource`, `skin`.
+Options
+> * `-n, --name <string>`: Especifica el nombre del addon (default: `"New Addon"`).
+> * `-s, --namespace <string>`: Especifica el namespace del addon (default: `"namespace"`).
+> * `-d, --description <string>`: Especifica la descripción del addon (default: `"Addon Description"`).
+> * `-t, --type <string>`: Especifica el tipo de proyecto (default: `"behavior"`). Options: `behavior`, `resource`, `skin`.
 
 ## Setting
 
 Sets global configurations for the CLI.
 
 ```shell
-mccc setting [opciones]
+mccc setting [options]
 
-mccc s [opciones]
+mccc s [options]
 ```
 
-Opciones
+Options
 > * `-l, --lang <string>`: Specifies the program language. Options: `"es"`, `"es"`.
 
 
@@ -47,12 +47,12 @@ Opciones
 Generates custom components, elements, and blocks.
 
 ```shell
-mccc generate [comando] [opciones]
+mccc generate [command] [options]
 
-mccc g [comando] [opciones]
+mccc g [command] [options]
 ```
 
-Subcomandos
+Subcommands
 > * `component`: Generates a custom component.
 > * `common`: Generates common files such as `lang`, `manifest`, `library`, `icon`.
 > * `element`: Generates objects of type `entity`, `item`, `block`.
@@ -63,18 +63,18 @@ Subcomandos
 Generates a custom component.
 
 ```shell
-mccc generate component [comando] [opciones]
+mccc generate component [command] [options]
 
-mccc g c [comando] [opciones]
+mccc g c [command] [options]
 ```
 
-Subcomandos
+Subcommands
 > * `block`: Creates a custom component for a block.
 > * `item`: Creates a custom component for an item.
 
-Opciones
-> * `-n, --name <string>`: Especifica el nombre del componente (por defecto: `"namespace:component"`).
-> * `-d, --description <string>`: Especifica la descripción del componente (por defecto: `"description`").
+Options
+> * `-n, --name <string>`: Especifica el nombre del componente (default: `"namespace:component"`).
+> * `-d, --description <string>`: Especifica la descripción del componente (default: `"description`").
 
 
 ### Block
@@ -82,9 +82,9 @@ Opciones
 Creates a custom component for a block.
 
 ```shell
-mccc generate component block [opciones]
+mccc generate component block [options]
 
-mccc g c block [opciones]
+mccc g c block [options]
 ```
 
 ### Item
@@ -92,9 +92,9 @@ mccc g c block [opciones]
 Creates a custom component for an item.
 
 ```shell
-mccc generate component item [opciones]
+mccc generate component item [options]
 
-mccc g c item [opciones]
+mccc g c item [options]
 ```
 
 
@@ -104,16 +104,17 @@ mccc g c item [opciones]
 Generates common files.
 
 ```shell
-mccc generate common [comando] [opciones]
+mccc generate common [command] [options]
 
-mccc g cm [comando] [opciones]
+mccc g cm [command] [options]
 ```
 
-Subcomandos
+Subcommands
 > * `lang`: Generates a language file.
 > * `manifest`: Generates a manifest.
 > * `library`: Generates a library.
 > * `icon`: Sets a generic icon for your project.
+> * `model`: Generates a model file.
 
 
 
@@ -122,13 +123,13 @@ Subcomandos
 Generates a language file.
 
 ```shell
-mccc generate common lang [opciones]
+mccc generate common lang [options]
 
-mccc g cm lang [opciones]
+mccc g cm lang [options]
 ```
 
 
-Opciones
+Options
 > * `-r, --region <string>`: Specifies the region for language localization.
 
 
@@ -137,12 +138,12 @@ Opciones
 Generates a `manifest.json`.
 
 ```shell
-mccc generate common manifest [opciones]
+mccc generate common manifest [options]
 
-mccc g cm manifest [opciones]
+mccc g cm manifest [options]
 ```
 
-Opciones
+Options
 > * `-l, --link <string>`: Links a resource_pack with a behavior_pack.
 > * `-s, --scripts <boolean>`: Enables scripts in a behavior_pack.
 > * `-c, --capabilities <boolean>`: Enables capabilities in a resource_pack.
@@ -153,13 +154,13 @@ Opciones
 Generates a library.
 
 ```shell
-mccc generate common library [opciones]
+mccc generate common library [options]
 
-mccc g cm library [opciones]
+mccc g cm library [options]
 ```
 
-Opciones
-> * `-m, --module <string>`: Especifica la librería que se va a agregar. Opciones: `bedrockSystem`, `blockManager`, `itemManager`.
+Options
+> * `-m, --module <string>`: Especifica la librería que se va a agregar. Options: `bedrockSystem`, `blockManager`, `itemManager`.
 
 
 ### Icon
@@ -167,13 +168,27 @@ Opciones
 Sets a generic icon for your project.
 
 ```shell
-mccc generate common icon [opciones]
+mccc generate common icon [options]
 
-mccc g cm icon [opciones]
+mccc g cm icon [options]
 ```
 
-Opciones
-> * `-r, --random <boolean>`: Enables random icon selection (por defecto: `false`).
+Options
+> * `-r, --random <boolean>`: Enables random icon selection (default: `false`).
+
+
+### Model
+
+Generates a model file.
+
+```shell
+mccc generate common model [options]
+
+mccc g cm mo [options]
+```
+
+Options
+> * `-t, --type <string>`: Specifies the type of model to create - Resource pack only (default: `"slab"`). Options: `slab`, `stair`.
 
 
 ## Element
@@ -181,12 +196,12 @@ Opciones
 Generates objects of type `entity`, `item`, `block`.
 
 ```shell
-mccc generate element [comando] [opciones]
+mccc generate element [command] [options]
 
-mccc g e [comando] [opciones]
+mccc g e [command] [options]
 ```
 
-Subcomandos
+Subcommands
 
 > * `entity`: Generates an entity object.
 > * `item`: Generates an item object.
@@ -198,17 +213,17 @@ Subcomandos
 Generates an entity object.
 
 ```shell
-mccc generate element entity [opciones]
+mccc generate element entity [options]
 
-mccc g e entity [opciones]
+mccc g e entity [options]
 ```
 
-Opciones
-> * `-n, --name <string>`: Especifica el identificador de la entidad (por defecto: `"namespace:entity"`).
+Options
+> * `-n, --name <string>`: Especifica el identificador de la entidad (default: `"namespace:entity"`).
 > * `-r, --runtime <string>`: Sets the Vanilla Minecraft identifier this entity will use to build itself.
-> * `-e, --experimental <boolean>`: Specifies if the entity will use experimental Minecraft features (por defecto: `false`).
-> * `-sp, --spawnable <boolean>`: Specifies if the entity's spawn egg will appear in the creative inventory (por defecto: `false`).
-> * `-su, --summonable <boolean>`: Specifies if the entity can be summoned using in-game commands (por defecto: `false`).
+> * `-e, --experimental <boolean>`: Specifies if the entity will use experimental Minecraft features (default: `false`).
+> * `-sp, --spawnable <boolean>`: Specifies if the entity's spawn egg will appear in the creative inventory (default: `false`).
+> * `-su, --summonable <boolean>`: Specifies if the entity can be summoned using in-game commands (default: `false`).
 
 
 ### Item
@@ -216,15 +231,15 @@ Opciones
 Generates an item object.
 
 ```shell
-mccc generate element item [opciones]
+mccc generate element item [options]
 
-mccc g e item [opciones]
+mccc g e item [options]
 ```
 
-Opciones
-> * `-n, --name <string>`: Especifica el identificador del item (por defecto: `"namespace:item"`).
-> * `-t, --type <string>`: Specifies the item type to create (por defecto: `"item"`). Opciones: `item`, `axe`, `pickaxe`, `shovel`, `sword`.
-> * `-m, --menu <boolean>`: Indicates whether the item will have a custom section in the Minecraft menu (por defecto: `false`).
+Options
+> * `-n, --name <string>`: Especifica el identificador del item (default: `"namespace:item"`).
+> * `-t, --type <string>`: Specifies the item type to create (default: `"item"`). Options: `item`, `axe`, `pickaxe`, `shovel`, `slab`, `sword`.
+> * `-m, --menu <boolean>`: Indicates whether the item will have a custom section in the Minecraft menu (default: `false`).
 
 
 ### Block
@@ -232,13 +247,14 @@ Opciones
 Generates a block object.
 
 ```shell
-mccc generate element block [opciones]
+mccc generate element block [options]
 
-mccc g e block [opciones]
+mccc g e block [options]
 ```
 
-Opciones
-> * `-n, --name <string>`: Especifica el identificador del bloque (por defecto: `"namespace:block"`).
-> * `-m, --menu <boolean>`: Indicates whether the block will have a custom section in the Minecraft menu (por defecto: `false`).
-> * `-l, --liquid <boolean>`: Defines how the block behaves when detecting liquid (por defecto: `false`).
-> * `-r, --render <string>`: Defines the block's texture material (por defecto: `"opaque"`). Opciones: `opaque`, `double_sided`, `blend`, `alpha_test`.
+Options
+> * `-n, --name <string>`: Especifica el identificador del bloque (default: `"namespace:block"`).
+> * `-p, --prefab <string>`: Specifies the prefab the block will use (default: `"block"`). Options: `block`, `slab`, `stair`. PD: Stairs are in beta.
+> * `-m, --menu <boolean>`: Indicates whether the block will have a custom section in the Minecraft menu (default: `false`).
+> * `-l, --liquid <boolean>`: Defines how the block behaves when detecting liquid (default: `false`).
+> * `-r, --render <string>`: Defines the block's texture material (default: `"opaque"`). Options: `opaque`, `double_sided`, `blend`, `alpha_test`.

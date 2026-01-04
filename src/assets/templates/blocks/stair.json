@@ -1,0 +1,218 @@
+{
+  "format_version": "1.21.130",
+  "use_beta_features": true,
+  "minecraft:block": {
+    "description": {
+      "identifier": "namespace:stair",
+      "menu_category": {
+        "category": "construction",
+        "group": "minecraft:itemGroup.name.stairs"
+      },
+      "states": {},
+      "traits": {
+        "minecraft:placement_direction": {
+          "enabled_states": ["minecraft:cardinal_direction", "minecraft:corner_and_cardinal_direction"],
+          "blocks_to_corner_with": [{"tags": "q.any_tag('minecraft:cornerable_stairs')"}]
+        },
+        "minecraft:placement_position": {
+          "enabled_states": ["minecraft:vertical_half"]
+        }
+      }
+    },
+    "components": {
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 4
+      },
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "block",
+          "render_method": "opaque"
+        }
+      },
+      "minecraft:item_visual": {
+        "geometry": "geometry.custom_stair_icon",
+        "material_instances": {
+          "*": {
+            "texture": "block",
+            "render_method": "opaque"
+          }
+        }
+      },
+      "minecraft:loot": "loot_tables/blocks/block.json",
+      "minecraft:liquid_detection": {
+        "detection_rules": [
+          {
+            "liquid_type": "water",
+            "can_contain_liquid": true,
+            "stops_liquid_flowing_from_direction": [
+              "up",
+              "south",
+              "east",
+              "west",
+              "north",
+              "down"
+            ]
+          }
+        ]
+      },
+      "minecraft:geometry": {
+        "identifier": "geometry.custom_stair",
+        "bone_visibility": {
+          "left_top_south": "query.block_state('minecraft:corner') == 'inner_left'",
+          "right_top_south": "query.block_state('minecraft:corner') == 'inner_right'",
+          "left_top_north": "query.block_state('minecraft:corner') != 'outer_left'",
+          "right_top_north": "query.block_state('minecraft:corner') != 'outer_right'"
+        }
+      },
+      "minecraft:collision_box": [
+        {
+          "origin": [-8, 0, -8],
+          "size": [16, 16, 8]
+        },
+        {
+          "origin": [-8, 0, 0],
+          "size": [16, 8, 8]
+        }
+      ],
+      "tag:minecraft:cornerable_stairs": {}
+    },
+    "permutations": [
+      {
+        "condition": "query.block_state('minecraft:vertical_half') == 'top'",
+        "components": {
+          "minecraft:geometry": {
+            "identifier": "geometry.custom_stair",
+            "bone_visibility": {
+              "left_bottom_south": "query.block_state('minecraft:corner') == 'inner_left'",
+              "right_bottom_south": "query.block_state('minecraft:corner') == 'inner_right'",
+              "left_bottom_north": "query.block_state('minecraft:corner') != 'outer_left'",
+              "right_bottom_north": "query.block_state('minecraft:corner') != 'outer_right'"
+            }
+          }
+        }
+      },
+      {
+        "condition": "query.block_state('minecraft:vertical_half') == 'bottom' && query.block_state('minecraft:corner') != 'outer_left' && query.block_state('minecraft:corner') != 'outer_right'",
+        "components": {
+          "minecraft:collision_box": [
+            {
+              "origin": [-8, 8, -8],
+              "size": [16, 8, 8]
+            },
+            {
+              "origin": [-8, 0, -8],
+              "size": [16, 8, 16]
+            }
+          ]
+        }
+      },
+      {
+        "condition": "query.block_state('minecraft:vertical_half') == 'top' && query.block_state('minecraft:corner') != 'outer_left' && query.block_state('minecraft:corner') != 'outer_right'",
+        "components": {
+          "minecraft:collision_box": [
+            {
+              "origin": [-8, 0, -8],
+              "size": [16, 8, 8]
+            },
+            {
+              "origin": [-8, 8, -8],
+              "size": [16, 8, 16]
+            }
+          ]
+        }
+      },
+      {
+        "condition": "query.block_state('minecraft:vertical_half') == 'bottom' && query.block_state('minecraft:corner') == 'outer_left'",
+        "components": {
+          "minecraft:collision_box": [
+            {
+              "origin": [0, 8, -8],
+              "size": [8, 8, 8]
+            },
+            {
+              "origin": [-8, 0, -8],
+              "size": [16, 8, 16]
+            }
+          ]
+        }
+      },
+      {
+        "condition": "query.block_state('minecraft:vertical_half') == 'bottom' && query.block_state('minecraft:corner') == 'outer_right'",
+        "components": {
+          "minecraft:collision_box": [
+            {
+              "origin": [-8, 8, -8],
+              "size": [8, 8, 8]
+            },
+            {
+              "origin": [-8, 0, -8],
+              "size": [16, 8, 16]
+            }
+          ]
+        }
+      },
+      {
+        "condition": "query.block_state('minecraft:vertical_half') == 'top' && query.block_state('minecraft:corner') == 'outer_left'",
+        "components": {
+          "minecraft:collision_box": [
+            {
+              "origin": [0, 0, -8],
+              "size": [8, 8, 8]
+            },
+            {
+              "origin": [-8, 8, -8],
+              "size": [16, 8, 16]
+            }
+          ]
+        }
+      },
+      {
+        "condition": "query.block_state('minecraft:vertical_half') == 'top' && query.block_state('minecraft:corner') == 'outer_right'",
+        "components": {
+          "minecraft:collision_box": [
+            {
+              "origin": [-8, 0, -8],
+              "size": [8, 8, 8]
+            },
+            {
+              "origin": [-8, 8, -8],
+              "size": [16, 8, 16]
+            }
+          ]
+        }
+      },
+      {
+        "condition": "query.block_state ('minecraft:cardinal_direction') == 'north'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [0, 0, 0]
+          }
+        }
+      },
+      {
+        "condition": "query.block_state ('minecraft:cardinal_direction') == 'south'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [0, 180, 0]
+          }
+        }
+      },
+      {
+        "condition": "query.block_state ('minecraft:cardinal_direction') == 'west'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [0, 90, 0]
+          }
+        }
+      },
+      {
+        "condition": "query.block_state ('minecraft:cardinal_direction') == 'east'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [0, -90, 0]
+          }
+        }
+      }
+    ]
+  }
+}

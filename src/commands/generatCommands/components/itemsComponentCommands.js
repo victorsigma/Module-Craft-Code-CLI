@@ -6,15 +6,18 @@ import { ONLY_BEHAVIOR, PATH_ITEM_COMPONENTS, PATH_ITEM_EVENTS } from '../../../
 import { propertiesAsync } from '../../../utils/readProperties.js';
 import { selectFromArray } from '../../../utils/forms.js';
 import { language } from "../../../utils/i18n.js";
-import { Command } from 'commander';
+import { Command, Option } from 'commander';
 import inquirer from 'inquirer';
 import chalk from 'chalk';
 import ora from 'ora';
+import { slabComponent } from "./itemPrefabs/slabComponent.js";
 
 const itemsComponent = new Command('item').alias('i')
     .description(language.__("component.item.description"));
 itemsComponent.option('-n, --name <string>', language.__("component.item.option.n"), 'namespace:item_component');
 itemsComponent.option('-d, --description <string>', language.__("component.item.option.n"), 'description');
+itemsComponent.addOption(new Option('-p, --prefab <string>', language.__("component.item.option.p")).default("none").choices(["none", "slab"]));
+
 
 
 itemsComponent.action(async (options) => {
@@ -28,6 +31,17 @@ itemsComponent.action(async (options) => {
     if (!behavior) return console.log(
         chalk.yellowBright(language.__("component.item.exits.2"))
     );
+
+    if (options.prefab === "slab") {
+        await slabComponent(options)
+    } else {
+        await defaultComponent(options)
+    }
+    process.exit(0);
+});
+
+const defaultComponent = async (options) => {
+    const config = await propertiesAsync();
 
     // Asegurar que el nombre tenga un namespace
     options.name = toSnackCase(options.name);
@@ -68,7 +82,6 @@ itemsComponent.action(async (options) => {
             ? `${config['addon.namespace']}:item_component`
             : 'namespace:item_component';
         }
-        
     }
 
     const questions = [
@@ -144,9 +157,7 @@ export const ${toCamelCase(options.name.split(':')[1])}Component = {
         spinner.fail(chalk.red(language.__("component.item.spinner.error")));
         console.error(error);
     }
-    process.exit(0);
-});
-
+}
 
 
 export default itemsComponent;

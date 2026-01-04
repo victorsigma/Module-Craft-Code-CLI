@@ -1,0 +1,99 @@
+{
+    "format_version": "1.21.60",
+    "minecraft:block": {
+        "description": {
+            "identifier": "namespace:slab",
+            "menu_category": {
+                "category": "construction",
+                "group": "minecraft:itemGroup.name.slab"
+            },
+            "states": {
+            },
+            "traits": {
+                "minecraft:placement_position": {
+                    "enabled_states": [
+                        "minecraft:vertical_half"
+                    ]
+                }
+            }
+        },
+        "components": {
+            "minecraft:destructible_by_mining": {
+                "seconds_to_destroy": 2.0
+            },
+            "minecraft:geometry": {
+                "identifier": "geometry.namespace_slab",
+                "bone_visibility": {
+                    "slab_top": "query.block_state('minecraft:vertical_half') == 'top' || query.block_state('namespace:slab_double')",
+                    "slab_bottom": "query.block_state('minecraft:vertical_half') == 'bottom' || query.block_state('namespace:slab_double')"
+                }
+            },
+            "minecraft:material_instances": {
+                "*": {
+                "texture": "block",
+                "render_method": "opaque"
+                }
+            },
+            "minecraft:loot": "loot_tables/blocks/custom_slab_double.json",
+            "minecraft:selection_box": true,
+            "minecraft:collision_box": true,
+            "tag:stone": {},
+            "tag:minecraft:is_pickaxe_item_destructible": {}
+        },
+        "permutations": [
+            {
+                "condition": "query.block_state('minecraft:vertical_half') == 'top' && !query.block_state('namespace:slab_double')",
+                "components": {
+                    "minecraft:selection_box": {
+                        "origin": [ -8, 8, -8 ],
+                        "size": [ 16, 8, 16 ]
+                    },
+                    "minecraft:collision_box": {
+                        "origin": [ -8, 8, -8 ],
+                        "size": [ 16, 8, 16 ]
+                    },
+                    "minecraft:liquid_detection": {
+                        "detection_rules": [
+                            {
+                                "liquid_type": "water",
+                                "can_contain_liquid": true,
+                                "on_liquid_touches": "no_reaction"
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "condition": "query.block_state('minecraft:vertical_half') == 'bottom' && !query.block_state('namespace:slab_double')",
+                "components": {
+                    "minecraft:selection_box": {
+                        "origin": [ -8, 0, -8 ],
+                        "size": [ 16, 8, 16 ]
+                    },
+                    "minecraft:collision_box": {
+                        "origin": [ -8, 0, -8 ],
+                        "size": [ 16, 8, 16 ]
+                    },
+                    "minecraft:liquid_detection": {
+                        "detection_rules": [
+                            {
+                                "liquid_type": "water",
+                                "can_contain_liquid": true,
+                                "on_liquid_touches": "no_reaction",
+                                "stops_liquid_flowing_from_direction": [
+                                    "down"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "condition": "!query.block_state('namespace:slab_double')",
+                "components": {
+                    "minecraft:loot": "loot_tables/blocks/custom_slab.json"
+                }
+            }
+        ]
+    }
+}
