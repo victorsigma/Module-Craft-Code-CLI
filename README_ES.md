@@ -75,7 +75,7 @@ Subcomandos
 Opciones
 > * `-n, --name <string>`: Especifica el nombre del componente (por defecto: `"namespace:component"`).
 > * `-d, --description <string>`: Especifica la descripción del componente (por defecto: `"description`").
-
+> * `-p, --prefab <string>`: Especifica el prefab que el componente utilizará (por defecto: `"none"`). Opciones: `none`, `slab`.
 
 ### Block
 

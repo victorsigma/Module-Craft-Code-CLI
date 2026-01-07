@@ -1,4 +1,4 @@
-import { world } from '@minecraft/server';
+import { system } from '@minecraft/server';
 
 // Importaciones de componentes de bloques
 // aquí se agregan los imports de componentes block
@@ -7,7 +7,7 @@ import { world } from '@minecraft/server';
 // aquí se agregan los imports de componentes item
 
 
-world.beforeEvents.worldInitialize.subscribe(initEvent => {
+system.beforeEvents.startup.subscribe(initEvent => {
     // Registro de componentes de bloques
     // aquí se agregan los registros de componentes block
 

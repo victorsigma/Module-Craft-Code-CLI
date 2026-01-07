@@ -73,9 +73,9 @@ Subcommands
 > * `item`: Creates a custom component for an item.
 
 Options
-> * `-n, --name <string>`: Especifica el nombre del componente (default: `"namespace:component"`).
-> * `-d, --description <string>`: Especifica la descripción del componente (default: `"description`").
-
+> * `-n, --name <string>`: Specifies the name of the component (default: `"namespace:component"`).
+> * `-d, --description <string>`: Specifies the description of the component (default: `"description`").
+> * `-p, --prefab <string>`: Specifies the prefab the component will use (default: `"none"`). Options: `none`, `slab`.
 
 ### Block
 

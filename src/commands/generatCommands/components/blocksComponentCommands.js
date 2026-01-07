@@ -5,16 +5,18 @@ import { clearEvents, getJsonFile, makeComponentFile, makeEventFile, makeFile, u
 import { ONLY_BEHAVIOR, PATH_BLOCK_COMPONENTS, PATH_BLOCK_EVENTS } from '../../../utils/constants.js';
 import { propertiesAsync } from '../../../utils/readProperties.js';
 import { selectFromArray } from '../../../utils/forms.js';
-import { Command } from 'commander';
+import { Command, Option } from 'commander';
 import inquirer from 'inquirer';
 import chalk from 'chalk';
 import ora from 'ora';
 import { language } from "../../../utils/i18n.js";
+import { slabComponent } from "./blockPrefabs/slabComponent.js";
 
 const blocksComponent = new Command('block').alias('b')
     .description(language.__("component.block.description"));
 blocksComponent.option('-n, --name <string>', language.__("component.block.option.n"), 'namespace:block_component');
 blocksComponent.option('-d, --description <string>', language.__("component.block.option.d"), 'description');
+blocksComponent.addOption(new Option('-p, --prefab <string>', language.__("component.item.option.p")).default("none").choices(["none", "slab"]));
 
 
 blocksComponent.action(async (options) => {
@@ -29,6 +31,18 @@ blocksComponent.action(async (options) => {
     if (!behavior) return console.log(
         chalk.yellowBright(language.__("component.block.exits.2"))
     );
+
+    if (options.prefab === "slab") {
+        await slabComponent(options)
+    } else {
+        await defaultComponent(options)
+    }
+    process.exit(0);
+});
+
+
+const defaultComponent = async (options) => {
+    const config = await propertiesAsync();
 
     // Asegurar que el nombre tenga un namespace
     options.name = toSnackCase(options.name);
@@ -47,7 +61,7 @@ blocksComponent.action(async (options) => {
             const response = await inquirer.prompt(input);
             options.name = response.name;
         } else {
-            if(Array.isArray(config['addon.namespace'])){
+            if (Array.isArray(config['addon.namespace'])) {
                 console.log(chalk.yellow(language.__("addon.namespace.multiple")));
                 const namespace = await selectFromArray(config['addon.namespace']);
                 options.name = `${namespace}:${options.name}`;
@@ -58,16 +72,16 @@ blocksComponent.action(async (options) => {
     }
 
     if (options.name === 'namespace:block_component') {
-        if(Array.isArray(config['addon.namespace'])){
+        if (Array.isArray(config['addon.namespace'])) {
             console.log(chalk.yellow(language.__("addon.namespace.multiple")));
             const namespace = await selectFromArray(config['addon.namespace']);
             options.name = namespace
-            ? `${namespace}:block_component`
-            : 'namespace:block_component';
+                ? `${namespace}:block_component`
+                : 'namespace:block_component';
         } else {
             options.name = config['addon.namespace']
-            ? `${config['addon.namespace']}:block_component`
-            : 'namespace:block_component';
+                ? `${config['addon.namespace']}:block_component`
+                : 'namespace:block_component';
         }
     }
 
@@ -129,7 +143,7 @@ export const ${toCamelCase(options.name.split(':')[1])}Component = {
         }
 
         const fileName = `block_components.json`
-        let fileData = {...block_components};
+        let fileData = { ...block_components };
         if (await validateFileAsync(fileName)) {
             fileData = await getJsonFile(fileName);
             if (!fileData.components.includes(options.name)) {
@@ -147,9 +161,7 @@ export const ${toCamelCase(options.name.split(':')[1])}Component = {
         spinner.fail(chalk.red(language.__("component.block.spinner.error")));
         console.error(error);
     }
-    process.exit(0);
-});
-
+}
 
 
 export default blocksComponent;
