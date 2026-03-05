@@ -16,7 +16,7 @@ export const slabBlockModel = async (options) => {
         const namespace = await selectFromArray(options.config['addon.namespace']);
         options.namespace = namespace
     } else {
-        return
+        options.namespace = options.config['addon.namespace']
     }
 
     const spinner = ora(language.__("common.model.spinner.start")).start();
@@ -29,7 +29,6 @@ export const slabBlockModel = async (options) => {
 
         spinner.succeed(chalk.bold(chalk.whiteBright(language.__("common.model.spinner.succeed"))));
     } catch (error) {
-        console.log(error);
         spinner.fail(chalk.red(language.__("common.model.spinner.error")));
     }
 }

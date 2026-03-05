@@ -325,6 +325,7 @@
 			}
 		},
 		"model": {
+			"description": "Generates a model file for a block",
 			"option": {
 				"t": "Specifies the type of model to create - Only resource"
 			},

@@ -62,6 +62,8 @@ const behaviorPack = async (options) => {
             ];
 
             const response = await inquirer.prompt(input);
+            
+            options.namespace = options.config['addon.namespace'];
             options.name = response.name;
         } else {
             if (Array.isArray(options.config['addon.namespace'])) {
@@ -70,6 +72,7 @@ const behaviorPack = async (options) => {
                 options.name = `${namespace}:${options.name}`;
             } else {
                 options.name = `${options.config['addon.namespace']}:${options.name}`;
+                options.namespace = options.config['addon.namespace'];
             }
         }
     }

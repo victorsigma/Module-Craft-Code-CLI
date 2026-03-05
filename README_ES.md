@@ -54,7 +54,7 @@ mccc g [comando] [opciones]
 
 Subcomandos
 > * `component`: Genera un componente personalizado.
-> * `common`: Genera archivos comunes como `lang`, `manifest`, `library`, `icon`.
+> * `common`: Genera archivos comunes como `lang`, `manifest`, `library`, `icon`, `model`.
 > * `element`: Genera objetos de tipo `entity`, `item`, `block`.
 
 
@@ -188,7 +188,7 @@ mccc g cm mo [opciones]
 ```
 
 Opciones
-> * `-t, --type <string>`: Especifica el tipo de modelo a crear - Solo resource pack (por defecto: `"slab"`). Opciones: `slab`, `stair`.
+> * `-t, --type <string>`: Especifica el tipo de modelo a crear - Solo resource pack (por defecto: `"slab"`). Opciones: `slab`, `stair`, `fence`.
 
 
 ## Element
@@ -254,7 +254,7 @@ mccc g e block [opciones]
 
 Opciones
 > * `-n, --name <string>`: Especifica el identificador del bloque (por defecto: `"namespace:block"`).
-> * `-p, --prefab <string>`: Especifica el prefab que el bloque utilizará (por defecto: `"block"`). Opciones: `block`, `slab`, `stair`. PD: Las escaleras estan en beta.
+> * `-p, --prefab <string>`: Especifica el prefab que el bloque utilizará (por defecto: `"block"`). Opciones: `block`, `slab`, `stair`, `fence`.
 > * `-m, --menu <boolean>`: Indica si el bloque tendrá una sección personalizada en el menú de Minecraft (por defecto: `false`).
 > * `-l, --liquid <boolean>`: Define cómo se comporta un bloque al detectar un líquido (por defecto: `false`).
 > * `-r, --render <string>`: Define el material de la textura del bloque (por defecto: `"opaque"`). Opciones: `opaque`, `double_sided`, `blend`, `alpha_test`.

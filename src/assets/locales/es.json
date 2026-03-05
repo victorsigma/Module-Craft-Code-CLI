@@ -325,6 +325,7 @@
 			}
 		},
 		"model": {
+			"description": "Genera un archivo de modelo para un bloque",
 			"option": {
 				"t": "Especifica el tipo de modelo a crear - Solo resource"
 			},

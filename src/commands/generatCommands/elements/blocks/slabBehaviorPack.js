@@ -92,7 +92,7 @@ export const slabBehaviorPack = async (options) => {
             }
         }
     } else {
-        block["minecraft:block"]["description"]["menu_category"]["category"] = "none";
+        block["minecraft:block"]["description"]["menu_category"]["category"] = "construction";
         delete block["minecraft:block"]["description"]["menu_category"]["group"];
     }
 

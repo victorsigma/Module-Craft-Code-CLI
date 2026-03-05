@@ -192,6 +192,7 @@ export const ITEM_GROUP_NAMES = {
         "itemGroup.name.glass",
         "itemGroup.name.glazedTerracotta",
         "itemGroup.name.ironFence",
+        "itemGroup.name.fence",
         "itemGroup.name.purpur",
         "itemGroup.name.sandstone",
         "itemGroup.name.stairs",

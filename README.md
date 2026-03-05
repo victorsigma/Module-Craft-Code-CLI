@@ -10,7 +10,7 @@
 
 
 
-### Comandos
+### Commands
 
 ## Init
 
@@ -23,10 +23,10 @@ mccc i [options]
 ```
 
 Options
-> * `-n, --name <string>`: Especifica el nombre del addon (default: `"New Addon"`).
-> * `-s, --namespace <string>`: Especifica el namespace del addon (default: `"namespace"`).
-> * `-d, --description <string>`: Especifica la descripción del addon (default: `"Addon Description"`).
-> * `-t, --type <string>`: Especifica el tipo de proyecto (default: `"behavior"`). Options: `behavior`, `resource`, `skin`.
+> * `-n, --name <string>`: Specifies the name of the addon (default: `"New Addon"`).
+> * `-s, --namespace <string>`: Specifies the namespace of the addon (default: `"namespace"`).
+> * `-d, --description <string>`: Specifies the description of the addon (default: `"Addon Description"`).
+> * `-t, --type <string>`: Specifies the type of project (default: `"behavior"`). Options: `behavior`, `resource`, `skin`.
 
 ## Setting
 
@@ -54,7 +54,7 @@ mccc g [command] [options]
 
 Subcommands
 > * `component`: Generates a custom component.
-> * `common`: Generates common files such as `lang`, `manifest`, `library`, `icon`.
+> * `common`: Generates common files such as `lang`, `manifest`, `library`, `icon`, `model`.
 > * `element`: Generates objects of type `entity`, `item`, `block`.
 
 
@@ -188,7 +188,7 @@ mccc g cm mo [options]
 ```
 
 Options
-> * `-t, --type <string>`: Specifies the type of model to create - Resource pack only (default: `"slab"`). Options: `slab`, `stair`.
+> * `-t, --type <string>`: Specifies the type of model to create - Resource pack only (default: `"slab"`). Options: `slab`, `stair`, `fence`.
 
 
 ## Element
@@ -254,7 +254,7 @@ mccc g e block [options]
 
 Options
 > * `-n, --name <string>`: Especifica el identificador del bloque (default: `"namespace:block"`).
-> * `-p, --prefab <string>`: Specifies the prefab the block will use (default: `"block"`). Options: `block`, `slab`, `stair`. PD: Stairs are in beta.
+> * `-p, --prefab <string>`: Specifies the prefab the block will use (default: `"block"`). Options: `block`, `slab`, `stair`, `fence`.
 > * `-m, --menu <boolean>`: Indicates whether the block will have a custom section in the Minecraft menu (default: `false`).
 > * `-l, --liquid <boolean>`: Defines how the block behaves when detecting liquid (default: `false`).
 > * `-r, --render <string>`: Defines the block's texture material (default: `"opaque"`). Options: `opaque`, `double_sided`, `blend`, `alpha_test`.

@@ -1,5 +1,5 @@
-import base from "../../../../assets/templates/blocks/block.json" with { type: 'json' };
-import stair from "../../../../assets/templates/blocks/stair.json" with { type: 'json' };
+
+import fence from "../../../../assets/templates/blocks/fence.json" with { type: 'json' };
 
 import { BLOCK_MATERIALS, CATEGORYS, ITEM_GROUP_NAMES } from "../../../../utils/constants.js";
 import { getJsonFileOrBool, makeSubFile, validateFileAsync } from "../../../../utils/fileOperations.js";
@@ -11,11 +11,11 @@ import chalk from "chalk";
 import ora from "ora";
 
 /**
- * @param {{name: string, prefab: "block" | "stair" | "slab", config: {[key: string]: string | Array<string> }}} options 
+ * @param {{name: string, config: {[key: string]: string | Array<string> }}} options 
  * @returns 
  */
-export const blockBehaviorPack = async (options) => {
-    // Asegurar que el nombre tenga un namespace
+export const fenceBehaviorPack = async (options) => {
+// Asegurar que el nombre tenga un namespace
     options.name = toSnackCase(options.name);
     while (!options.name.includes(':')) {
         if (!options.config['addon.namespace']) {
@@ -60,20 +60,16 @@ export const blockBehaviorPack = async (options) => {
     const fileName = `${name}.json`;
     const namespace = options.name.split(':')[0];
 
-    const block = options.prefab === 'stair' ? stair : base;
+    const block = fence;
     block["minecraft:block"]["description"]["identifier"] = options.name;
     block["minecraft:block"]["components"]["minecraft:material_instances"]["*"]["texture"] = name;
     block["minecraft:block"]["components"]["minecraft:loot"] = `loot_tables/blocks/${fileName}`;
 
-    if (options.prefab === 'stair') {
-        block["minecraft:block"]["components"]["minecraft:geometry"]["identifier"] = `geometry.${namespace}_stair`;
-        block["minecraft:block"]["components"]["minecraft:item_visual"]["geometry"] = `geometry.${namespace}_stair_icon`;
-        block["minecraft:block"]["permutations"][0]["components"]["minecraft:geometry"]["identifier"] = `geometry.${namespace}_stair`;
-    }
+    block["minecraft:block"]["components"]["minecraft:geometry"]["identifier"] = `geometry.${namespace}_fence`;
+    block["minecraft:block"]["components"]["minecraft:item_visual"]["geometry"] = `geometry.${namespace}_fence_icon`;
+    
+    block["minecraft:block"]["components"]["minecraft:item_visual"]["material_instances"]["*"]["texture"] = name;
 
-    if (!JSON.parse(options.liquid)) {
-        delete block["minecraft:block"]["components"]["minecraft:liquid_detection"];
-    }
     if (BLOCK_MATERIALS.includes(options.render)) {
         block["minecraft:block"]["components"]['minecraft:material_instances']["*"]["render_method"] = options.render;
     } else {
@@ -114,7 +110,6 @@ export const blockBehaviorPack = async (options) => {
     }
     if (answers.add_components) {
         const jsonFile = await getJsonFileOrBool("block_components.json");
-        const newComponents = []
         if (!jsonFile) {
             console.log(chalk.red('✖'), chalk.bold(chalk.whiteBright(language.__("element.block.add_components.error.1"))));
             delete block["minecraft:block"]["components"]["minecraft:custom_components"];
@@ -128,7 +123,10 @@ export const blockBehaviorPack = async (options) => {
             do {
                 console.log(chalk.yellow(language.__("element.block.add_components.message")));
                 const component = await selectFromArray(jsonFile.components);
-                newComponents.push(component)
+                
+                if (component) {
+                    block["minecraft:block"]["components"][component] = {};
+                }
                 const answers = await inquirer.prompt(
                     {
                         type: 'confirm',
@@ -138,7 +136,7 @@ export const blockBehaviorPack = async (options) => {
                 );
                 addComponents = answers.add_components;
             } while (addComponents);
-            block["minecraft:block"]["components"]["minecraft:custom_components"] = [...new Set(newComponents)];
+            delete block["minecraft:block"]["components"]["minecraft:custom_components"];
         }
     } else {
         delete block["minecraft:block"]["components"]["minecraft:custom_components"];

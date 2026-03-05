@@ -22,5 +22,7 @@ export const itemSlab = async (options) => {
 
     item["minecraft:item"]["components"]["minecraft:block_placer"]["block"] = options.name
 
+    item["minecraft:item"]["components"]["minecraft:tags"]["tags"][0] = `${options.namespace}:slabs`
+
     return item;
 }

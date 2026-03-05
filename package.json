@@ -1,6 +1,6 @@
 {
   "name": "module-craft-code-cli",
-  "version": "1.1.4",
+  "version": "1.2.0",
   "description": "A versatile tool for generating and managing modules, components, events and configuration files in Minecraft projects.",
   "type": "module",
   "main": "src/index.js",
@@ -16,6 +16,17 @@
     "type": "git",
     "url": "https://github.com/victorsigma/Module-Craft-Code-CLI.git"
   },
+  "keywords": [
+    "minecraft",
+    "bedrock",
+    "cli",
+    "addon",
+    "generator",
+    "components",
+    "blocks",
+    "items",
+    "events"
+  ],
   "dependencies": {
     "chalk": "~5.3.0",
     "commander": "~12.1.0",
@@ -23,8 +34,5 @@
     "inquirer": "~11.0.2",
     "ora": "~8.1.0",
     "uuid": "~10.0.0"
-  },
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com/"
   }
 }
