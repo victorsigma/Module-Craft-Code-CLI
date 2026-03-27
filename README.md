@@ -1,4 +1,4 @@
-![MCCC Banner](https://raw.githubusercontent.com/victorsigma/Module-Craft-Code-CLI/main/docs/assets/banner-mccc.gif)
+![MCCC Banner](https://raw.githubusercontent.com/victorsigma/Module-Craft-Code-CLI/main/docs/assets/banner-mccc.png)
 
 # Module Craft Code CLI (MCCC)
 > ⚡ A fast CLI for Minecraft Bedrock Add-On development
