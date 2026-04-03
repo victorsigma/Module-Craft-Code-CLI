@@ -1,3 +1,5 @@
+import settings from "../assets/settings.json" with { type: 'json' };
+
 import { propertiesAsync } from "../utils/readProperties.js";
 import { makeFile } from "../utils/fileOperations.js";
 import { Command, Option } from "commander";
@@ -51,17 +53,20 @@ init.action(async (options) => {
     } else {
         addon.namespace = options.namespace;
     }
+    const namespaceMode = settings["namespace.mode"];
 
     const content =
         `##Project Config
 addon.name=${addon.name}
 addon.description=${addon.description}
 ${addon.namespace ? `addon.namespace=${addon.namespace}` : '#addon.namespace='}
-addon.type=${addon.type}`.replace(/\r\n|\n/g, "\n");
+addon.type=${addon.type}
+namespace.mode=${namespaceMode}`.replace(/\r\n|\n/g, "\n");
 
     console.log(chalk.yellow(`- Addon: ${addon.name}`));
     console.log(chalk.yellow(`- Description: ${addon.description}`));
-    if (addon.namespace) console.log(chalk.yellow(`- Spacename: ${addon.namespace}`));
+    if (addon.namespace) console.log(chalk.yellow(`- Namespace: ${addon.namespace}`));
+    if (addon.type) console.log(chalk.yellow(`- Namespace Mode: ${namespaceMode}`));
     if (addon.type) console.log(chalk.yellow(`- Type: ${addon.type}`));
     const spinner = ora(language.__("init.spinner.start")).start();
 

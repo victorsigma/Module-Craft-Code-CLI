@@ -37,6 +37,9 @@
           }
         }
       },
+      "minecraft:support": {
+        "shape": "stair"
+      },
       "minecraft:loot": "loot_tables/blocks/block.json",
       "minecraft:liquid_detection": {
         "detection_rules": [
@@ -187,6 +190,17 @@
         "components": {
           "minecraft:transformation": {
             "rotation": [0, 0, 0]
+          },
+          "minecraft:liquid_detection": {
+            "detection_rules": [
+              {
+                "liquid_type": "water",
+                "can_contain_liquid": true,
+                "stops_liquid_flowing_from_direction": [
+                  "north"
+                ]
+              }
+            ]
           }
         }
       },
@@ -195,6 +209,17 @@
         "components": {
           "minecraft:transformation": {
             "rotation": [0, 180, 0]
+          },
+          "minecraft:liquid_detection": {
+            "detection_rules": [
+              {
+                "liquid_type": "water",
+                "can_contain_liquid": true,
+                "stops_liquid_flowing_from_direction": [
+                  "south"
+                ]
+              }
+            ]
           }
         }
       },
@@ -203,6 +228,17 @@
         "components": {
           "minecraft:transformation": {
             "rotation": [0, 90, 0]
+          },
+          "minecraft:liquid_detection": {
+            "detection_rules": [
+              {
+                "liquid_type": "water",
+                "can_contain_liquid": true,
+                "stops_liquid_flowing_from_direction": [
+                  "west"
+                ]
+              }
+            ]
           }
         }
       },
@@ -211,6 +247,17 @@
         "components": {
           "minecraft:transformation": {
             "rotation": [0, -90, 0]
+          },
+          "minecraft:liquid_detection": {
+            "detection_rules": [
+              {
+                "liquid_type": "water",
+                "can_contain_liquid": true,
+                "stops_liquid_flowing_from_direction": [
+                  "east"
+                ]
+              }
+            ]
           }
         }
       }

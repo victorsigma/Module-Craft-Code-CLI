@@ -1,23 +1,24 @@
 import base from "../../../assets/templates/items/item.json" with { type: 'json' };
-import slab from "../../../assets/templates/items/slab.json" with { type: 'json' };
 import item_texture from "../../../assets/jsons/item_texture.json" with { type: 'json' };
 
 import { ONLY_BEHAVIOR, ONLY_RESOURCE, PATH_ITEM_TEXTURES } from '../../../utils/constants.js';
 import { getJsonFile, getJsonFileOrBool, makeSubFile, validateFileAsync } from "../../../utils/fileOperations.js";
+import { resolveElementName } from "../../../core/nameResolver.js";
 import { propertiesAsync } from "../../../utils/readProperties.js";
-import { toSnackCase } from "../../../utils/stringManager.js";
+import { generateFile } from "../../../core/generateFile.js";
+import { resolvePath } from "../../../core/resolvePath.js";
 import { selectFromArray } from '../../../utils/forms.js';
 import { itemDefault } from "./items/itemDefault.js";
 import { itemPickaxe } from "./items/itemPickaxe.js";
 import { itemShovel } from "./items/itemShovel.js";
 import { language } from '../../../utils/i18n.js';
 import { itemSword } from "./items/itemSword.js";
+import { itemSlab } from "./items/itemSlab.js";
 import { itemAxe } from "./items/itemAxe.js";
 import { Command, Option } from "commander";
 import inquirer from "inquirer";
 import chalk from "chalk";
 import ora from "ora";
-import { itemSlab } from "./items/itemSlab.js";
 
 const item = new Command('item').alias('i')
     .description(language.__("element.item.description"))
@@ -46,50 +47,13 @@ item.action(async (options) => {
     }
 })
 
+/**
+ * @param {{name: string, config: {[key: string]: string | Array<string> }}} options 
+ * @returns 
+ */
 const behaviorPack = async (options) => {
     // Asegurar que el nombre tenga un namespace
-    options.name = toSnackCase(options.name);
-    while (!options.name.includes(':')) {
-        if (!options.config['addon.namespace']) {
-            console.error(
-                chalk.red(language.__("addon.namespace.error.1")),
-                chalk.green(language.__("addon.namespace.error.2")),
-                chalk.white(options.name)
-            );
-
-            const input = [
-                { type: 'input', name: 'name', message: language.__("addon.namespace.question") }
-            ];
-
-            const response = await inquirer.prompt(input);
-            
-            options.namespace = options.config['addon.namespace'];
-            options.name = response.name;
-        } else {
-            if (Array.isArray(options.config['addon.namespace'])) {
-                console.log(chalk.yellow(language.__("addon.namespace.multiple")));
-                const namespace = await selectFromArray(options.config['addon.namespace']);
-                options.name = `${namespace}:${options.name}`;
-            } else {
-                options.name = `${options.config['addon.namespace']}:${options.name}`;
-                options.namespace = options.config['addon.namespace'];
-            }
-        }
-    }
-
-    if (options.name === 'namespace:item') {
-        if (Array.isArray(options.config['addon.namespace'])) {
-            console.log(chalk.yellow(language.__("addon.namespace.multiple")));
-            const namespace = await selectFromArray(options.config['addon.namespace']);
-            options.name = namespace
-                ? `${namespace}:item`
-                : 'namespace:item';
-        } else {
-            options.name = options.config['addon.namespace']
-                ? `${options.config['addon.namespace']}:item`
-                : 'namespace:item';
-        }
-    }
+    options.name = await resolveElementName(options.name, options.config, "item");
 
     const fileName = `${options.name.split(':')[1]}.json`;
     const namespace = options.name.split(':')[0];
@@ -164,58 +128,26 @@ const behaviorPack = async (options) => {
         }
     }
 
-    const spinner = ora(language.__("element.item.behavior.spinner.start")).start();
-    try {
-        if (await validateFileAsync(`items/${namespace}/${fileName}`))
-            return spinner.fail(chalk.bold(chalk.yellowBright(language.__("element.item.exits.2").replace("fileName", fileName))));
-        await makeSubFile(fileName, `items/${namespace}/`, JSON.stringify(item, null, 2))
-
-        spinner.succeed(chalk.bold(chalk.whiteBright(language.__("element.item.behavior.spinner.succeed").replace("${options.name}", options.name))));
-    } catch (error) {
-        spinner.fail(chalk.red(language.__("element.item.behavior.spinner.error").replace("${options.name}", options.name)));
-    }
+    await generateFile({
+        fileName,
+        path: resolvePath("items", namespace, options.config),
+        content: item,
+        lang: {
+            start: "element.item.behavior.spinner.start",
+            success: "element.item.behavior.spinner.succeed",
+            error: "element.item.behavior.spinner.error",
+            exists: "element.item.exits.2"
+        },
+        interpolate: {
+            "options.name": options.name
+        }
+    })
 }
 
 
 const resourcePack = async (options) => {
     // Asegurar que el nombre tenga un namespace
-    options.name = toSnackCase(options.name);
-    while (!options.name.includes(':')) {
-        if (!options.config['addon.namespace']) {
-            console.error(
-                chalk.red(language.__("addon.namespace.error.1")),
-                chalk.green(language.__("addon.namespace.error.2")),
-                chalk.white(options.name)
-            );
-
-            const input = [
-                { type: 'input', name: 'name', message: language.__("addon.namespace.question") }
-            ];
-
-            const response = await inquirer.prompt(input);
-            options.name = response.name;
-        } else {
-            if (Array.isArray(options.config['addon.namespace'])) {
-                const namespace = options.config['addon.namespace'][0];
-                options.name = `${namespace}:${options.name}`;
-            } else {
-                options.name = `${options.config['addon.namespace']}:${options.name}`;
-            }
-        }
-    }
-
-    if (options.name === 'namespace:item') {
-        if (Array.isArray(options.config['addon.namespace'])) {
-            const namespace = options.config['addon.namespace'][0]
-            options.name = namespace
-                ? `${namespace}:item`
-                : 'namespace:item';
-        } else {
-            options.name = options.config['addon.namespace']
-                ? `${options.config['addon.namespace']}:item`
-                : 'namespace:item';
-        }
-    }
+    options.name = await resolveElementName(options.name, options.config, "item");
 
     const textureName = options.name.split(':')[1]
 

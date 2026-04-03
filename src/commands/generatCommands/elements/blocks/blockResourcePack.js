@@ -1,8 +1,8 @@
 import terrain_texture from "../../../../assets/jsons/terrain_texture.json" with { type: 'json' };
 
-import { PATH_BLOCK_TEXTURES } from "../../../../utils/constants.js";
 import { getJsonFile, makeSubFile, validateFileAsync } from "../../../../utils/fileOperations.js";
-import { toSnackCase } from "../../../../utils/stringManager.js";
+import { resolveElementName } from "../../../../core/nameResolver.js";
+import { PATH_BLOCK_TEXTURES } from "../../../../utils/constants.js";
 import { language } from "../../../../utils/i18n.js";
 import inquirer from "inquirer";
 import chalk from "chalk";
@@ -14,43 +14,7 @@ import ora from "ora";
  */
 export const blockResourcePack = async (options) => {
     // Asegurar que el nombre tenga un namespace
-    options.name = toSnackCase(options.name);
-    while (!options.name.includes(':')) {
-        if (!options.config['addon.namespace']) {
-            console.error(
-                chalk.red(language.__("addon.namespace.error.1")),
-                chalk.green(language.__("addon.namespace.error.2")),
-                chalk.white(options.name)
-            );
-
-            const input = [
-                { type: 'input', name: 'name', message: language.__("addon.namespace.question") }
-            ];
-
-            const response = await inquirer.prompt(input);
-            options.name = response.name;
-        } else {
-            if (Array.isArray(options.config['addon.namespace'])) {
-                const namespace = options.config['addon.namespace'][0];
-                options.name = `${namespace}:${options.name}`;
-            } else {
-                options.name = `${options.config['addon.namespace']}:${options.name}`;
-            }
-        }
-    }
-
-    if (options.name === 'namespace:block') {
-        if (Array.isArray(options.config['addon.namespace'])) {
-            const namespace = options.config['addon.namespace'][0]
-            options.name = namespace
-                ? `${namespace}:block`
-                : 'namespace:block';
-        } else {
-            options.name = options.config['addon.namespace']
-                ? `${options.config['addon.namespace']}:block`
-                : 'namespace:block';
-        }
-    }
+    options.name = await resolveElementName(options.name, options.config, "block");
 
     const textureName = options.name.split(':')[1]
 
@@ -67,9 +31,9 @@ export const blockResourcePack = async (options) => {
             await makeSubFile('terrain_texture.json', `textures/`, JSON.stringify(fileData, null, 2))
         }
 
-        spinner.succeed(chalk.bold(chalk.whiteBright(language.__("element.block.resource.spinner.succeed").replace("textureName", textureName))));
+        spinner.succeed(chalk.bold(chalk.whiteBright(language.__("element.block.resource.spinner.succeed").replace("${textureName}", textureName))));
     } catch (error) {
-        spinner.fail(chalk.red(language.__("element.block.resource.spinner.error").replace("textureName", textureName)));
+        spinner.fail(chalk.red(language.__("element.block.resource.spinner.error").replace("${textureName}", textureName)));
         console.error(error);
     }
 }

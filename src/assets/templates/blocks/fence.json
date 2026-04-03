@@ -20,6 +20,12 @@
       "minecraft:destructible_by_mining": {
         "seconds_to_destroy": 2
       },
+      "minecraft:support": {
+        "shape": "fence"
+      },
+      "minecraft:leashable": {
+        "offset": [0, 12, 0]
+      },
       "minecraft:material_instances": {
         "*": {
           "texture": "block",

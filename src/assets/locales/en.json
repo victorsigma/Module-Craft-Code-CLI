@@ -347,6 +347,7 @@
 				"1": "The name must include \":\" to separate namespace",
 				"2": "\nCurrent name:"
 			},
+			"mode_warning": "The property 'namespace.mode' is not defined in addon.properties, it is recommended to set it to 'single' or 'multi' to avoid issues with namespace handling.",
 			"question": "Write another name:",
 			"multiple": "Several namespaces have been found"
 		}
@@ -354,10 +355,12 @@
 	"setting": {
 		"description": "Set the program settings.",
 		"option": {
-			"l": "Specifies the language of the program"
+			"l": "Specifies the language of the program",
+			"n": "Specifies the mode of namespace handling in the program"
 		},
 		"questions": {
-			"1": "Select a language:"
+			"1": "Select a language:",
+			"2": "Select a namespace mode:"
 		},
 		"spinner": {
 			"start": "Saving configuration...",

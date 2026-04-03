@@ -1,8 +1,9 @@
 import { BEHAVIOR_ENTITY, ONLY_BEHAVIOR, ONLY_RESOURCE, RESOURCE_ENTITY } from "../../../utils/constants.js";
 import { makeSubFile, validateFileAsync } from "../../../utils/fileOperations.js";
 import { propertiesAsync } from "../../../utils/readProperties.js";
-import { toSnackCase } from "../../../utils/stringManager.js";
-import { selectFromArray } from "../../../utils/forms.js";
+import { resolveElementName } from "../../../core/nameResolver.js";
+import { generateFile } from "../../../core/generateFile.js";
+import { resolvePath } from "../../../core/resolvePath.js";
 import { language } from "../../../utils/i18n.js";
 import { Command } from "commander";
 import inquirer from "inquirer";
@@ -42,46 +43,7 @@ const behaviorPack = async (options) => {
     const entity = {...BEHAVIOR_ENTITY};
 
     // Asegurar que el nombre tenga un namespace
-    options.name = toSnackCase(options.name);
-    while (!options.name.includes(':')) {
-        if (!options.config['addon.namespace']) {
-            console.error(
-                chalk.red(language.__("addon.namespace.error.1")),
-                chalk.green(language.__("addon.namespace.error.2")),
-                chalk.white(options.name)
-            );
-
-            const input = [
-                { type: 'input', name: 'name', message: language.__("addon.namespace.question") }
-            ];
-
-            const response = await inquirer.prompt(input);
-            options.name = response.name;
-        } else {
-            if(Array.isArray(options.config['addon.namespace'])){
-                console.log(chalk.yellow(language.__("addon.namespace.multiple")));
-                const namespace = await selectFromArray(options.config['addon.namespace']);
-                options.name = `${namespace}:${options.name}`;
-            } else {
-                options.name = `${options.config['addon.namespace']}:${options.name}`;
-            }
-        }
-    }
-
-    if (options.name === 'namespace:entity') {
-        if(Array.isArray(options.config['addon.namespace'])){
-            console.log(chalk.yellow(language.__("addon.namespace.multiple")));
-            const namespace = await selectFromArray(options.config['addon.namespace']);
-            options.name = namespace
-            ? `${namespace}:entity`
-            : 'namespace:entity';
-        } else {
-            options.name = options.config['addon.namespace']
-            ? `${options.config['addon.namespace']}:entity`
-            : 'namespace:entity';
-        }
-        
-    }
+    options.name = await resolveElementName(options.name, options.config, "entity");
 
     const fileName = `${options.name.split(':')[1]}.json`;
     const namespace = options.name.split(':')[0];
@@ -98,62 +60,27 @@ const behaviorPack = async (options) => {
     entity["minecraft:entity"].description.is_spawnable = JSON.parse(options.spawnable) ? true : false;
     entity["minecraft:entity"].description.is_summonable = JSON.parse(options.summonable) ? true : false;
 
-    
-    const spinner = ora(language.__("element.entity.spinner.start")).start();
-    try {
-        if(await validateFileAsync(`entities/${namespace}/${fileName}`)) return spinner.fail(chalk.bold(chalk.yellowBright(language.__("element.entity.exits.2").replace("fileName", fileName))));
-        await makeSubFile(fileName, `entities/${namespace}/`, JSON.stringify(entity, null, 2))
-
-        spinner.succeed(chalk.bold(chalk.whiteBright(language.__("element.entity.spinner.succeed").replace("${options.name}", options.name))));
-    } catch (error) {
-        spinner.fail(chalk.red(language.__("element.entity.spinner.error").replace("${options.name}", options.name)));
-    }
+    await generateFile({
+        fileName,
+        path: resolvePath("entities", namespace, options.config),
+        content: entity,
+        lang: {
+            start: "element.entity.spinner.start",
+            success: "element.entity.spinner.succeed",
+            error: "element.entity.spinner.error",
+            exists: "element.entity.exits.2"
+        },
+        interpolate: {
+            "options.name": options.name
+        }
+    })
 }
 
 const resourcePack = async (options) => {
     const entity = {...RESOURCE_ENTITY};
 
     // Asegurar que el nombre tenga un namespace
-    options.name = toSnackCase(options.name);
-    while (!options.name.includes(':')) {
-        if (!options.config['addon.namespace']) {
-            console.error(
-                chalk.red(language.__("addon.namespace.error.1")),
-                chalk.green(language.__("addon.namespace.error.2")),
-                chalk.white(options.name)
-            );
-
-            const input = [
-                { type: 'input', name: 'name', message: language.__("addon.namespace.question") }
-            ];
-
-            const response = await inquirer.prompt(input);
-            options.name = response.name;
-        } else {
-            if(Array.isArray(options.config['addon.namespace'])){
-                console.log(chalk.yellow(language.__("addon.namespace.multiple")));
-                const namespace = await selectFromArray(options.config['addon.namespace']);
-                options.name = `${namespace}:${options.name}`;
-            } else {
-                options.name = `${options.config['addon.namespace']}:${options.name}`;
-            }
-        }
-    }
-
-    if (options.name === 'namespace:entity') {
-        if(Array.isArray(options.config['addon.namespace'])){
-            console.log(chalk.yellow(language.__("addon.namespace.multiple")));
-            const namespace = await selectFromArray(options.config['addon.namespace']);
-            options.name = namespace
-            ? `${namespace}:entity`
-            : 'namespace:entity';
-        } else {
-            options.name = options.config['addon.namespace']
-            ? `${options.config['addon.namespace']}:entity`
-            : 'namespace:entity';
-        }
-        
-    }
+    options.name = await resolveElementName(options.name, options.config, "entity");
 
     const fileName = `${options.name.split(':')[1]}.entity.json`
     const namespace = options.name.split(':')[0]
@@ -161,15 +88,20 @@ const resourcePack = async (options) => {
     entity.format_version = "1.10.0";
     entity["minecraft:client_entity"].description.identifier = options.name;
 
-    const spinner = ora(language.__("element.entity.spinner.start")).start();
-    try {
-        if(await validateFileAsync(`entity/${namespace}/${fileName}`)) return spinner.fail(chalk.bold(chalk.yellowBright(language.__("element.entity.exits.2").replace("fileName", fileName))));
-        await makeSubFile(fileName, `entity/${namespace}/`, JSON.stringify(entity, null, 2))
-
-        spinner.succeed(chalk.bold(chalk.whiteBright(language.__("element.entity.spinner.succeed").replace("${options.name}", options.name))));
-    } catch (error) {
-        spinner.fail(chalk.red(language.__("element.entity.spinner.error").replace("${options.name}", options.name)));
-    }
+    await generateFile({
+        fileName,
+        path: resolvePath("entity", namespace, options.config),
+        content: entity,
+        lang: {
+            start: "element.entity.spinner.start",
+            success: "element.entity.spinner.succeed",
+            error: "element.entity.spinner.error",
+            exists: "element.entity.exits.2"
+        },
+        interpolate: {
+            "options.name": options.name
+        }
+    })
 }
 
 export default entity;

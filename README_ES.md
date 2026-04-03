@@ -117,6 +117,24 @@ mccc s [opciones]
 
 Opciones
 > * `-l, --lang <string>`: Especifica el idioma del programa. Opciones: `"es"`, `"en"`.
+> * `-n, --namespacemode <string>`: Especifica cómo manejar namespaces. Opciones: `"single"` (predeterminado), `"multi"`.
+
+### Modos de Namespace
+
+- **`single`** (predeterminado): Todos los elementos usan un único namespace definido en `addon.properties`
+  - Flujo de trabajo más simple, recomendado para la mayoría de proyectos
+  - Todos los bloques, ítems y entidades comparten el mismo namespace
+
+- **`multi`**: Organiza elementos por múltiples namespaces (si están definidos en `addon.properties`)
+  - Característica avanzada para proyectos complejos
+  - Permite diferentes namespaces para bloques, ítems y entidades
+  - Se te pedirá que elijas un namespace al generar elementos
+
+**Configurarlo:**
+```bash
+mccc setting -n single    # Usar namespace único (predeterminado)
+mccc setting -n multi     # Usar múltiples namespaces
+```
 
 
 ## Generate
