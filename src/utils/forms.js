@@ -13,7 +13,7 @@ export const selectFromArray = async (array) => {
 
     const questions = [
         {
-            type: 'list',
+            type: 'select',
             name: 'selection',
             message: language.__("form.selection"),
             choices

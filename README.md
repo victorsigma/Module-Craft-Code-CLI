@@ -283,7 +283,7 @@ mccc g cm mo [options]
 ```
 
 Options
-> * `-t, --type <string>`: Specifies the type of model to create - Resource pack only (default: `"slab"`). Options: `slab`, `stair`, `fence`.
+> * `-t, --type <string>`: Specifies the type of model to create - Resource pack only (default: `"slab"`). Options: `slab`, `stair`, `fence`, `wall`.
 
 
 ## Element
@@ -349,7 +349,7 @@ mccc g e block [options]
 
 Options
 > * `-n, --name <string>`: Specifies the block identifier (default: `"namespace:block"`).
-> * `-p, --prefab <string>`: Specifies the prefab the block will use (default: `"block"`). Options: `block`, `slab`, `stair`, `fence`.
+> * `-p, --prefab <string>`: Specifies the prefab the block will use (default: `"block"`). Options: `block`, `slab`, `stair`, `fence`, `wall`.
 > * `-m, --menu <boolean>`: Indicates whether the block will have a custom section in the Minecraft menu (default: `false`).
 > * `-l, --liquid <boolean>`: Defines how the block behaves when detecting liquid (default: `false`).
 > * `-r, --render <string>`: Defines the block's texture material (default: `"opaque"`). Options: `opaque`, `double_sided`, `blend`, `alpha_test`.

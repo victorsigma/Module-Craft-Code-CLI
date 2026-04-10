@@ -52,7 +52,7 @@ icon.action(async (options) => {
     } else {
         const questions = [
             {
-                type: 'list',
+                type: 'select',
                 name: 'selection',
                 message: 'Selecciona un ícono para tu proyecto:',
                 choices: [

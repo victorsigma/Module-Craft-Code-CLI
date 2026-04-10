@@ -1,0 +1,559 @@
+{
+  "format_version": "1.26.0",
+  "minecraft:block": {
+    "description": {
+      "identifier": "namespace:wall",
+      "menu_category": {
+        "category": "construction",
+        "group": "minecraft:itemGroup.name.walls"
+      },
+      "states": {},
+      "traits": {
+        "minecraft:connection": {
+          "enabled_states": [
+            "minecraft:cardinal_connections"
+          ]
+        }
+      }
+    },
+    "components": {
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 2
+      },
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "block",
+          "render_method": "opaque"
+        }
+      },
+      "minecraft:item_visual": {
+        "geometry": "geometry.namespace_wall_icon",
+        "material_instances": {
+          "*": {
+            "texture": "block",
+            "render_method": "opaque"
+          }
+        }
+      },
+      "minecraft:support": {
+        "shape": "fence"
+      },
+      "minecraft:custom_components": [],
+      "minecraft:loot": "loot_tables/blocks/block_wall.json",
+      "minecraft:geometry": {
+        "identifier": "geometry.namespace_wall",
+        "bone_visibility": {
+          "connection_none": "!(query.block_state('minecraft:connection_north') && query.block_state('minecraft:connection_south') && !query.block_state('minecraft:connection_east') && !query.block_state('minecraft:connection_west')) && !(query.block_state('minecraft:connection_east') && query.block_state('minecraft:connection_west') && !query.block_state('minecraft:connection_north') && !query.block_state('minecraft:connection_south'))",
+          "connection_north": "query.block_state('minecraft:connection_north') && !(query.block_state('minecraft:connection_north') && query.block_state('minecraft:connection_south') && !query.block_state('minecraft:connection_east') && !query.block_state('minecraft:connection_west'))",
+          "connection_south": "query.block_state('minecraft:connection_south') && !(query.block_state('minecraft:connection_north') && query.block_state('minecraft:connection_south') && !query.block_state('minecraft:connection_east') && !query.block_state('minecraft:connection_west'))",
+          "connection_east": "query.block_state('minecraft:connection_east') && !(query.block_state('minecraft:connection_east') && query.block_state('minecraft:connection_west') && !query.block_state('minecraft:connection_north') && !query.block_state('minecraft:connection_south'))",
+          "connection_west": "query.block_state('minecraft:connection_west') && !(query.block_state('minecraft:connection_east') && query.block_state('minecraft:connection_west') && !query.block_state('minecraft:connection_north') && !query.block_state('minecraft:connection_south'))",
+          "connection_south_north": "(query.block_state('minecraft:connection_north') && query.block_state('minecraft:connection_south') && !query.block_state('minecraft:connection_east') && !query.block_state('minecraft:connection_west'))",
+          "connection_west_east": "(query.block_state('minecraft:connection_east') && query.block_state('minecraft:connection_west') && !query.block_state('minecraft:connection_north') && !query.block_state('minecraft:connection_south'))",
+          "connection_south_north_up": "false",
+          "connection_west_east_up": "false"
+        }
+      },
+      "minecraft:selection_box": {
+        "origin": [-4, 0, -4],
+        "size": [8, 16, 8]
+      },
+      "minecraft:collision_box": {
+        "origin": [-4, 0, -4],
+        "size": [8, 24, 8]
+      },
+      "minecraft:liquid_detection": {
+        "detection_rules": [
+          {
+            "liquid_type": "water",
+            "can_contain_liquid": true
+          }
+        ]
+      },
+      "tag:stone": {},
+      "tag:minecraft:is_pickaxe_item_destructible": {}
+    },
+    "permutations": [
+      {
+        "condition": "query.block_state('minecraft:connection_north') && query.block_state('minecraft:connection_south') && query.block_state('minecraft:connection_east') && query.block_state('minecraft:connection_west')",
+        "components": {
+          "minecraft:selection_box": {
+            "origin": [-8, 0, -8],
+            "size": [16, 16, 16]
+          },
+          "minecraft:collision_box": [
+            {
+              "origin": [-4, 0, -4],
+              "size": [8, 24, 8]
+            },
+            {
+              "origin": [-3, 0, -8],
+              "size": [6, 24, 8]
+            },
+            {
+              "origin": [-3, 0, 0],
+              "size": [6, 24, 8]
+            },
+            {
+              "origin": [-8, 0, -3],
+              "size": [8, 24, 6]
+            },
+            {
+              "origin": [0, 0, -3],
+              "size": [8, 24, 6]
+            }
+          ],
+          "minecraft:liquid_detection": {
+            "detection_rules": [
+              {
+                "liquid_type": "water",
+                "can_contain_liquid": true,
+                "stops_liquid_flowing_from_direction": ["north", "south", "east", "west"]
+              }
+            ]
+          }
+        }
+      },
+      {
+        "condition": "query.block_state('minecraft:connection_north') && !query.block_state('minecraft:connection_south') && !query.block_state('minecraft:connection_east') && !query.block_state('minecraft:connection_west')",
+        "components": {
+          "minecraft:selection_box": {
+            "origin": [-4, 0, -8],
+            "size": [8, 16, 12]
+          },
+          "minecraft:collision_box": [
+            {
+              "origin": [-4, 0, -4],
+              "size": [8, 24, 8]
+            },
+            {
+              "origin": [-3, 0, -8],
+              "size": [6, 24, 8]
+            }
+          ],
+          "minecraft:liquid_detection": {
+            "detection_rules": [
+              {
+                "liquid_type": "water",
+                "can_contain_liquid": true,
+                "stops_liquid_flowing_from_direction": ["north"]
+              }
+            ]
+          }
+        }
+      },
+      {
+        "condition": "!query.block_state('minecraft:connection_north') && query.block_state('minecraft:connection_south') && !query.block_state('minecraft:connection_east') && !query.block_state('minecraft:connection_west')",
+        "components": {
+          "minecraft:selection_box": {
+            "origin": [-4, 0, -4],
+            "size": [8, 16, 12]
+          },
+          "minecraft:collision_box": [
+            {
+              "origin": [-4, 0, -4],
+              "size": [8, 24, 8]
+            },
+            {
+              "origin": [-3, 0, 0],
+              "size": [6, 24, 8]
+            }
+          ],
+          "minecraft:liquid_detection": {
+            "detection_rules": [
+              {
+                "liquid_type": "water",
+                "can_contain_liquid": true,
+                "stops_liquid_flowing_from_direction": ["south"]
+              }
+            ]
+          }
+        }
+      },
+      {
+        "condition": "!query.block_state('minecraft:connection_north') && !query.block_state('minecraft:connection_south') && query.block_state('minecraft:connection_east') && !query.block_state('minecraft:connection_west')",
+        "components": {
+          "minecraft:selection_box": {
+            "origin": [-8, 0, -4],
+            "size": [12, 16, 8]
+          },
+          "minecraft:collision_box": [
+            {
+              "origin": [-4, 0, -4],
+              "size": [8, 24, 8]
+            },
+            {
+              "origin": [-8, 0, -3],
+              "size": [8, 24, 6]
+            }
+          ],
+          "minecraft:liquid_detection": {
+            "detection_rules": [
+              {
+                "liquid_type": "water",
+                "can_contain_liquid": true,
+                "stops_liquid_flowing_from_direction": ["east"]
+              }
+            ]
+          }
+        }
+      },
+      {
+        "condition": "!query.block_state('minecraft:connection_north') && !query.block_state('minecraft:connection_south') && !query.block_state('minecraft:connection_east') && query.block_state('minecraft:connection_west')",
+        "components": {
+          "minecraft:selection_box": {
+            "origin": [-4, 0, -4],
+            "size": [12, 16, 8]
+          },
+          "minecraft:collision_box": [
+            {
+              "origin": [-4, 0, -4],
+              "size": [8, 24, 8]
+            },
+            {
+              "origin": [0, 0, -3],
+              "size": [8, 24, 6]
+            }
+          ],
+          "minecraft:liquid_detection": {
+            "detection_rules": [
+              {
+                "liquid_type": "water",
+                "can_contain_liquid": true,
+                "stops_liquid_flowing_from_direction": ["west"]
+              }
+            ]
+          }
+        }
+      },
+      {
+        "condition": "query.block_state('minecraft:connection_north') && query.block_state('minecraft:connection_south') && !query.block_state('minecraft:connection_east') && !query.block_state('minecraft:connection_west')",
+        "components": {
+          "minecraft:selection_box": {
+            "origin": [-3, 0, -8],
+            "size": [6, 13, 16]
+          },
+          "minecraft:collision_box": [
+            {
+              "origin": [-3, 0, -8],
+              "size": [6, 24, 8]
+            },
+            {
+              "origin": [-3, 0, 0],
+              "size": [6, 24, 8]
+            }
+          ],
+          "minecraft:liquid_detection": {
+            "detection_rules": [
+              {
+                "liquid_type": "water",
+                "can_contain_liquid": true,
+                "stops_liquid_flowing_from_direction": ["north", "south"]
+              }
+            ]
+          }
+        }
+      },
+      {
+        "condition": "!query.block_state('minecraft:connection_north') && !query.block_state('minecraft:connection_south') && query.block_state('minecraft:connection_east') && query.block_state('minecraft:connection_west')",
+        "components": {
+          "minecraft:selection_box": {
+            "origin": [-8, 0, -3],
+            "size": [16, 13, 6]
+          },
+          "minecraft:collision_box": [
+            {
+              "origin": [-8, 0, -3],
+              "size": [8, 24, 6]
+            },
+            {
+              "origin": [0, 0, -3],
+              "size": [8, 24, 6]
+            }
+          ],
+          "minecraft:liquid_detection": {
+            "detection_rules": [
+              {
+                "liquid_type": "water",
+                "can_contain_liquid": true,
+                "stops_liquid_flowing_from_direction": ["east", "west"]
+              }
+            ]
+          }
+        }
+      },
+      {
+        "condition": "query.block_state('minecraft:connection_north') && !query.block_state('minecraft:connection_south') && query.block_state('minecraft:connection_east') && query.block_state('minecraft:connection_west')",
+        "components": {
+          "minecraft:selection_box": {
+            "origin": [-8, 0, -8],
+            "size": [16, 16, 12]
+          },
+          "minecraft:collision_box": [
+            {
+              "origin": [-4, 0, -4],
+              "size": [8, 24, 8]
+            },
+            {
+              "origin": [-3, 0, -8],
+              "size": [6, 24, 8]
+            },
+            {
+              "origin": [-8, 0, -3],
+              "size": [8, 24, 6]
+            },
+            {
+              "origin": [0, 0, -3],
+              "size": [8, 24, 6]
+            }
+          ],
+          "minecraft:liquid_detection": {
+            "detection_rules": [
+              {
+                "liquid_type": "water",
+                "can_contain_liquid": true,
+                "stops_liquid_flowing_from_direction": ["east", "west", "north"]
+              }
+            ]
+          }
+        }
+      },
+      {
+        "condition": "!query.block_state('minecraft:connection_north') && query.block_state('minecraft:connection_south') && query.block_state('minecraft:connection_east') && query.block_state('minecraft:connection_west')",
+        "components": {
+          "minecraft:selection_box": {
+            "origin": [-8, 0, -4],
+            "size": [16, 16, 12]
+          },
+          "minecraft:collision_box": [
+            {
+              "origin": [-4, 0, -4],
+              "size": [8, 24, 8]
+            },
+            {
+              "origin": [-3, 0, 0],
+              "size": [6, 24, 8]
+            },
+            {
+              "origin": [-8, 0, -3],
+              "size": [8, 24, 6]
+            },
+            {
+              "origin": [0, 0, -3],
+              "size": [8, 24, 6]
+            }
+          ],
+          "minecraft:liquid_detection": {
+            "detection_rules": [
+              {
+                "liquid_type": "water",
+                "can_contain_liquid": true,
+                "stops_liquid_flowing_from_direction": ["east", "west", "south"]
+              }
+            ]
+          }
+        }
+      },
+      {
+        "condition": "query.block_state('minecraft:connection_north') && query.block_state('minecraft:connection_south') && query.block_state('minecraft:connection_east') && !query.block_state('minecraft:connection_west')",
+        "components": {
+          "minecraft:selection_box": {
+            "origin": [-8, 0, -8],
+            "size": [12, 16, 16]
+          },
+          "minecraft:collision_box": [
+            {
+              "origin": [-4, 0, -4],
+              "size": [8, 24, 8]
+            },
+            {
+              "origin": [-3, 0, -8],
+              "size": [6, 24, 8]
+            },
+            {
+              "origin": [-3, 0, 0],
+              "size": [6, 24, 8]
+            },
+            {
+              "origin": [-8, 0, -3],
+              "size": [8, 24, 6]
+            }
+          ],
+          "minecraft:liquid_detection": {
+            "detection_rules": [
+              {
+                "liquid_type": "water",
+                "can_contain_liquid": true,
+                "stops_liquid_flowing_from_direction": ["north", "south", "east"]
+              }
+            ]
+          }
+        }
+      },
+      {
+        "condition": "query.block_state('minecraft:connection_north') && query.block_state('minecraft:connection_south') && !query.block_state('minecraft:connection_east') && query.block_state('minecraft:connection_west')",
+        "components": {
+          "minecraft:selection_box": {
+            "origin": [-4, 0, -8],
+            "size": [12, 16, 16]
+          },
+          "minecraft:collision_box": [
+            {
+              "origin": [-4, 0, -4],
+              "size": [8, 24, 8]
+            },
+            {
+              "origin": [-3, 0, -8],
+              "size": [6, 24, 8]
+            },
+            {
+              "origin": [-3, 0, 0],
+              "size": [6, 24, 8]
+            },
+            {
+              "origin": [0, 0, -3],
+              "size": [8, 24, 6]
+            }
+          ],
+          "minecraft:liquid_detection": {
+            "detection_rules": [
+              {
+                "liquid_type": "water",
+                "can_contain_liquid": true,
+                "stops_liquid_flowing_from_direction": ["north", "south", "west"]
+              }
+            ]
+          }
+        }
+      },
+      {
+        "condition": "query.block_state('minecraft:connection_north') && !query.block_state('minecraft:connection_south') && query.block_state('minecraft:connection_east') && !query.block_state('minecraft:connection_west')",
+        "components": {
+          "minecraft:selection_box": {
+            "origin": [-8, 0, -8],
+            "size": [12, 16, 12]
+          },
+          "minecraft:collision_box": [
+            {
+              "origin": [-4, 0, -4],
+              "size": [8, 24, 8]
+            },
+            {
+              "origin": [-3, 0, -8],
+              "size": [6, 24, 8]
+            },
+            {
+              "origin": [-8, 0, -3],
+              "size": [8, 24, 6]
+            }
+          ],
+          "minecraft:liquid_detection": {
+            "detection_rules": [
+              {
+                "liquid_type": "water",
+                "can_contain_liquid": true,
+                "stops_liquid_flowing_from_direction": ["north", "east"]
+              }
+            ]
+          }
+        }
+      },
+      {
+        "condition": "query.block_state('minecraft:connection_north') && !query.block_state('minecraft:connection_south') && !query.block_state('minecraft:connection_east') && query.block_state('minecraft:connection_west')",
+        "components": {
+          "minecraft:selection_box": {
+            "origin": [-4, 0, -8],
+            "size": [12, 16, 12]
+          },
+          "minecraft:collision_box": [
+            {
+              "origin": [-4, 0, -4],
+              "size": [8, 24, 8]
+            },
+            {
+              "origin": [-3, 0, -8],
+              "size": [6, 24, 8]
+            },
+            {
+              "origin": [0, 0, -3],
+              "size": [8, 24, 6]
+            }
+          ],
+          "minecraft:liquid_detection": {
+            "detection_rules": [
+              {
+                "liquid_type": "water",
+                "can_contain_liquid": true,
+                "stops_liquid_flowing_from_direction": ["north", "west"]
+              }
+            ]
+          }
+        }
+      },
+      {
+        "condition": "!query.block_state('minecraft:connection_north') && query.block_state('minecraft:connection_south') && query.block_state('minecraft:connection_east') && !query.block_state('minecraft:connection_west')",
+        "components": {
+          "minecraft:selection_box": {
+            "origin": [-8, 0, -4],
+            "size": [12, 16, 12]
+          },
+          "minecraft:collision_box": [
+            {
+              "origin": [-4, 0, -4],
+              "size": [8, 24, 8]
+            },
+            {
+              "origin": [-3, 0, 0],
+              "size": [6, 24, 8]
+            },
+            {
+              "origin": [-8, 0, -3],
+              "size": [8, 24, 6]
+            }
+          ],
+          "minecraft:liquid_detection": {
+            "detection_rules": [
+              {
+                "liquid_type": "water",
+                "can_contain_liquid": true,
+                "stops_liquid_flowing_from_direction": ["south", "east"]
+              }
+            ]
+          }
+        }
+      },
+      {
+        "condition": "!query.block_state('minecraft:connection_north') && query.block_state('minecraft:connection_south') && !query.block_state('minecraft:connection_east') && query.block_state('minecraft:connection_west')",
+        "components": {
+          "minecraft:selection_box": {
+            "origin": [-4, 0, -4],
+            "size": [12, 16, 12]
+          },
+          "minecraft:collision_box": [
+            {
+              "origin": [-4, 0, -4],
+              "size": [8, 24, 8]
+            },
+            {
+              "origin": [-3, 0, 0],
+              "size": [6, 24, 8]
+            },
+            {
+              "origin": [0, 0, -3],
+              "size": [8, 24, 6]
+            }
+          ],
+          "minecraft:liquid_detection": {
+            "detection_rules": [
+              {
+                "liquid_type": "water",
+                "can_contain_liquid": true,
+                "stops_liquid_flowing_from_direction": ["south", "west"]
+              }
+            ]
+          }
+        }
+      }
+    ]
+  }
+}

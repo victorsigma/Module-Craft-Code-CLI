@@ -1,5 +1,5 @@
 
-import fence from "../../../../assets/templates/blocks/fence.json" with { type: 'json' };
+import wall from "../../../../assets/templates/blocks/wall.json" with { type: 'json' };
 
 import { BLOCK_MATERIALS, CATEGORYS, ITEM_GROUP_NAMES } from "../../../../utils/constants.js";
 import { getJsonFileOrBool } from "../../../../utils/fileOperations.js";
@@ -15,7 +15,7 @@ import chalk from "chalk";
  * @param {{name: string, config: {[key: string]: string | Array<string> }}} options 
  * @returns 
  */
-export const fenceBehaviorPack = async (options) => {
+export const wallBehaviorPack = async (options) => {
     // Asegurar que el nombre tenga un namespace
     options.name = await resolveElementName(options.name, options.config, "block");
 
@@ -23,13 +23,13 @@ export const fenceBehaviorPack = async (options) => {
     const fileName = `${name}.json`;
     const namespace = options.name.split(':')[0];
 
-    const block = fence;
+    const block = wall;
     block["minecraft:block"]["description"]["identifier"] = options.name;
     block["minecraft:block"]["components"]["minecraft:material_instances"]["*"]["texture"] = name;
     block["minecraft:block"]["components"]["minecraft:loot"] = `loot_tables/blocks/${fileName}`;
 
-    block["minecraft:block"]["components"]["minecraft:geometry"]["identifier"] = `geometry.${namespace}_fence`;
-    block["minecraft:block"]["components"]["minecraft:item_visual"]["geometry"] = `geometry.${namespace}_fence_icon`;
+    block["minecraft:block"]["components"]["minecraft:geometry"]["identifier"] = `geometry.${namespace}_wall`;
+    block["minecraft:block"]["components"]["minecraft:item_visual"]["geometry"] = `geometry.${namespace}_wall_icon`;
     
     block["minecraft:block"]["components"]["minecraft:item_visual"]["material_instances"]["*"]["texture"] = name;
 
@@ -51,7 +51,7 @@ export const fenceBehaviorPack = async (options) => {
         }
     } else {
         block["minecraft:block"]["description"]["menu_category"]["category"] = "construction";
-        delete block["minecraft:block"]["description"]["menu_category"]["group"];
+        block["minecraft:block"]["description"]["menu_category"]["group"] = "minecraft:itemGroup.name.walls";
     }
 
     const questions = [

@@ -4,7 +4,6 @@ import { getJsonFile, makeSubFile, validateFileAsync } from "../../../../utils/f
 import { resolveElementName } from "../../../../core/nameResolver.js";
 import { PATH_BLOCK_TEXTURES } from "../../../../utils/constants.js";
 import { language } from "../../../../utils/i18n.js";
-import inquirer from "inquirer";
 import chalk from "chalk";
 import ora from "ora";
 

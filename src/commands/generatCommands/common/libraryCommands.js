@@ -28,7 +28,7 @@ library.action(async (options) => {
         );
         const questions = [
             {
-                type: 'list',
+                type: 'select',
                 name: 'selection',
                 message: language.__("common.library.selections"),
                 choices: [

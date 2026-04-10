@@ -71,13 +71,23 @@ function isMultiNamespace(config) {
         config['namespace.mode'] === "multi";
 }
 
+/**
+ * Retorna un namespace simple, ya sea el único definido o el primero de una lista.
+ * @param {{[key: string]: string | Array<string> }} config 
+ * @returns {string}
+ */
 function getSingleNamespace(config) {
     return Array.isArray(config['addon.namespace'])
         ? config['addon.namespace'][0]
         : config['addon.namespace'];
 }
 
-async function resolveNamespace(config) {
+/**
+ * Resuelve el namespace a usar, ya sea seleccionando uno de varios disponibles o usando el único definido.
+ * @param {{[key: string]: string | Array<string> }} config 
+ * @returns 
+ */
+export async function resolveNamespace(config) {
     if (isMultiNamespace(config)) {
         console.log(chalk.yellow(language.__("addon.namespace.multiple")));
         return await selectFromArray(config['addon.namespace']);

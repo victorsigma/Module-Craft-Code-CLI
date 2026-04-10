@@ -19,7 +19,7 @@ setting.action(async (options) => {
 
 		if (!options.lang) {
 			questions.push({
-				type: 'list',
+				type: 'select',
 				name: 'lang',
 				choices: [
 					{ name: 'Español', value: 'es' },
@@ -31,7 +31,7 @@ setting.action(async (options) => {
 
 		if (!options.namespacemode) {
 			questions.push({
-				type: 'list',
+				type: 'select',
 				name: 'namespacemode',
 				choices: [
 					{ name: 'Single namespace', value: 'single' },
