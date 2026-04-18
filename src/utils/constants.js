@@ -3,16 +3,14 @@
  *
  * Este archivo define constantes y funciones utilizadas en un proyecto para la gestión de componentes, eventos y configuraciones en entornos relacionados con Minecraft. También incluye plantillas para eventos personalizados.
  */
-
-import { myRequire } from "./exports.js";
 import { propertiesAsync } from "./readProperties.js";
 import { toCamelCase } from "./stringManager.js";
 
 // Obtiene la versión del paquete desde package.json
-const { version } = myRequire('../../package.json');
+import pkg from '../../package.json' with { type: 'json' };
 
 /** Versión del módulo */
-export const VERSION = version;
+export const VERSION = pkg.version;
 
 /** Rutas para componentes y texturas de ítems y bloques */
 export const PATH_ITEM_COMPONENTS = 'scripts/components/items';

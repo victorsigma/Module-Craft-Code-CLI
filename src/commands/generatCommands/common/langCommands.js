@@ -1,12 +1,11 @@
 import { propertiesAsync } from "../../../utils/readProperties.js";
-import { makeSubFile, validateFileAsync } from "../../../utils/fileOperations.js";
+import { getJsonFile, makeSubFile, validateFileAsync } from "../../../utils/fileOperations.js";
 import { LANGS } from "../../../utils/constants.js";
 import { language } from "../../../utils/i18n.js";
 import { Command, Option } from "commander";
 import inquirer from "inquirer";
 import chalk from "chalk";
 import ora from "ora";
-import fs from 'fs';
 
 const lang = new Command('lang').alias('lan')
     .description(language.__("common.lang.description"))
@@ -87,9 +86,7 @@ pack.description=${Array.isArray(config['addon.description']) ? config['addon.de
 
             makeSubFile('languages.json', 'texts/', JSON.stringify(languages, null, 2))
         } else {
-            const languagesText = await fs.promises.readFile('texts/languages.json', 'utf8');
-
-            const languages = JSON.parse(languagesText);
+            const languages = await getJsonFile("texts/languages.json");
 
             languages.push(options.region);
 
