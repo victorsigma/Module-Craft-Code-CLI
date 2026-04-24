@@ -1,5 +1,6 @@
 
 import fence from "../../../../assets/templates/blocks/fence.json" with { type: 'json' };
+import { Options } from "../../../../typedefs.js";
 
 import { BLOCK_MATERIALS, CATEGORYS, ITEM_GROUP_NAMES } from "../../../../utils/constants.js";
 import { getJsonFileOrBool } from "../../../../utils/fileOperations.js";
@@ -12,7 +13,7 @@ import inquirer from "inquirer";
 import chalk from "chalk";
 
 /**
- * @param {{name: string, config: {[key: string]: string | Array<string> }}} options 
+ * @param {Options} options 
  * @returns 
  */
 export const fenceBehaviorPack = async (options) => {

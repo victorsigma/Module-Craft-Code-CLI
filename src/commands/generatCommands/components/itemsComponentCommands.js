@@ -1,16 +1,17 @@
 import item_components from "../../../assets/jsons/item_components.json" with { type: 'json' };
+import { Options } from "../../../typedefs.js"
 
-import { toCamelCase, toSnackCase, uppercaseFirstLetter } from '../../../utils/stringManager.js';
+import { toCamelCase, uppercaseFirstLetter } from '../../../utils/stringManager.js';
 import { clearEvents, getJsonFile, makeComponentFile, makeEventFile, makeFile, updateIndexFile, validateFileAsync } from '../../../utils/fileOperations.js';
 import { ONLY_BEHAVIOR, PATH_ITEM_COMPONENTS, PATH_ITEM_EVENTS } from '../../../utils/constants.js';
 import { propertiesAsync } from '../../../utils/readProperties.js';
-import { selectFromArray } from '../../../utils/forms.js';
+import { resolveAddonName, resolveElementName } from "../../../core/nameResolver.js";
+import { slabComponent } from "./itemPrefabs/slabComponent.js";
 import { language } from "../../../utils/i18n.js";
 import { Command, Option } from 'commander';
 import inquirer from 'inquirer';
 import chalk from 'chalk';
 import ora from 'ora';
-import { slabComponent } from "./itemPrefabs/slabComponent.js";
 
 const itemsComponent = new Command('item').alias('i')
     .description(language.__("component.item.description"));
@@ -27,6 +28,8 @@ itemsComponent.action(async (options) => {
         chalk.bold(chalk.green('addon.properties'))
     );
 
+    options.config = config;
+
     const behavior = await ONLY_BEHAVIOR()
     if (!behavior) return console.log(
         chalk.yellowBright(language.__("component.item.exits.2"))
@@ -40,49 +43,14 @@ itemsComponent.action(async (options) => {
     process.exit(0);
 });
 
+/**
+ * @param {Options} options 
+ * @returns 
+ */
 const defaultComponent = async (options) => {
-    const config = await propertiesAsync();
 
     // Asegurar que el nombre tenga un namespace
-    options.name = toSnackCase(options.name);
-    while (!options.name.includes(':')) {
-        if (!config['addon.namespace']) {
-            console.error(
-                chalk.red(language.__("addon.namespace.error.1")),
-                chalk.green(language.__("addon.namespace.error.2")),
-                chalk.white(options.name)
-            );
-
-            const input = [
-                { type: 'input', name: 'name', message: language.__("addon.namespace.question") }
-            ];
-
-            const response = await inquirer.prompt(input);
-            options.name = response.name;
-        } else {
-            if(Array.isArray(config['addon.namespace'])){
-                console.log(chalk.yellow(language.__("addon.namespace.multiple")));
-                const namespace = await selectFromArray(config['addon.namespace']);
-                options.name = `${namespace}:${options.name}`;
-            } else {
-                options.name = `${config['addon.namespace']}:${options.name}`;
-            }
-        }
-    }
-
-    if (options.name === 'namespace:item_component') {
-        if(Array.isArray(config['addon.namespace'])){
-            console.log(chalk.yellow(language.__("addon.namespace.multiple")));
-            const namespace = await selectFromArray(config['addon.namespace']);
-            options.name = namespace
-            ? `${namespace}:item_component`
-            : 'namespace:item_component';
-        } else {
-            options.name = config['addon.namespace']
-            ? `${config['addon.namespace']}:item_component`
-            : 'namespace:item_component';
-        }
-    }
+    options.name = await resolveElementName(options.name, options.config, "item_component");
 
     const questions = [
         {
@@ -118,11 +86,13 @@ const defaultComponent = async (options) => {
         return `${event}: ${toCamelCase(options.name.split(':')[1])}${uppercaseFirstLetter(event)}Event`;
     }).join(',\n\t');
 
+    const projectName = resolveAddonName(options.config);
+
     const content = `${imports}
 
 /**
  * Componente: ${options.name}
- * Descripción: ${options.description}${config['addon.name'] ? `\n * Addon: ${Array.isArray(config['addon.name']) ? config['addon.name'][0] : config['addon.name']}` : ''}
+ * Descripción: ${options.description}${projectName}
  */
 
 export const ${toCamelCase(options.name.split(':')[1])}Component = {

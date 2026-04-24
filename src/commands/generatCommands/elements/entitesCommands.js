@@ -1,14 +1,11 @@
 import { BEHAVIOR_ENTITY, ONLY_BEHAVIOR, ONLY_RESOURCE, RESOURCE_ENTITY } from "../../../utils/constants.js";
-import { makeSubFile, validateFileAsync } from "../../../utils/fileOperations.js";
 import { propertiesAsync } from "../../../utils/readProperties.js";
 import { resolveElementName } from "../../../core/nameResolver.js";
 import { generateFile } from "../../../core/generateFile.js";
 import { resolvePath } from "../../../core/resolvePath.js";
 import { language } from "../../../utils/i18n.js";
 import { Command } from "commander";
-import inquirer from "inquirer";
 import chalk from "chalk";
-import ora from "ora";
 
 const entity = new Command('entity').alias('e')
     .description(language.__("element.entity.description"))

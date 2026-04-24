@@ -1,4 +1,5 @@
 import terrain_texture from "../../../../assets/jsons/terrain_texture.json" with { type: 'json' };
+import { Options } from "../../../../typedefs.js";
 
 import { getJsonFile, makeSubFile, validateFileAsync } from "../../../../utils/fileOperations.js";
 import { resolveElementName } from "../../../../core/nameResolver.js";
@@ -8,7 +9,7 @@ import chalk from "chalk";
 import ora from "ora";
 
 /**
- * @param {{name: string, config: {[key: string]: string | Array<string> }}} options 
+ * @param {Options} options 
  * @returns 
  */
 export const blockResourcePack = async (options) => {

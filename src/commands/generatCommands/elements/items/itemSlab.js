@@ -1,9 +1,15 @@
 import slab from "../../../../assets/templates/items/slab.json" with { type: 'json' };
+import { Options } from "../../../../typedefs.js";
+
 import { CATEGORYS, ITEM_GROUP_NAMES } from "../../../../utils/constants.js";
 import { selectFromArray } from "../../../../utils/forms.js";
 import { language } from "../../../../utils/i18n.js";
 import chalk from "chalk";
 
+/**
+ * @param {Options} options 
+ * @returns 
+ */
 export const itemSlab = async (options) => {
     const item = slab;
     item["minecraft:item"].description.identifier = options.name;
@@ -21,6 +27,10 @@ export const itemSlab = async (options) => {
     }
 
     item["minecraft:item"]["components"]["minecraft:block_placer"]["block"] = options.name
+
+    item["minecraft:item"]["components"][`${options.namespace}:slab_item`] = { ...item["minecraft:item"]["components"]["namespace:slab_item"] }
+    
+    delete item["minecraft:item"]["components"]["namespace:slab_item"];
 
     item["minecraft:item"]["components"]["minecraft:tags"]["tags"][0] = `${options.namespace}:slabs`
 

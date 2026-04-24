@@ -1,10 +1,15 @@
 import base from "../../../../assets/templates/items/item.json" with { type: 'json' };
+import { Options } from "../../../../typedefs.js";
+
 import { CATEGORYS, ITEM_GROUP_NAMES } from "../../../../utils/constants.js";
 import { selectFromArray } from "../../../../utils/forms.js";
 import { language } from "../../../../utils/i18n.js";
 import chalk from "chalk";
 
-
+/**
+ * @param {Options} options 
+ * @returns 
+ */
 export const itemDefault = async (options) => {
     const item = base;
     if (JSON.parse(options.menu)) {

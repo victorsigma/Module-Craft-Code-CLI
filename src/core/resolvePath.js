@@ -1,8 +1,10 @@
+import { AddonProperties } from "../typedefs.js"
+
 /**
- * 
+ * Determina la carpeta en la que se crearan los archivos
  * @param {"blocks" | "items" | "entities" | "entity"} type 
  * @param {string} namespace 
- * @param {{[key: string]: string | Array<string> }} config 
+ * @param {AddonProperties} config 
  * @returns {string}
  */
 export function resolvePath(type, namespace, config) {

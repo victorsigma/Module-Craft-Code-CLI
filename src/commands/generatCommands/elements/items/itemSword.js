@@ -1,10 +1,16 @@
 import sword from "../../../../assets/templates/items/sword.json" with { type: 'json' };
+import { Options } from "../../../../typedefs.js";
+
 import { CATEGORYS, ITEM_GROUP_NAMES } from "../../../../utils/constants.js";
 import { selectFromArray } from "../../../../utils/forms.js";
 import { language } from "../../../../utils/i18n.js";
 import inquirer from "inquirer";
 import chalk from "chalk";
 
+/**
+ * @param {Options} options 
+ * @returns 
+ */
 export const itemSword = async (options) => {
     const item = sword;
     item["minecraft:item"].description.identifier = options.name;
@@ -65,25 +71,25 @@ export const itemSword = async (options) => {
 
     const answers = await inquirer.prompt(questions);
     if (answers.value_damage) {
-        item["minecraft:item"]["components"]["minecraft:damage"]["value"] = parseInt(answers.value_damage);
+        item["minecraft:item"]["components"]["minecraft:damage"]["value"] = Number.parseInt(answers.value_damage);
     }
     if (answers.enchantable_value) {
-        item["minecraft:item"]["components"]["minecraft:enchantable"]["value"] = parseInt(answers.enchantable_value);
+        item["minecraft:item"]["components"]["minecraft:enchantable"]["value"] = Number.parseInt(answers.enchantable_value);
     }
     if (answers.min_damage_chance) {
-        item["minecraft:item"]["components"]["minecraft:durability"]["damage_chance"]["min"] = parseInt(answers.min_damage_chance);
+        item["minecraft:item"]["components"]["minecraft:durability"]["damage_chance"]["min"] = Number.parseInt(answers.min_damage_chance);
     }
     if (answers.max_damage_chance) {
-        item["minecraft:item"]["components"]["minecraft:durability"]["damage_chance"]["max"] = parseInt(answers.max_damage_chance);
+        item["minecraft:item"]["components"]["minecraft:durability"]["damage_chance"]["max"] = Number.parseInt(answers.max_damage_chance);
     }
     if (answers.max_durability) {
-        item["minecraft:item"]["components"]["minecraft:durability"]["max_durability"] = parseInt(answers.max_durability);
+        item["minecraft:item"]["components"]["minecraft:durability"]["max_durability"] = Number.parseInt(answers.max_durability);
     }
     if (answers.speedWeb) {
-        item["minecraft:item"]["components"]["minecraft:digger"]["destroy_speeds"][0]["speed"] = parseFloat(answers.speedWeb);
+        item["minecraft:item"]["components"]["minecraft:digger"]["destroy_speeds"][0]["speed"] = Number.parseFloat(answers.speedWeb);
     }
     if (answers.speedBamboo) {
-        item["minecraft:item"]["components"]["minecraft:digger"]["destroy_speeds"][1]["speed"] = parseFloat(answers.speedBamboo);
+        item["minecraft:item"]["components"]["minecraft:digger"]["destroy_speeds"][1]["speed"] = Number.parseFloat(answers.speedBamboo);
     }
 
     return item;

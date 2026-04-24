@@ -81,14 +81,14 @@ pack.description=${Array.isArray(config['addon.description']) ? config['addon.de
         if (await validateFileAsync(`texts/${options.region}.lang`)) return spinner.fail(chalk.bold(chalk.yellowBright(language.__("common.lang.exits.3"))));
         await makeSubFile(`${options.region}.lang`, 'texts/', content);
 
-        if (!await validateFileAsync(`texts/languages.json`)) {
-            const languages = [options.region];
-
-            makeSubFile('languages.json', 'texts/', JSON.stringify(languages, null, 2))
-        } else {
+        if (await validateFileAsync(`texts/languages.json`)) {
             const languages = await getJsonFile("texts/languages.json");
 
             languages.push(options.region);
+
+            makeSubFile('languages.json', 'texts/', JSON.stringify(languages, null, 2))
+        } else {
+            const languages = [options.region];
 
             makeSubFile('languages.json', 'texts/', JSON.stringify(languages, null, 2))
         }

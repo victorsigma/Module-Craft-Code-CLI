@@ -47,7 +47,7 @@ icon.action(async (options) => {
 
     if (options.random) {
         // Selecciona un ícono aleatorio
-        options.icon = iconsList[Math.floor(Math.random() * iconsList.length)];
+        options.icon = iconsList[Math.floor(Math.random() * iconsList.length)];// NOSONAR java:S2245
         console.log(chalk.green('✔'), chalk.bold(chalk.whiteBright(language.__("common.icon.random"))));
     } else {
         const questions = [
@@ -75,7 +75,7 @@ icon.action(async (options) => {
     console.log(chalk.yellow(`- ${iconsNames[options.icon]}`));
 
 
-    const create = cloneFile(`img/${options.icon}.png`, 'pack_icon.png');
+    const create = await cloneFile(`img/${options.icon}.png`, 'pack_icon.png');
 
     if(create) {
         console.log(chalk.green('✔'), chalk.bold(chalk.whiteBright(language.__("common.icon.create.succeed").replace('${iconsNames[options.icon]}', iconsNames[options.icon]))));

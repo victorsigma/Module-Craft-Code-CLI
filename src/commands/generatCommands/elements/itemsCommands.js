@@ -57,6 +57,7 @@ const behaviorPack = async (options) => {
 
     const fileName = `${options.name.split(':')[1]}.json`;
     const namespace = options.name.split(':')[0];
+    options.namespace = namespace;
 
     let item = base;
 

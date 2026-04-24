@@ -1,5 +1,6 @@
 
 import slab from "../../../../assets/templates/blocks/slab.json" with { type: 'json' };
+import { Options } from "../../../../typedefs.js";
 
 import { BLOCK_MATERIALS, CATEGORYS, ITEM_GROUP_NAMES } from "../../../../utils/constants.js";
 import { resolveElementName } from "../../../../core/nameResolver.js";
@@ -10,7 +11,7 @@ import { language } from "../../../../utils/i18n.js";
 import chalk from "chalk";
 
 /**
- * @param {{name: string, config: {[key: string]: string | Array<string> }}} options 
+ * @param {Options} options 
  * @returns 
  */
 export const slabBehaviorPack = async (options) => {

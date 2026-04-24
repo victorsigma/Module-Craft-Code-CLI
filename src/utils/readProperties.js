@@ -1,14 +1,11 @@
+import { AddonProperties } from "../typedefs.js"
+
 import fs from 'fs';
 import path from 'path';
 
 /**
  * Obtiene las propiedades de la aplicación de manera asincrona.
- * @returns {Promise<{
- *      ["addon.name"]: string,
- *      ["addon.description"]: string,
- *      ["addon.namespace"]: string | Array<string>,
- *      ["addon.type"]: "resource" | "behavior"> 
- * } | undefined>}
+ * @returns {Promise<AddonProperties | undefined>}
  */
 export const propertiesAsync = async () => {
     const filePath = path.join('./addon.properties');

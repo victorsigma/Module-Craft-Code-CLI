@@ -1,3 +1,5 @@
+import { AddonProperties } from "../typedefs.js"
+
 import { toSnackCase } from "../utils/stringManager.js";
 import { selectFromArray } from "../utils/forms.js";
 import { language } from "../utils/i18n.js";
@@ -7,8 +9,8 @@ import chalk from "chalk";
 /**
  * 
  * @param {string} name 
- * @param {{[key: string]: string | Array<string> }} config 
- * @param {"item" | "block" | "entity"} type 
+ * @param {AddonProperties} config 
+ * @param {"item" | "block" | "entity" | "item_component"} type 
  * @returns {Promise<string>}
  */
 export async function resolveElementName(name, config, type) {
@@ -17,11 +19,20 @@ export async function resolveElementName(name, config, type) {
     return name;
 }
 
+/**
+ * Retorna el nombre del Add-On para encabezados JSDoc
+ * @param {AddonProperties} config
+ * @returns {string}
+ */
+export const resolveAddonName = (config) => {
+    if (!config['addon.name']) return '';
+    return `\n * Addon: ${Array.isArray(config['addon.name']) ? config['addon.name'][0] : config['addon.name']}`;
+}
 
 /**
  * 
  * @param {string} name 
- * @param {{[key: string]: string | Array<string> }} config 
+ * @param {AddonProperties} config 
  * @returns {Promise<string>}
  */
 async function ensureNamespacedName(name, config) {
@@ -54,8 +65,8 @@ async function ensureNamespacedName(name, config) {
 /**
  * 
  * @param {string} name 
- * @param {{[key: string]: string | Array<string> }} config 
- * @param {"item" | "block" | "entity"} type 
+ * @param {AddonProperties} config 
+ * @param {"item" | "block" | "entity" | "item_component"} type 
  * @returns {Promise<string>}
  */
 async function resolveDefaultNamespacePlaceholder(name, config, type) {
@@ -73,7 +84,7 @@ function isMultiNamespace(config) {
 
 /**
  * Retorna un namespace simple, ya sea el único definido o el primero de una lista.
- * @param {{[key: string]: string | Array<string> }} config 
+ * @param {AddonProperties} config
  * @returns {string}
  */
 function getSingleNamespace(config) {
@@ -84,7 +95,7 @@ function getSingleNamespace(config) {
 
 /**
  * Resuelve el namespace a usar, ya sea seleccionando uno de varios disponibles o usando el único definido.
- * @param {{[key: string]: string | Array<string> }} config 
+ * @param {AddonProperties} config
  * @returns 
  */
 export async function resolveNamespace(config) {

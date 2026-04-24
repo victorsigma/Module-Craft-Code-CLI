@@ -1,10 +1,16 @@
 import pickaxe from "../../../../assets/templates/items/pickaxe.json" with { type: 'json' };
+import { Options } from "../../../../typedefs.js";
+
 import { CATEGORYS, ITEM_GROUP_NAMES } from "../../../../utils/constants.js";
 import { selectFromArray } from "../../../../utils/forms.js";
 import { language } from "../../../../utils/i18n.js";
 import inquirer from "inquirer";
 import chalk from "chalk";
 
+/**
+ * @param {Options} options 
+ * @returns 
+ */
 export const itemPickaxe = async (options) => {
     const item = pickaxe;
     item["minecraft:item"].description.identifier = options.name;
@@ -60,22 +66,22 @@ export const itemPickaxe = async (options) => {
 
     const answers = await inquirer.prompt(questions);
     if (answers.value_damage) {
-        item["minecraft:item"]["components"]["minecraft:damage"]["value"] = parseInt(answers.value_damage);
+        item["minecraft:item"]["components"]["minecraft:damage"]["value"] = Number.parseInt(answers.value_damage);
     }
     if (answers.enchantable_value) {
-        item["minecraft:item"]["components"]["minecraft:enchantable"]["value"] = parseInt(answers.enchantable_value);
+        item["minecraft:item"]["components"]["minecraft:enchantable"]["value"] = Number.parseInt(answers.enchantable_value);
     }
     if (answers.min_damage_chance) {
-        item["minecraft:item"]["components"]["minecraft:durability"]["damage_chance"]["min"] = parseInt(answers.min_damage_chance);
+        item["minecraft:item"]["components"]["minecraft:durability"]["damage_chance"]["min"] = Number.parseInt(answers.min_damage_chance);
     }
     if (answers.max_damage_chance) {
-        item["minecraft:item"]["components"]["minecraft:durability"]["damage_chance"]["max"] = parseInt(answers.max_damage_chance);
+        item["minecraft:item"]["components"]["minecraft:durability"]["damage_chance"]["max"] = Number.parseInt(answers.max_damage_chance);
     }
     if (answers.max_durability) {
-        item["minecraft:item"]["components"]["minecraft:durability"]["max_durability"] = parseInt(answers.max_durability);
+        item["minecraft:item"]["components"]["minecraft:durability"]["max_durability"] = Number.parseInt(answers.max_durability);
     }
     if (answers.speed) {
-        item["minecraft:item"]["components"]["minecraft:digger"]["destroy_speeds"][0]["speed"] = parseFloat(answers.speed);
+        item["minecraft:item"]["components"]["minecraft:digger"]["destroy_speeds"][0]["speed"] = Number.parseFloat(answers.speed);
     }
 
     return item;
