@@ -1,6 +1,6 @@
 import base from "../../../../assets/templates/blocks/block.json" with { type: 'json' };
 import stair from "../../../../assets/templates/blocks/stair.json" with { type: 'json' };
-import { AddonProperties, Options } from "../../../../typedefs.js";
+import { AddonProperties } from "../../../../typedefs.js";
 
 import { BLOCK_MATERIALS, CATEGORYS, ITEM_GROUP_NAMES } from "../../../../utils/constants.js";
 import { getJsonFileOrBool } from "../../../../utils/fileOperations.js";

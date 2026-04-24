@@ -3,10 +3,8 @@ import { Options } from "../../../../typedefs.js"
 
 import { clearEvents, getJsonFile, getTextFileEvent, makeComponentFile, makeEventFileWithPrefab, makeFile, updateIndexFile, validateFileAsync } from "../../../../utils/fileOperations.js";
 import { PATH_ITEM_COMPONENTS, PATH_ITEM_EVENTS } from "../../../../utils/constants.js";
-import { propertiesAsync } from "../../../../utils/readProperties.js";
 import { resolveAddonName, resolveNamespace } from "../../../../core/nameResolver.js";
 import { toCamelCase } from "../../../../utils/stringManager.js";
-import { selectFromArray } from "../../../../utils/forms.js";
 import { language } from "../../../../utils/i18n.js";
 import chalk from "chalk";
 import ora from "ora";
