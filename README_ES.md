@@ -170,7 +170,7 @@ Subcomandos
 Opciones
 > * `-n, --name <string>`: Especifica el nombre del componente (por defecto: `"namespace:component"`).
 > * `-d, --description <string>`: Especifica la descripción del componente (por defecto: `"description"`).
-> * `-p, --prefab <string>`: Especifica el prefab que utilizará el componente (por defecto: `"none"`). Opciones: `none`, `slab`.
+> * `-p, --prefab <string>`: Especifica el prefab que utilizará el componente (por defecto: `"none"`). Opciones: `none`, `slab`, `fence_gate`.
 
 ### Block
 
@@ -181,6 +181,12 @@ mccc generate component block [opciones]
 
 mccc g c block [opciones]
 ```
+
+Opciones
+> * `-n, --name <string>`: Especifica el nombre del componente (por defecto: `"namespace:component"`).
+> * `-d, --description <string>`: Especifica la descripción del componente (por defecto: `"description"`).
+> * `-p, --prefab <string>`: Especifica el prefab que utilizará el componente (por defecto: `"none"`). Opciones: `none`, `slab`.
+
 
 ### Item
 
@@ -282,7 +288,7 @@ mccc g cm mo [opciones]
 ```
 
 Opciones
-> * `-t, --type <string>`: Especifica el tipo de modelo a crear - Solo resource pack (por defecto: `"slab"`). Opciones: `slab`, `stair`, `fence`, `wall`.
+> * `-t, --type <string>`: Especifica el tipo de modelo a crear - Solo resource pack (por defecto: `"slab"`). Opciones: `slab`, `stair`, `fence`, `fence_gate`, `wall`.
 
 
 ## Element
@@ -348,7 +354,7 @@ mccc g e block [opciones]
 
 Opciones
 > * `-n, --name <string>`: Especifica el identificador del bloque (por defecto: `"namespace:block"`).
-> * `-p, --prefab <string>`: Especifica el prefab que utilizará el bloque (por defecto: `"block"`). Opciones: `block`, `slab`, `stair`, `fence`, `wall`.
+> * `-p, --prefab <string>`: Especifica el prefab que utilizará el bloque (por defecto: `"block"`). Opciones: `block`, `slab`, `stair`, `fence`, `fence_gate`, `wall`.
 > * `-m, --menu <boolean>`: Indica si el bloque tendrá una sección personalizada en el menú de Minecraft (por defecto: `false`).
 > * `-l, --liquid <boolean>`: Define cómo se comporta el bloque al detectar un líquido (por defecto: `false`).
 > * `-r, --render <string>`: Define el material de textura del bloque (por defecto: `"opaque"`). Opciones: `opaque`, `double_sided`, `blend`, `alpha_test`.

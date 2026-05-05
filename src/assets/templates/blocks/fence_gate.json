@@ -1,0 +1,108 @@
+{
+  "format_version": "1.26.0",
+  "minecraft:block": {
+    "description": {
+      "identifier": "namespace:fence_gate",
+      "menu_category": {
+        "category": "construction",
+        "group": "minecraft:itemGroup.name.fenceGate"
+      },
+      "states": {},
+      "traits": {
+        "minecraft:placement_direction": {
+            "enabled_states": ["minecraft:cardinal_direction"],
+            "y_rotation_offset": 180
+        }
+      }
+    },
+    "components": {
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 2
+      },
+      "minecraft:support": {
+        "shape": "fence"
+      },
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "block",
+          "render_method": "opaque"
+        }
+      },
+      "minecraft:item_visual": {
+        "geometry": "geometry.namespace_fence_gate_icon",
+        "material_instances": {
+          "*": {
+            "texture": "block",
+            "render_method": "opaque"
+          }
+        }
+      },
+      "minecraft:loot": "loot_tables/blocks/block_fence_gate.json",
+      "minecraft:geometry": {
+        "identifier": "geometry.namespace_fence_gate",
+        "bone_visibility": {
+          "center_north_south": "q.block_state('minecraft:cardinal_direction') == 'north' || q.block_state('minecraft:cardinal_direction') == 'south'",
+          "close_north_south": "(q.block_state('minecraft:cardinal_direction') == 'north' || q.block_state('minecraft:cardinal_direction') == 'south') && !q.block_state('namespace:open')",
+          "open_north": "q.block_state('namespace:open') && q.block_state('namespace:direction') == 'north'",
+          "open_south": "q.block_state('namespace:open') && q.block_state('namespace:direction') == 'south'",
+          "center_east_west": "q.block_state('minecraft:cardinal_direction') == 'east' || q.block_state('minecraft:cardinal_direction') == 'west'",
+          "close_east_west": "(q.block_state('minecraft:cardinal_direction') == 'east' || q.block_state('minecraft:cardinal_direction') == 'west') && !q.block_state('namespace:open')",
+          "open_west": "q.block_state('namespace:open') && q.block_state('namespace:direction') == 'west'",
+          "open_east": "q.block_state('namespace:open') && q.block_state('namespace:direction') == 'east'"
+        }
+      },
+      "minecraft:redstone_consumer": {
+        "min_power": 0
+      },
+      "minecraft:custom_components": {}
+    },
+    "permutations": [
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'north' || q.block_state('minecraft:cardinal_direction') == 'south'",
+        "components": {
+          "minecraft:connection_rule": {
+              "accepts_connections_from": "all",
+              "enabled_directions": [
+                "east",
+                "west"
+              ]
+          },
+          "minecraft:selection_box": {
+            "origin": [-8, 0, -2],
+            "size": [16, 16, 4]
+          },
+          "minecraft:collision_box": {
+            "origin": [-8, 0, -2],
+            "size": [16, 24, 4]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'east' || q.block_state('minecraft:cardinal_direction') == 'west'",
+        "components": {
+          "minecraft:connection_rule": {
+              "accepts_connections_from": "all",
+              "enabled_directions": [
+                "north",
+                "south"
+              ]
+          },
+          "minecraft:selection_box": {
+            "origin": [-2, 0, -8],
+            "size": [4, 16, 16]
+          },
+          "minecraft:collision_box": {
+            "origin": [-2, 0, -8],
+            "size": [4, 24, 16]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('namespace:open')",
+        "components": {
+          "minecraft:collision_box": false
+        }
+      }
+    ]
+  }
+}

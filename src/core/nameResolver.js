@@ -76,7 +76,7 @@ async function resolveDefaultNamespacePlaceholder(name, config, type) {
     return name
 }
 
-function isMultiNamespace(config) {
+export function isMultiNamespace(config) {
     if(!config['namespace.mode']) return console.warn(chalk.yellow(language.__("addon.namespace.mode_warning")));
     return Array.isArray(config['addon.namespace']) &&
         config['namespace.mode'] === "multi";

@@ -5,26 +5,26 @@ import { clearEvents, getJsonFile, getTextFileEvent, makeComponentFile, makeEven
 import { PATH_BLOCK_COMPONENTS, PATH_BLOCK_EVENTS } from "../../../../utils/constants.js";
 import { resolveAddonName, resolveNamespace } from "../../../../core/nameResolver.js";
 import { componentBuilder } from "../../../../core/componentBuilder.js";
-import { eventTemplates } from "../../../../core/templateProcessor.js";
 import { toCamelCase } from "../../../../utils/stringManager.js";
 import { language } from "../../../../utils/i18n.js";
 import chalk from "chalk";
 import ora from "ora";
+import { eventTemplates } from "../../../../core/templateProcessor.js";
 
 /**
  * @param {Options} options 
  * @returns 
  */
-export const slabComponent = async (options) => {
+export const fenceGateComponent = async (options) => {
     options.namespace = await resolveNamespace(options.config);
 
-    const events = ["onPlayerInteract"]
+    const events = ["beforeOnPlayerPlace", "onPlayerInteract", "onRedstoneUpdate"]
 
-    options.name = `${options.namespace}:slab`
-
+    options.name = `${options.namespace}:fence_gate`
+    
     const projectName = resolveAddonName(options.config);
 
-    options.description = `Generic component with custom slabs`
+    options.description = `Generic component with custom fence gate`
 
     const content = componentBuilder({
         name: options.name,
@@ -38,13 +38,13 @@ export const slabComponent = async (options) => {
 
     try {
         await makeComponentFile(options.name, PATH_BLOCK_COMPONENTS, content);
-        await clearEvents(`${PATH_BLOCK_EVENTS}/slab`);
+        await clearEvents(`${PATH_BLOCK_EVENTS}/fenceGate`);
 
         const eventsData = await eventTemplates({
             events,
             addonName: options.config["addon.name"],
             namespace: options.namespace,
-            templatePath: "blocks/slab"
+            templatePath: "blocks/fenceGate"
         })
 
         await Promise.all(

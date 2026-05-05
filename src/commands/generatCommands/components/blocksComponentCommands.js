@@ -1,11 +1,13 @@
 import block_components from "../../../assets/jsons/block_components.json" with { type: 'json' };
 import { Options } from "../../../typedefs.js"
 
-import { toCamelCase, uppercaseFirstLetter } from '../../../utils/stringManager.js';
+import { toCamelCase } from '../../../utils/stringManager.js';
 import { clearEvents, getJsonFile, makeComponentFile, makeEventFile, makeFile, updateIndexFile, validateFileAsync } from '../../../utils/fileOperations.js';
 import { ONLY_BEHAVIOR, PATH_BLOCK_COMPONENTS, PATH_BLOCK_EVENTS } from '../../../utils/constants.js';
 import { propertiesAsync } from '../../../utils/readProperties.js';
 import { resolveAddonName, resolveElementName } from "../../../core/nameResolver.js";
+import { fenceGateComponent } from "./blockPrefabs/fenceGateComponent.js";
+import { componentBuilder } from "../../../core/componentBuilder.js";
 import { slabComponent } from "./blockPrefabs/slabComponent.js";
 import { language } from "../../../utils/i18n.js";
 import { Command, Option } from 'commander';
@@ -17,7 +19,7 @@ const blocksComponent = new Command('block').alias('b')
     .description(language.__("component.block.description"));
 blocksComponent.option('-n, --name <string>', language.__("component.block.option.n"), 'namespace:block_component');
 blocksComponent.option('-d, --description <string>', language.__("component.block.option.d"), 'description');
-blocksComponent.addOption(new Option('-p, --prefab <string>', language.__("component.item.option.p")).default("none").choices(["none", "slab"]));
+blocksComponent.addOption(new Option('-p, --prefab <string>', language.__("component.item.option.p")).default("none").choices(["none", "slab", "fence_gate"]));
 
 
 blocksComponent.action(async (options) => {
@@ -36,6 +38,8 @@ blocksComponent.action(async (options) => {
 
     if (options.prefab === "slab") {
         await slabComponent(options)
+    } else if (options.prefab === "fence_gate") {
+        await fenceGateComponent(options)
     } else {
         await defaultComponent(options)
     }
@@ -75,31 +79,19 @@ const defaultComponent = async (options) => {
     // Validar si el usuario no selecciona ningún evento
     if (!response.selections.length) return console.log(chalk.red(language.__("component.block.invalid")));
 
-
     response.selections.forEach(evento => {
         console.log(chalk.yellow(`- ${evento}`));
     });
 
-    const imports = response.selections.map(event => {
-        return `import { ${toCamelCase(options.name.split(':')[1])}${uppercaseFirstLetter(event)}Event } from "../../events/blocks/${toCamelCase(options.name.split(':')[1])}/${event}Event";`;
-    }).join('\n');
-
-    const events = response.selections.map(event => {
-        return `${event}: ${toCamelCase(options.name.split(':')[1])}${uppercaseFirstLetter(event)}Event`;
-    }).join(',\n\t');
-
     const projectName = resolveAddonName(options.config);
 
-    const content = `${imports}
-
-/**
- * Componente: ${options.name}
- * Descripción: ${options.description}${projectName}
- */
-
-export const ${toCamelCase(options.name.split(':')[1])}Component = {
-    ${events}
-}`;
+    const content = componentBuilder({
+        name: options.name,
+        events: response.selections,
+        projectName,
+        description: options.description,
+        type: "blocks"
+    })
 
     const spinner = ora(language.__("component.block.spinner.start")).start();
 

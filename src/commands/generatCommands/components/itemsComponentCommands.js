@@ -12,6 +12,7 @@ import { Command, Option } from 'commander';
 import inquirer from 'inquirer';
 import chalk from 'chalk';
 import ora from 'ora';
+import { componentBuilder } from "../../../core/componentBuilder.js";
 
 const itemsComponent = new Command('item').alias('i')
     .description(language.__("component.item.description"));
@@ -77,27 +78,16 @@ const defaultComponent = async (options) => {
     response.selections.forEach(evento => {
         console.log(chalk.yellow(`- ${evento}`));
     });
-
-    const imports = response.selections.map(event => {
-        return `import { ${toCamelCase(options.name.split(':')[1])}${uppercaseFirstLetter(event)}Event } from "../../events/items/${toCamelCase(options.name.split(':')[1])}/${event}Event";`;
-    }).join('\n');
-
-    const events = response.selections.map(event => {
-        return `${event}: ${toCamelCase(options.name.split(':')[1])}${uppercaseFirstLetter(event)}Event`;
-    }).join(',\n\t');
-
+    
     const projectName = resolveAddonName(options.config);
 
-    const content = `${imports}
-
-/**
- * Componente: ${options.name}
- * Descripción: ${options.description}${projectName}
- */
-
-export const ${toCamelCase(options.name.split(':')[1])}Component = {
-    ${events}
-}`;
+    const content = componentBuilder({
+        name: options.name,
+        events: response.selections,
+        projectName,
+        description: options.description,
+        type: "items"
+    })
 
     const spinner = ora(language.__("component.item.spinner.start")).start();
 

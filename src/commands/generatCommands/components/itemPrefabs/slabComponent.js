@@ -4,6 +4,8 @@ import { Options } from "../../../../typedefs.js"
 import { clearEvents, getJsonFile, getTextFileEvent, makeComponentFile, makeEventFileWithPrefab, makeFile, updateIndexFile, validateFileAsync } from "../../../../utils/fileOperations.js";
 import { PATH_ITEM_COMPONENTS, PATH_ITEM_EVENTS } from "../../../../utils/constants.js";
 import { resolveAddonName, resolveNamespace } from "../../../../core/nameResolver.js";
+import { componentBuilder } from "../../../../core/componentBuilder.js";
+import { eventTemplates } from "../../../../core/templateProcessor.js";
 import { toCamelCase } from "../../../../utils/stringManager.js";
 import { language } from "../../../../utils/i18n.js";
 import chalk from "chalk";
@@ -16,20 +18,21 @@ import ora from "ora";
 export const slabComponent = async (options) => {
     options.namespace = await resolveNamespace(options.config);
 
+    const events = ["onUseOn"]
+
     options.name = `${options.namespace}:slab_item`
 
     const projectName = resolveAddonName(options.config);
 
-    const content = `import { slabItemOnUseOnEvent } from "../../events/items/slabItem/onUseOnEvent";
+    options.description = `Generic component with custom slabs item`
 
-/**
- * Componente: ${options.name}
- * Descripción: Generic component with custom slabs item${projectName}
- */
-
-export const ${toCamelCase(options.name.split(':')[1])}Component = {
-    onUseOn: slabItemOnUseOnEvent
-}`;
+    const content = componentBuilder({
+        name: options.name,
+        events,
+        projectName,
+        description: options.description,
+        type: "items"
+    })
 
     const spinner = ora(language.__("component.item.spinner.start")).start();
 
@@ -37,15 +40,23 @@ export const ${toCamelCase(options.name.split(':')[1])}Component = {
         await makeComponentFile(options.name, PATH_ITEM_COMPONENTS, content);
         await clearEvents(`${PATH_ITEM_EVENTS}/slabItem`);
 
+        const eventsData = await eventTemplates({
+            events,
+            addonName: options.config["addon.name"],
+            namespace: options.namespace,
+            templatePath: "slabItem/"
+        })
 
-        let slabEvent = await getTextFileEvent('slabItem/onUseOnEvent.js');
-
-        if (!slabEvent) return console.log(language.__("operations.error.8"));
-
-        slabEvent = slabEvent.replaceAll("addon_name", options.config["addon.name"]);
-        slabEvent = slabEvent.replaceAll("namespace", options.namespace);
-
-        await makeEventFileWithPrefab(options.name, slabEvent, "onUseOn", PATH_ITEM_EVENTS);
+        await Promise.all(
+            eventsData.map(eventData =>
+                makeEventFileWithPrefab(
+                    options.name,
+                    eventData.content,
+                    eventData.event,
+                    PATH_ITEM_EVENTS
+                )
+            )
+        );
 
         const fileName = `item_components.json`
         let fileData = { ...item_components };

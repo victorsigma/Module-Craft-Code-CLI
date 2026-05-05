@@ -170,7 +170,7 @@ Subcommands
 Options
 > * `-n, --name <string>`: Specifies the name of the component (default: `"namespace:component"`).
 > * `-d, --description <string>`: Specifies the description of the component (default: `"description"`).
-> * `-p, --prefab <string>`: Specifies the prefab the component will use (default: `"none"`). Options: `none`, `slab`.
+> * `-p, --prefab <string>`: Specifies the prefab the component will use (default: `"none"`). Options: `none`, `slab`, `fence_gate`.
 
 ### Block
 
@@ -181,6 +181,12 @@ mccc generate component block [options]
 
 mccc g c block [options]
 ```
+
+Options
+> * `-n, --name <string>`: Specifies the name of the component (default: `"namespace:component"`).
+> * `-d, --description <string>`: Specifies the description of the component (default: `"description"`).
+> * `-p, --prefab <string>`: Specifies the prefab the component will use (default: `"none"`). Options: `none`, `slab`.
+
 
 ### Item
 
@@ -283,7 +289,7 @@ mccc g cm mo [options]
 ```
 
 Options
-> * `-t, --type <string>`: Specifies the type of model to create - Resource pack only (default: `"slab"`). Options: `slab`, `stair`, `fence`, `wall`.
+> * `-t, --type <string>`: Specifies the type of model to create - Resource pack only (default: `"slab"`). Options: `slab`, `stair`, `fence`, `fence_gate`, `wall`.
 
 
 ## Element
@@ -349,7 +355,7 @@ mccc g e block [options]
 
 Options
 > * `-n, --name <string>`: Specifies the block identifier (default: `"namespace:block"`).
-> * `-p, --prefab <string>`: Specifies the prefab the block will use (default: `"block"`). Options: `block`, `slab`, `stair`, `fence`, `wall`.
+> * `-p, --prefab <string>`: Specifies the prefab the block will use (default: `"block"`). Options: `block`, `slab`, `stair`, `fence`, `fence_gate`, `wall`.
 > * `-m, --menu <boolean>`: Indicates whether the block will have a custom section in the Minecraft menu (default: `false`).
 > * `-l, --liquid <boolean>`: Defines how the block behaves when detecting liquid (default: `false`).
 > * `-r, --render <string>`: Defines the block's texture material (default: `"opaque"`). Options: `opaque`, `double_sided`, `blend`, `alpha_test`.

@@ -67,7 +67,8 @@
             "can_contain_liquid": true
           }
         ]
-      }
+      },
+      "tag:minecraft:has_fence_connections": {}
     },
     "permutations": [
       {

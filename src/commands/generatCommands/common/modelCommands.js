@@ -8,11 +8,12 @@ import { ONLY_RESOURCE } from "../../../utils/constants.js";
 import { language } from "../../../utils/i18n.js";
 import { Command, Option } from "commander";
 import chalk from "chalk";
+import { fenceGateBlockModel } from "./models/fenceGateBlockModel.js";
 
 const model = new Command('model').alias("mo")
     .description(language.__("common.model.description"))
 
-model.addOption(new Option('-t, --type <string>', language.__("common.model.option.t")).default("slab").choices(["slab", "stair", "fence", "wall"]));
+model.addOption(new Option('-t, --type <string>', language.__("common.model.option.t")).default("slab").choices(["slab", "stair", "fence", "fence_gate", "wall"]));
 
 
 /**
@@ -41,6 +42,9 @@ const action = async (options) => {
             break;
         case "fence":
             await fenceBlockModel(options);
+            break;
+        case "fence_gate":
+            await fenceGateBlockModel(options);
             break;
         case "wall":
             await wallBlockModel(options);

@@ -1,5 +1,4 @@
-
-import fence from "../../../../assets/templates/blocks/fence.json" with { type: 'json' };
+import fenceGate from "../../../../assets/templates/blocks/fence_gate.json" with { type: 'json' };
 import { Options } from "../../../../typedefs.js";
 
 import { BLOCK_MATERIALS, CATEGORYS, ITEM_GROUP_NAMES } from "../../../../utils/constants.js";
@@ -12,11 +11,12 @@ import { language } from "../../../../utils/i18n.js";
 import inquirer from "inquirer";
 import chalk from "chalk";
 
+
 /**
  * @param {Options} options 
  * @returns 
  */
-export const fenceBehaviorPack = async (options) => {
+export const fenceGateBehaviorPack = async (options) => {
     // Asegurar que el nombre tenga un namespace
     options.name = await resolveElementName(options.name, options.config, "block");
 
@@ -24,21 +24,36 @@ export const fenceBehaviorPack = async (options) => {
     const fileName = `${name}.json`;
     const namespace = options.name.split(':')[0];
 
-    const block = fence;
+    const block = fenceGate;
     block["minecraft:block"]["description"]["identifier"] = options.name;
+    block["minecraft:block"]["description"]["states"][`${namespace}:open`] = [false, true];
+    block["minecraft:block"]["description"]["states"][`${namespace}:direction`] = ["north", "south", "west", "east"];
+
     block["minecraft:block"]["components"]["minecraft:material_instances"]["*"]["texture"] = name;
     block["minecraft:block"]["components"]["minecraft:loot"] = `loot_tables/blocks/${fileName}`;
 
-    block["minecraft:block"]["components"]["minecraft:geometry"]["identifier"] = `geometry.${namespace}_fence`;
-    block["minecraft:block"]["components"]["minecraft:item_visual"]["geometry"] = `geometry.${namespace}_fence_icon`;
-    
+    block["minecraft:block"]["components"]["minecraft:geometry"]["identifier"] = `geometry.${namespace}_fence_gate`;
+    block["minecraft:block"]["components"]["minecraft:geometry"]["bone_visibility"]["close_north_south"] = `(q.block_state('minecraft:cardinal_direction') == 'north' || q.block_state('minecraft:cardinal_direction') == 'south') && !q.block_state('${namespace}:open')`;
+    block["minecraft:block"]["components"]["minecraft:geometry"]["bone_visibility"]["open_north"] = `q.block_state('${namespace}:open') && q.block_state('${namespace}:direction') == 'north'`;
+    block["minecraft:block"]["components"]["minecraft:geometry"]["bone_visibility"]["open_south"] = `q.block_state('${namespace}:open') && q.block_state('${namespace}:direction') == 'south'`;
+    block["minecraft:block"]["components"]["minecraft:geometry"]["bone_visibility"]["close_east_west"] = `(q.block_state('minecraft:cardinal_direction') == 'east' || q.block_state('minecraft:cardinal_direction') == 'west') && !q.block_state('${namespace}:open')`;
+    block["minecraft:block"]["components"]["minecraft:geometry"]["bone_visibility"]["open_west"] = `q.block_state('${namespace}:open') && q.block_state('${namespace}:direction') == 'west'`;
+    block["minecraft:block"]["components"]["minecraft:geometry"]["bone_visibility"]["open_east"] = `q.block_state('${namespace}:open') && q.block_state('${namespace}:direction') == 'east'`;
+
+    block["minecraft:block"]["components"]["minecraft:item_visual"]["geometry"] = `geometry.${namespace}_fence_gate_icon`;
+
     block["minecraft:block"]["components"]["minecraft:item_visual"]["material_instances"]["*"]["texture"] = name;
+
+    block["minecraft:block"]["components"][`${namespace}:fence_gate`] = { "sound_open": "open.fence_gate", "sound_close": "close.fence_gate" };
+
+    block["minecraft:block"]["permutations"][2]["condition"] = `q.block_state('${namespace}:open')`;
 
     if (BLOCK_MATERIALS.includes(options.render)) {
         block["minecraft:block"]["components"]['minecraft:material_instances']["*"]["render_method"] = options.render;
     } else {
         block["minecraft:block"]["components"]['minecraft:material_instances']["*"]["render_method"] = BLOCK_MATERIALS[0];
     }
+
     if (JSON.parse(options.menu)) {
         console.log(chalk.yellow(language.__("element.block.menu.category")));
         const category = await selectFromArray(CATEGORYS);

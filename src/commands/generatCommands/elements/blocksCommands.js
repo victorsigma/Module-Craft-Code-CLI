@@ -1,19 +1,20 @@
 import { ONLY_BEHAVIOR, ONLY_RESOURCE } from "../../../utils/constants.js";
+import { fenceGateBehaviorPack } from "./blocks/fenceGateBehaviorPack.js";
 import { propertiesAsync } from "../../../utils/readProperties.js";
 import { blockBehaviorPack } from "./blocks/blockBehaviorPack.js";
 import { blockResourcePack } from "./blocks/blockResourcePack.js";
 import { fenceBehaviorPack } from "./blocks/fenceBehaviorPack.js";
 import { slabBehaviorPack } from "./blocks/slabBehaviorPack.js";
+import { wallBehaviorPack } from "./blocks/wallBehaviorPack.js";
 import { language } from "../../../utils/i18n.js";
 import { Command, Option } from "commander";
 import chalk from "chalk";
-import { wallBehaviorPack } from "./blocks/wallBehaviorPack.js";
 
 const block = new Command('block').alias('b')
     .description(language.__("element.block.description"))
 
 block.option('-n, --name <string>', language.__("element.block.option.n"), 'namespace:block');
-block.addOption(new Option('-p, --prefab <string>', language.__("element.block.option.p")).default("block").choices(["block", "stair", "slab", "fence", "wall"]));
+block.addOption(new Option('-p, --prefab <string>', language.__("element.block.option.p")).default("block").choices(["block", "stair", "slab", "fence", "fence_gate", "wall"]));
 block.option('-m, --menu <boolean>', language.__("element.block.option.m"), false);
 block.option('-l, --liquid <boolean>', language.__("element.block.option.l"), false);
 block.addOption(new Option('-r, --render <string>', language.__("element.block.option.r")).default('opaque').choices(['opaque', 'double_sided', 'blend', 'alpha_test']));
@@ -33,6 +34,9 @@ block.action(async (options) => {
                 break;
             case "fence":
                 await fenceBehaviorPack(options);
+                break;
+            case "fence_gate":
+                await fenceGateBehaviorPack(options);
                 break;
             case "wall":
                 await wallBehaviorPack(options);
