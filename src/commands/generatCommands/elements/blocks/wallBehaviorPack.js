@@ -70,7 +70,7 @@ export const wallBehaviorPack = async (options) => {
 
     const answers = await inquirer.prompt(questions);
     if (answers.seconds_to_destroy) {
-        block["minecraft:block"]["components"]["minecraft:destructible_by_mining"]["seconds_to_destroy"] = parseFloat(answers.seconds_to_destroy);
+        block["minecraft:block"]["components"]["minecraft:destructible_by_mining"]["seconds_to_destroy"] = Number.parseFloat(answers.seconds_to_destroy);
     }
     if (answers.add_components) {
         const jsonFile = await getJsonFileOrBool("block_components.json");

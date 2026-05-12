@@ -7,35 +7,20 @@ describe("resolvePath", () => {
     const configSingle = { "namespace.mode": "single" };
     const configMulti = { "namespace.mode": "multi" };
 
-    test("resuelve la ruta donde se creara un archivo de entidad client, single mode", () => {
-        assert.strictEqual(resolvePath("entity", "test", configSingle), "entity/")
-    })
+    const casos = [
+        { tipo: "entity", descripcion: "entidad client" },
+        { tipo: "entities", descripcion: "entidad server" },
+        { tipo: "blocks", descripcion: "bloque" },
+        { tipo: "items", descripcion: "item" },
+    ];
 
-    test("resuelve la ruta donde se creara un archivo de entidad client, multi mode", () => {
-        assert.strictEqual(resolvePath("entity", "test", configMulti), "entity/test/")
-    })
+    for (const { tipo, descripcion } of casos) {
+        test(`resuelve la ruta de ${descripcion} en single mode`, () => {
+            assert.strictEqual(resolvePath(tipo, "test", configSingle), `${tipo}/`)
+        });
 
-    test("resuelve la ruta donde se creara un archivo de entidad server, single mode", () => {
-        assert.strictEqual(resolvePath("entities", "test", configSingle), "entities/")
-    })
-
-    test("resuelve la ruta donde se creara un archivo de entidad server, multi mode", () => {
-        assert.strictEqual(resolvePath("entities", "test", configMulti), "entities/test/")
-    })
-
-    test("resuelve la ruta donde se creara un archivo de bloque, single mode", () => {
-        assert.strictEqual(resolvePath("blocks", "test", configSingle), "blocks/")
-    })
-
-    test("resuelve la ruta donde se creara un archivo de bloque, multi mode", () => {
-        assert.strictEqual(resolvePath("blocks", "test", configMulti), "blocks/test/")
-    })
-
-    test("resuelve la ruta donde se creara un archivo de item, single mode", () => {
-        assert.strictEqual(resolvePath("items", "test", configSingle), "items/")
-    })
-
-    test("resuelve la ruta donde se creara un archivo de item, multi mode", () => {
-        assert.strictEqual(resolvePath("items", "test", configMulti), "items/test/")
-    })
-})
+        test(`resuelve la ruta de ${descripcion} en multi mode`, () => {
+            assert.strictEqual(resolvePath(tipo, "test", configMulti), `${tipo}/test/`)
+        });
+    }
+});

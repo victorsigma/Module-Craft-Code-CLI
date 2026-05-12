@@ -139,6 +139,8 @@ export const LIBS = [
     "bedrockSystem",
     "blockManager",
     "itemManager",
+    "vectorManager",
+    "worldFuntions",
 ]
 
 /** Idiomas soportados */

@@ -61,3 +61,4 @@ function resolveComponentName(name) {
     const [, rawName] = name.split(':');
     return toCamelCase(rawName);
 }
+

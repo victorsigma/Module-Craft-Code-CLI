@@ -1,7 +1,7 @@
 import item_components from "../../../../assets/jsons/item_components.json" with { type: 'json' };
 import { Options } from "../../../../typedefs.js"
 
-import { clearEvents, getJsonFile, getTextFileEvent, makeComponentFile, makeEventFileWithPrefab, makeFile, updateIndexFile, validateFileAsync } from "../../../../utils/fileOperations.js";
+import { clearEvents, getJsonFile, makeComponentFile, makeEventFileWithPrefab, makeFile, updateIndexFile, validateFileAsync } from "../../../../utils/fileOperations.js";
 import { PATH_ITEM_COMPONENTS, PATH_ITEM_EVENTS } from "../../../../utils/constants.js";
 import { resolveAddonName, resolveNamespace } from "../../../../core/nameResolver.js";
 import { componentBuilder } from "../../../../core/componentBuilder.js";

@@ -10,6 +10,15 @@ import { language } from "../../../utils/i18n.js";
 import { Command, Option } from "commander";
 import chalk from "chalk";
 
+export const behaviorBlockStrategies = {
+    block: blockBehaviorPack,
+    stair: blockBehaviorPack,
+    slab: slabBehaviorPack,
+    fence: fenceBehaviorPack,
+    fence_gate: fenceGateBehaviorPack,
+    wall: wallBehaviorPack
+};
+
 const block = new Command('block').alias('b')
     .description(language.__("element.block.description"))
 
@@ -28,24 +37,10 @@ block.action(async (options) => {
     options.config = config;
     const behavior = await ONLY_BEHAVIOR()
     if (behavior) {
-        switch (options.prefab) {
-            case "slab":
-                await slabBehaviorPack(options);
-                break;
-            case "fence":
-                await fenceBehaviorPack(options);
-                break;
-            case "fence_gate":
-                await fenceGateBehaviorPack(options);
-                break;
-            case "wall":
-                await wallBehaviorPack(options);
-                break;
-            default:
-                await blockBehaviorPack(options);
-                break;
-        }
+        const strategy = behaviorBlockStrategies[options.prefab] ?? blockBehaviorPack;
+        await strategy(options);
     }
+    
     const resource = await ONLY_RESOURCE()
     if (resource) {
         await blockResourcePack(options);

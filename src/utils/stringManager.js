@@ -40,12 +40,11 @@ const isValidUUIDv4 = (string) => {
 };
 
 
-
-export const customStringify = (obj, spaces = 2) => {
+/*export const customStringify = (obj, spaces = 2) => {
     const jsonString = JSON.stringify(obj, null, spaces);
 
     // Limpiar saltos de línea innecesarios dentro de los arrays
     return jsonString
         .replace(/(\[\n\s*)/g, '[')
         .replace(/(\n\s*\])/g, ']');
-}
+}*/

@@ -1,7 +1,7 @@
 import block_components from "../../../../assets/jsons/block_components.json" with { type: 'json' };
 import { Options } from "../../../../typedefs.js"
 
-import { clearEvents, getJsonFile, getTextFileEvent, makeComponentFile, makeEventFileWithPrefab, makeFile, updateIndexFile, validateFileAsync } from "../../../../utils/fileOperations.js";
+import { clearEvents, getJsonFile, makeComponentFile, makeEventFileWithPrefab, makeFile, updateIndexFile, validateFileAsync } from "../../../../utils/fileOperations.js";
 import { PATH_BLOCK_COMPONENTS, PATH_BLOCK_EVENTS } from "../../../../utils/constants.js";
 import { resolveAddonName, resolveNamespace } from "../../../../core/nameResolver.js";
 import { componentBuilder } from "../../../../core/componentBuilder.js";

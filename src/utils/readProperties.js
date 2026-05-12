@@ -1,7 +1,7 @@
 import { AddonProperties } from "../typedefs.js"
 
-import fs from 'fs';
-import path from 'path';
+import fs from 'node:fs';
+import path from 'node:path';
 
 /**
  * Obtiene las propiedades de la aplicación de manera asincrona.

@@ -42,7 +42,9 @@ async function ensureNamespacedName(name, config) {
         if (attempts++ > 5) {
             throw new Error("Too many invalid namespace attempts");
         }
-        if (!config['addon.namespace']) {
+        if (config['addon.namespace']) {
+            name = await applyNamespace(name, config)
+        } else {
             console.error(
                 chalk.red(language.__("addon.namespace.error.1")),
                 chalk.green(language.__("addon.namespace.error.2")),
@@ -55,8 +57,6 @@ async function ensureNamespacedName(name, config) {
 
             const response = await inquirer.prompt(input);
             name = toSnackCase(response.name);
-        } else {
-            name = await applyNamespace(name, config)
         }
     }
     return name

@@ -1,6 +1,6 @@
 {
   "name": "module-craft-code-cli",
-  "version": "1.2.7",
+  "version": "1.2.8",
   "description": "A versatile tool for generating and managing modules, components, events and configuration files in Minecraft projects.",
   "type": "module",
   "main": "src/index.js",

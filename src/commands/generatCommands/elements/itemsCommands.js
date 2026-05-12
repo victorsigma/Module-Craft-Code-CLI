@@ -1,4 +1,3 @@
-import base from "../../../assets/templates/items/item.json" with { type: 'json' };
 import item_texture from "../../../assets/jsons/item_texture.json" with { type: 'json' };
 
 import { ONLY_BEHAVIOR, ONLY_RESOURCE, PATH_ITEM_TEXTURES } from '../../../utils/constants.js';
@@ -47,6 +46,17 @@ item.action(async (options) => {
     }
 })
 
+
+export const behaviorItemStrategies = {
+    item: itemDefault,
+    axe: itemAxe,
+    pickaxe: itemPickaxe,
+    shovel: itemShovel,
+    slab: itemSlab,
+    sword: itemSword
+};
+
+
 /**
  * @param {{name: string, config: {[key: string]: string | Array<string> }}} options 
  * @returns 
@@ -59,31 +69,8 @@ const behaviorPack = async (options) => {
     const namespace = options.name.split(':')[0];
     options.namespace = namespace;
 
-    let item = base;
-
-    switch (options.type) {
-        case "item":
-            item = await itemDefault(options);
-            break;
-        case "axe":
-            item = await itemAxe(options);
-            break;
-        case "pickaxe":
-            item = await itemPickaxe(options);
-            break;
-        case "shovel":
-            item = await itemShovel(options);
-            break;
-        case "slab":
-            item = await itemSlab(options);
-            break;
-        case "sword":
-            item = await itemSword(options);
-            break;
-        default:
-            item = itemDefault(options);
-            break;
-    }
+    const strategy = behaviorItemStrategies[options.type] ?? itemDefault;
+    const item = await strategy(options)
 
     if (options.type != "slab") {
         const questions = [

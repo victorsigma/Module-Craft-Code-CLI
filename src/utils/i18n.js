@@ -1,7 +1,7 @@
 import i18n from 'i18n';
-import path from 'path';
+import path from 'node:path';
 import { detectLanguage } from './languageDetector.js';
-import { fileURLToPath } from 'url';
+import { fileURLToPath } from 'node:url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -18,4 +18,5 @@ i18n.configure({
 
 i18n.setLocale(detectLanguage());
 
+// eslint-disable-next-line import/no-named-as-default-member
 export const language = i18n;

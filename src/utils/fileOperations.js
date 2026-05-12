@@ -1,10 +1,10 @@
 import { EVENT_TEMPLATES } from "./constants.js";
 import { toCamelCase } from "./stringManager.js";
-import { fileURLToPath } from 'url';
+import { fileURLToPath } from 'node:url';
 import { language } from "./i18n.js";
 import chalk from "chalk";
-import path from "path";
-import fs from 'fs';
+import path from "node:path";
+import fs from 'node:fs';
 
 import settings from '../assets/settings.json' with { type: 'json' };
 

@@ -4,7 +4,7 @@ import { resolveElementName } from "../../../core/nameResolver.js";
 import { generateFile } from "../../../core/generateFile.js";
 import { resolvePath } from "../../../core/resolvePath.js";
 import { language } from "../../../utils/i18n.js";
-import { Command } from "commander";
+import { Command, Option } from "commander";
 import chalk from "chalk";
 
 const entity = new Command('entity').alias('e')
@@ -12,9 +12,9 @@ const entity = new Command('entity').alias('e')
 
 entity.option('-n, --name <string>', language.__("element.entity.option.n"), 'namespace:entity');
 entity.option('-r, --runtime <string>', language.__("element.entity.option.r"));
-entity.option('-e, --experimental <boolean>', language.__("element.entity.option.e"), false);
-entity.option('-sp, --spawnable <boolean>', language.__("element.entity.option.sp"), false);
-entity.option('-su, --summonable <boolean>', language.__("element.entity.option.su"), false);
+entity.addOption(new Option('-e, --experimental <boolean>', language.__("element.entity.option.e")).default("false").choices(["false", "true"]));
+entity.addOption(new Option('-sp, --spawnable <boolean>', language.__("element.entity.option.sp")).default("false").choices(["false", "true"]));
+entity.addOption(new Option('-su, --summonable <boolean>', language.__("element.entity.option.su")).default("false").choices(["false", "true"]));
 
 entity.action(async (options) => {
     const config = await propertiesAsync();
@@ -53,9 +53,9 @@ const behaviorPack = async (options) => {
         entity["minecraft:entity"].description.runtime_identifier = options.runtime;
     }
 
-    entity["minecraft:entity"].description.is_experimental = JSON.parse(options.experimental) ? true : false;
-    entity["minecraft:entity"].description.is_spawnable = JSON.parse(options.spawnable) ? true : false;
-    entity["minecraft:entity"].description.is_summonable = JSON.parse(options.summonable) ? true : false;
+    entity["minecraft:entity"].description.is_experimental = JSON.parse(options.experimental);
+    entity["minecraft:entity"].description.is_spawnable = JSON.parse(options.spawnable);
+    entity["minecraft:entity"].description.is_summonable = JSON.parse(options.summonable);
 
     await generateFile({
         fileName,
