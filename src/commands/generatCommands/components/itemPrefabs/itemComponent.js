@@ -9,6 +9,7 @@ import { toCamelCase } from "../../../../utils/stringManager.js";
 import { language } from "../../../../utils/i18n.js";
 import inquirer from "inquirer";
 import chalk from "chalk";
+import ora from "ora";
 
 
 /**
